@@ -1,0 +1,14 @@
+{
+  "name": "clothes-shop",
+  "version": "1.0.0",
+  "description": "A MERN fullstack shop",
+  "main": "index.js",
+  "scripts": {
+    "start": "yarn --cwd client start",
+    "add-client": "yarn --cwd client add",
+    "remove-client": "yarn --cwd client remove"
+  },
+  "keywords": [],
+  "author": "tin-pham",
+  "license": "ISC"
+}
