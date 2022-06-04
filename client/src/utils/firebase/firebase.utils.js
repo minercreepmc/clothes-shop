@@ -3,6 +3,14 @@ import {
   getAuth,
   sendSignInLinkToEmail,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  isSignInWithEmailLink,
+  sendEmailVerification,
+  signInWithEmailLink,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  GoogleAuthProvider,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -32,6 +40,34 @@ export const signUpWithEmailAndPassword = async (email, password) => {
     return;
   }
 
-  const user = await createUserWithEmailAndPassword(auth, email, password);
-  await user.sendEmailVerification();
+  const { user } = await createUserWithEmailAndPassword(auth, email, password);
+
+  await sendEmailVerification(user);
+
+  return user;
+};
+
+export const verifyEmail = async (email) => {
+  const emailLink = window.location.href;
+
+  if (isSignInWithEmailLink(auth, emailLink)) {
+    return await signInWithEmailLink(auth, email, emailLink);
+  }
+};
+
+export const onAuthStateChangeListener = (callback) => {
+  return onAuthStateChanged(auth, callback);
+};
+
+export const loginUser = async (email, password) => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
+
+export const loginWithGooglePopUp = async () => {
+  const googleProvider = new GoogleAuthProvider();
+  return signInWithPopup(auth, googleProvider);
+};
+
+export const logOutUser = async () => {
+  return signOut(auth);
 };

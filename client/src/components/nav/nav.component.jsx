@@ -1,8 +1,17 @@
-import { Navbar, Nav } from 'react-bootstrap';
-import { MdOutlineShoppingCart } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { MdOutlineShoppingCart } from 'react-icons/md';
+import { FaUserAlt } from 'react-icons/fa';
+
+import { selectCurrentUser } from 'store/user/user.selector';
+import { logOutUser } from 'utils/firebase/firebase.utils';
 
 const NavContainer = () => {
+  const currentUser = useSelector(selectCurrentUser);
+
+  const handleLogOut = async () => await logOutUser();
+
   return (
     <>
       <Navbar.Toggle aria-controls="navbar-nav" />
@@ -13,12 +22,20 @@ const NavContainer = () => {
         </Nav>
 
         <Nav>
-          <Nav.Link as={Link} to="auth">
-            Login
-          </Nav.Link>
           <Nav.Link>
             <MdOutlineShoppingCart />
           </Nav.Link>
+
+          {!currentUser ? (
+            <Nav.Link as={Link} to="auth">
+              Login
+            </Nav.Link>
+          ) : (
+            <NavDropdown align="end" title={<FaUserAlt />}>
+              <NavDropdown.Item>Dashboard</NavDropdown.Item>
+              <NavDropdown.Item onClick={handleLogOut}>Logout</NavDropdown.Item>
+            </NavDropdown>
+          )}
         </Nav>
       </Navbar.Collapse>
     </>
