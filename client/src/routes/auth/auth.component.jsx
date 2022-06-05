@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Col, Container, Row } from 'react-bootstrap';
-
-import Login from 'components/login/login.component';
-import SignUp from 'components/signup/signup.component';
 
 import { selectCurrentUser } from 'store/user/user.selector';
+import AuthForm from 'components/auth-form/auth-form.component';
+import AuthComplete from 'routes/auth-complete/auth-complete.component';
+import ForgotPassword from 'components/forgot-password/forgot-password.component';
 
 const Auth = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -20,16 +19,11 @@ const Auth = () => {
   }, [currentUser, navigate]);
 
   return (
-    <Container>
-      <Row>
-        <Col className="mb-5" lg={6}>
-          <Login />
-        </Col>
-        <Col lg={6}>
-          <SignUp />
-        </Col>
-      </Row>
-    </Container>
+    <Routes>
+      <Route index element={<AuthForm />} />
+      <Route path="complete" element={<AuthComplete />} />
+      <Route path="forgot-password" element={<ForgotPassword />} />
+    </Routes>
   );
 };
 

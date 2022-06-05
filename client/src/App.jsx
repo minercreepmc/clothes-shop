@@ -4,7 +4,6 @@ import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 
 import Auth from 'routes/auth/auth.component';
-import AuthComplete from 'routes/auth-complete/auth-complete.component';
 import Home from 'routes/home/home.component';
 import Navbar from 'routes/navbar/navbar.component';
 
@@ -32,8 +31,7 @@ const App = () => {
       <Routes>
         <Route element={<Navbar />}>
           <Route index element={<Home />} />
-          <Route path="auth" element={<Auth />} />
-          <Route path="auth/complete" element={<AuthComplete />} />
+          <Route path="auth/*" element={<Auth />} />
         </Route>
       </Routes>
       <ToastContainer />

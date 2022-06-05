@@ -10,6 +10,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  sendPasswordResetEmail,
   GoogleAuthProvider,
 } from 'firebase/auth';
 
@@ -70,4 +71,25 @@ export const loginWithGooglePopUp = async () => {
 
 export const logOutUser = async () => {
   return signOut(auth);
+};
+
+export const resetPasswordWithEmailLink = async (email) => {
+  const actionCodeSettings = {
+    url: 'http://localhost:3000/auth',
+    handleCodeInApp: true,
+  };
+
+  try {
+    return await sendPasswordResetEmail(auth, email, actionCodeSettings);
+  } catch (error) {
+    if (error.code === 'auth/user-not-found') {
+      throw new Error('Email does not exist');
+    }
+
+    if (error.code === 'auth/invalid-email') {
+      throw new Error('Email is not valid');
+    }
+
+    throw error;
+  }
 };

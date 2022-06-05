@@ -6,6 +6,7 @@ import FormGroup from 'components/form-group/form-group.component';
 import { loginUser, loginWithGooglePopUp } from 'utils/firebase/firebase.utils';
 
 import { AiFillGoogleCircle } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 const userToLogInTemplate = {
   email: '',
@@ -92,6 +93,11 @@ const Login = () => {
           )}
         </Button>
       </ButtonGroup>
+
+      <br />
+      <Link className="float-end" to="/auth/forgot-password">
+        Forgot password?
+      </Link>
     </Form>
   );
 };
