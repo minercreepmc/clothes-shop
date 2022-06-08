@@ -3,16 +3,19 @@ const { checkUser } = require('./users.validator');
 const { getSubStringFromTo } = require('#utils/logics/logics.utils');
 
 async function createAndUpdateUser(data) {
-  const { success, errors } = checkUser(data);
+  const { body, headers } = data;
+
+  const userData = {
+    email: body?.email,
+    displayName: body?.displayName || getSubStringFromTo(data.email, 0, '@'),
+    address: body?.address,
+    accessToken: headers.accessToken,
+  };
+
+  const { success, errors } = checkUser(userData);
   if (!success) {
     throw errors;
   }
-
-  const userData = {
-    email: data.email,
-    displayName: data.displayName || getSubStringFromTo(data.email, 0, '@'),
-    address: data.address,
-  };
 
   const user = await userRepo.upsertUser(userData);
   return user;

@@ -9,15 +9,18 @@ import Navbar from 'routes/navbar/navbar.component';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { onAuthStateChangeListener } from 'utils/firebase/firebase.utils';
-
 import { setCurrentUser } from 'store/user/user.action';
+
+import { httpGetCurrentUser } from 'hooks/requests.hook';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    onAuthStateChangeListener((user) => {
-      if (user) {
+    onAuthStateChangeListener(async (userMetadata) => {
+      if (userMetadata) {
+        const user = await httpGetCurrentUser(userMetadata);
+        console.log(user);
         const { email, displayName, accessToken, role } = user;
         dispatch(setCurrentUser({ email, displayName, accessToken, role }));
       } else {

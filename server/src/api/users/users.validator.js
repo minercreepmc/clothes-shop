@@ -16,7 +16,7 @@ const schema = {
   },
   address: { type: 'string', min: 3, optional: true },
   // TODO: Firebase auth
-  // accessToken: { type: 'string'},
+  accessToken: { type: 'string' },
 };
 
 const check = validator.compile(schema);
