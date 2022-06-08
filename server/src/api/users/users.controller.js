@@ -1,11 +1,10 @@
 const usersService = require('./users.service');
 
+const { createRequest } = require('#share/utils/logics/logics.utils');
+
 const httpCreateUser = async (req, res) => {
   try {
-    const newUser = await usersService.createUser({
-      body: req.body,
-      headers: req.headers,
-    });
+    const newUser = await usersService.createUser(req.user);
     return res.status(201).json(newUser);
   } catch (errors) {
     return res.status(400).json(errors);
@@ -14,7 +13,7 @@ const httpCreateUser = async (req, res) => {
 
 const httpUpsertUser = async (req, res) => {
   try {
-    const user = await usersService.createAndUpdateUser(req.body);
+    const user = await usersService.createAndUpdateUser(req.user);
     return res.status(200).json(user);
   } catch (errors) {
     return res.status(400).json(errors);
@@ -23,7 +22,7 @@ const httpUpsertUser = async (req, res) => {
 
 const httpGetCurrentUser = async (req, res) => {
   try {
-    const user = await usersService.getCurrentUser(req.body);
+    const user = await usersService.getCurrentUser(req.user);
     return res.status(200).json(user);
   } catch (errors) {
     return res.status(400).json(errors);

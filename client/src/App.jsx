@@ -19,6 +19,7 @@ const App = () => {
   useEffect(() => {
     onAuthStateChangeListener(async (userMetadata) => {
       if (userMetadata) {
+        console.log(userMetadata);
         const user = await httpGetCurrentUser(userMetadata);
         console.log(user);
         const { email, displayName, accessToken, role } = user;

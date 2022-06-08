@@ -12,8 +12,8 @@
       "#configs/*": [
         "./src/configs/*"
       ],
-      "#utils/*": [
-        "./src/utils/*"
+      "#share/*": [
+        "./src/share/*"
       ]
     }
   }

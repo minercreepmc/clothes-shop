@@ -2,7 +2,7 @@ const http = require('http');
 
 const app = require('./app');
 
-const { mongoConnect } = require('#utils/mongodb/mongodb.utils');
+const { mongoConnect } = require('#share/utils/mongodb/mongodb.utils');
 
 const startServer = async () => {
   const server = http.createServer(app);

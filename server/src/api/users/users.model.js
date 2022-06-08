@@ -14,6 +14,7 @@ const userSchema = new Schema(
     },
     accessToken: {
       type: String,
+      required: true,
     },
     role: {
       type: String,
