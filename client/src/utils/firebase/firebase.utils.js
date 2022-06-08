@@ -28,7 +28,7 @@ const auth = getAuth();
 
 export const signUpWithEmail = async (email) => {
   const actionCodeSettings = {
-    url: 'http://localhost:3000/auth/complete',
+    url: process.env.REACT_APP_SIGN_UP_REDIRECT,
     handleCodeInApp: true,
   };
   await sendSignInLinkToEmail(auth, email, actionCodeSettings);
@@ -41,11 +41,25 @@ export const signUpWithEmailAndPassword = async (email, password) => {
     return;
   }
 
-  const { user } = await createUserWithEmailAndPassword(auth, email, password);
+  try {
+    const { user } = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
 
-  await sendEmailVerification(user);
+    await sendEmailVerification(user);
 
-  return user;
+    return user;
+  } catch (error) {
+    console.dir(error);
+    if (error.code === 'auth/email-already-in-use') {
+      throw new Error('Email already in use');
+    }
+    // if (error.message === 'EMAIL_EXISTS') {
+    //   throw new Error('Email already in use');
+    // }
+  }
 };
 
 export const verifyEmail = async (email) => {
@@ -64,7 +78,7 @@ export const loginUser = async (email, password) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
-export const loginWithGooglePopUp = async () => {
+export const loginWithGooglePopUp = () => {
   const googleProvider = new GoogleAuthProvider();
   return signInWithPopup(auth, googleProvider);
 };
@@ -75,7 +89,7 @@ export const logOutUser = async () => {
 
 export const resetPasswordWithEmailLink = async (email) => {
   const actionCodeSettings = {
-    url: 'http://localhost:3000/auth',
+    url: process.env.REACT_APP_RESET_PASSWORD_REDIRECT,
     handleCodeInApp: true,
   };
 

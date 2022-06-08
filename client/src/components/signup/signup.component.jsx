@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import FormGroup from 'components/form-group/form-group.component';
 
 import { signUpWithEmailAndPassword } from 'utils/firebase/firebase.utils';
+import { httpPostUser } from 'hooks/requests.hook';
 const newUserTemplate = {
   displayName: '',
   email: '',
@@ -32,16 +33,18 @@ const SignUp = () => {
 
     try {
       const user = await signUpWithEmailAndPassword(email, password);
-      // TODO:
-      //user.displayName = name;
+      if (user) {
+        user.displayName = displayName;
+      }
+      await httpPostUser(user);
+
       toast.success('A confirmation has been sent to your email');
 
       window.localStorage.setItem('emailToVerify', email);
 
       setNewUser(newUserTemplate);
     } catch (errors) {
-      console.error(errors);
-      toast.error('Something went wrong');
+      toast.error(errors.message);
     }
   };
 
@@ -56,27 +59,35 @@ const SignUp = () => {
       <Form.Text>You don't have an account?</Form.Text>
       <FormGroup
         label="Display Name"
-        placholder="Enter a display name"
+        placeholder="Enter a display name"
         type="text"
-        name="name"
+        name="displayName"
+        value={displayName}
+        onChange={() => { }}
       />
       <FormGroup
         label="Email"
-        placholder="Enter email"
+        placeholder="Enter email"
         type="email"
         name="email"
+        value={email}
+        onChange={() => { }}
       />
       <FormGroup
         label="Password"
-        placholder="Enter password"
+        placeholder="Enter password"
         type="password"
         name="password"
+        value={password}
+        onChange={() => { }}
       />
       <FormGroup
         label="Confirm Password"
-        placholder="Enter confirm password"
+        placeholder="Enter confirm password"
         type="password"
         name="passwordConfirm"
+        value={passwordConfirm}
+        onChange={() => { }}
       />
       <Button variant="dark" type="submit">
         Sign Up

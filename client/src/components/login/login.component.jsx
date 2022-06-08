@@ -4,9 +4,10 @@ import { toast } from 'react-toastify';
 
 import FormGroup from 'components/form-group/form-group.component';
 import { loginUser, loginWithGooglePopUp } from 'utils/firebase/firebase.utils';
-
 import { AiFillGoogleCircle } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+
+import { httpUpsertUser } from 'hooks/requests.hook';
 
 const userToLogInTemplate = {
   email: '',
@@ -41,9 +42,14 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     try {
       setIsGoogleLoggingIn(true);
-      await loginWithGooglePopUp();
+      const { user } = await loginWithGooglePopUp();
+      console.log(user);
+      await httpUpsertUser(user);
+
+      toast.success('Login Successful');
     } catch (errors) {
       console.error(errors);
+      toast.error('Something went wrong');
     } finally {
       setIsGoogleLoggingIn(false);
     }

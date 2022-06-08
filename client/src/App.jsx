@@ -18,8 +18,8 @@ const App = () => {
   useEffect(() => {
     onAuthStateChangeListener((user) => {
       if (user) {
-        const { email, displayName, accessToken } = user;
-        dispatch(setCurrentUser({ email, displayName, accessToken }));
+        const { email, displayName, accessToken, role } = user;
+        dispatch(setCurrentUser({ email, displayName, accessToken, role }));
       } else {
         dispatch(setCurrentUser(null));
       }

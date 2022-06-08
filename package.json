@@ -4,7 +4,9 @@
   "description": "A MERN fullstack shop",
   "main": "index.js",
   "scripts": {
-    "start": "yarn --cwd client start",
+    "client": "yarn --cwd client start",
+    "server": "yarn --cwd server run watch",
+    "watch": "yarn run server & yarn run client",
     "add-client": "yarn --cwd client add",
     "remove-client": "yarn --cwd client remove"
   },
