@@ -4,10 +4,7 @@ import { toast } from 'react-toastify';
 
 import FormGroup from 'components/form-group/form-group.component';
 
-import {
-  loginUserWithEmailAndPassword,
-  signUpWithEmailAndPassword,
-} from 'utils/firebase/firebase.utils';
+import { signUpWithEmailAndPassword } from 'utils/firebase/firebase.utils';
 
 const newUserTemplate = {
   email: '',

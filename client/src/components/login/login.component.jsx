@@ -11,8 +11,7 @@ import {
 } from 'utils/firebase/firebase.utils';
 import { AiFillGoogleCircle } from 'react-icons/ai';
 
-import { httpGetCurrentUser, httpUpsertUser } from 'hooks/requests.hook';
-import { setCurrentUser } from 'store/user/user.action';
+import { httpUpsertUser } from 'hooks/requests.hook';
 
 const userToLogInTemplate = {
   email: '',
@@ -25,8 +24,6 @@ const Login = () => {
   const [isGoogleLoggingIn, setIsGoogleLoggingIn] = useState(false);
 
   const { email, password } = userToLogIn;
-
-  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -55,7 +52,7 @@ const Login = () => {
     try {
       setIsGoogleLoggingIn(true);
       const userCredential = await loginWithGooglePopUp();
-      const user = await httpUpsertUser(userCredential.user.accessToken);
+      await httpUpsertUser(userCredential.user.accessToken);
 
       toast.success('Login Successful');
     } catch (errors) {
