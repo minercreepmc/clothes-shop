@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { MdOutlineShoppingCart } from 'react-icons/md';
@@ -7,10 +7,11 @@ import { FaUserAlt } from 'react-icons/fa';
 import { selectCurrentUser } from 'store/user/user.selector';
 import { logOutUser } from 'utils/firebase/firebase.utils';
 
-const NavContainer = () => {
+const NavBarNavs = () => {
   const currentUser = useSelector(selectCurrentUser);
-
   const handleLogOut = async () => await logOutUser();
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -32,7 +33,9 @@ const NavContainer = () => {
             </Nav.Link>
           ) : (
             <NavDropdown align="end" title={<FaUserAlt />}>
-              <NavDropdown.Item>Dashboard</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => navigate('/dashboard')}>
+                Dashboard
+              </NavDropdown.Item>
               <NavDropdown.Item onClick={handleLogOut}>Logout</NavDropdown.Item>
             </NavDropdown>
           )}
@@ -42,4 +45,4 @@ const NavContainer = () => {
   );
 };
 
-export default NavContainer;
+export default NavBarNavs;
