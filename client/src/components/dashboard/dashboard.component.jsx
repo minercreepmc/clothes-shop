@@ -7,11 +7,11 @@ const Dashboard = () => {
   return (
     <Container>
       <Row className="justify-content-md-center">
-        <Col lg={6}>
+        <Col style={{ borderRight: '1px solid #ccc' }} lg={2}>
           <DashboardNavs />
         </Col>
 
-        <Col lg={6}>
+        <Col lg={10}>
           <Outlet />
         </Col>
       </Row>

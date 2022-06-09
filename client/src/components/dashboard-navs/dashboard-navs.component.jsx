@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 const DashboardNavs = () => {
   return (
-    <Nav className="flex-column">
-      <Nav.Link as={Link} to="">
+    <Nav className="flex-column fw-bold">
+      <Nav.Link className="text-dark" as={Link} to="">
         Informations
       </Nav.Link>
-      <Nav.Link as={Link} to="wishlist">
+      <Nav.Link className="text-dark" as={Link} to="wishlist">
         Wishlist
       </Nav.Link>
     </Nav>
