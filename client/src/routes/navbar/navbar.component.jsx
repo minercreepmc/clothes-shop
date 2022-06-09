@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom';
 const NavbarContainer = () => {
   return (
     <>
-      <Navbar expand="lg" bg="light" variant="light" className="mb-5">
+      <Navbar expand="lg" bg="dark" variant="dark" className="mb-5">
         <Container fluid>
           <Brand>TIN.PHAM</Brand>
           <NavBarNavs />
