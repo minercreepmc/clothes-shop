@@ -1,4 +1,4 @@
-const { verifyToken } = require('#share/utils/firebase/index');
+const { verifyToken } = require('#share/utils/firebase/firebase.utils');
 
 const authCheck = async (req, res, next) => {
   try {
