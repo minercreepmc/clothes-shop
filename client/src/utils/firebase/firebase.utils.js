@@ -12,6 +12,7 @@ import {
   signOut,
   sendPasswordResetEmail,
   GoogleAuthProvider,
+  updateProfile,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -35,6 +36,10 @@ export const signUpWithEmail = async (email) => {
 };
 
 export const signUpWithEmailAndPassword = async (email, password) => {
+  const actionCodeSettings = {
+    url: process.env.REACT_APP_SIGN_UP_REDIRECT,
+    handleCodeInApp: true,
+  };
   if (!email || !password) {
     // TODO: fancy this
     alert('Missing email and password');
@@ -48,7 +53,7 @@ export const signUpWithEmailAndPassword = async (email, password) => {
       password,
     );
 
-    await sendEmailVerification(user);
+    await sendEmailVerification(user, actionCodeSettings);
 
     return user;
   } catch (error) {
@@ -56,10 +61,13 @@ export const signUpWithEmailAndPassword = async (email, password) => {
     if (error.code === 'auth/email-already-in-use') {
       throw new Error('Email already in use');
     }
-    // if (error.message === 'EMAIL_EXISTS') {
-    //   throw new Error('Email already in use');
-    // }
   }
+};
+
+export const updateUserProfile = async ({ displayName }) => {
+  return updateProfile(auth.currentUser, {
+    displayName,
+  });
 };
 
 export const verifyEmail = async (email) => {
@@ -74,7 +82,9 @@ export const onAuthStateChangeListener = (callback) => {
   return onAuthStateChanged(auth, callback);
 };
 
-export const loginUser = async (email, password) => {
+export const refreshSession = async () => { };
+
+export const loginUserWithEmailAndPassword = async (email, password) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
@@ -106,4 +116,8 @@ export const resetPasswordWithEmailLink = async (email) => {
 
     throw error;
   }
+};
+
+export const getCurrentLoggedInUser = () => {
+  return auth.currentUser;
 };

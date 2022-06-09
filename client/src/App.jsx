@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { onAuthStateChangeListener } from 'utils/firebase/firebase.utils';
 import { setCurrentUser } from 'store/user/user.action';
 
-import { httpGetCurrentUser } from 'hooks/requests.hook';
+import { httpGetCurrentUser, httpUpsertUser } from 'hooks/requests.hook';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -19,11 +19,9 @@ const App = () => {
   useEffect(() => {
     onAuthStateChangeListener(async (userMetadata) => {
       if (userMetadata) {
-        console.log(userMetadata);
-        const user = await httpGetCurrentUser(userMetadata);
-        console.log(user);
-        const { email, displayName, accessToken, role } = user;
-        dispatch(setCurrentUser({ email, displayName, accessToken, role }));
+        await httpUpsertUser(userMetadata.accessToken);
+        const user = await httpGetCurrentUser(userMetadata.accessToken);
+        dispatch(setCurrentUser(user));
       } else {
         dispatch(setCurrentUser(null));
       }

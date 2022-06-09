@@ -1,13 +1,18 @@
 import { useState } from 'react';
 import { Button, ButtonGroup, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import FormGroup from 'components/form-group/form-group.component';
-import { loginUser, loginWithGooglePopUp } from 'utils/firebase/firebase.utils';
+import {
+  loginUserWithEmailAndPassword,
+  loginWithGooglePopUp,
+} from 'utils/firebase/firebase.utils';
 import { AiFillGoogleCircle } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
 
-import { httpUpsertUser } from 'hooks/requests.hook';
+import { httpGetCurrentUser, httpUpsertUser } from 'hooks/requests.hook';
+import { setCurrentUser } from 'store/user/user.action';
 
 const userToLogInTemplate = {
   email: '',
@@ -21,6 +26,8 @@ const Login = () => {
 
   const { email, password } = userToLogIn;
 
+  const dispatch = useDispatch();
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -31,7 +38,12 @@ const Login = () => {
 
     try {
       setIsLoggingIn(true);
-      await loginUser(email, password);
+      const userCredential = await loginUserWithEmailAndPassword(
+        email,
+        password,
+      );
+
+      console.log(userCredential);
     } catch (errors) {
       console.error(errors);
     } finally {
@@ -42,9 +54,8 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     try {
       setIsGoogleLoggingIn(true);
-      const { user } = await loginWithGooglePopUp();
-      console.log(user);
-      await httpUpsertUser(user);
+      const userCredential = await loginWithGooglePopUp();
+      const user = await httpUpsertUser(userCredential.user.accessToken);
 
       toast.success('Login Successful');
     } catch (errors) {

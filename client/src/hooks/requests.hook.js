@@ -5,30 +5,30 @@ const USER_CREATE_ENDPOINT = `${API_URL}/users/create`;
 const USER_UPSERT_ENDPOINT = `${API_URL}/users/upsert`;
 const CURRENT_USER_URL = `${API_URL}/users/current-user`;
 
-async function httpPostUser(user) {
+async function httpPostUser(accessToken) {
   const res = await axios.post(
     USER_CREATE_ENDPOINT,
-    { ...user },
-    { headers: { accessToken: user.accessToken } },
+    {},
+    { headers: { accessToken } },
   );
   return res.data;
 }
 
-async function httpUpsertUser(user) {
+async function httpUpsertUser(accessToken) {
   const res = await axios.post(
     USER_UPSERT_ENDPOINT,
-    { ...user },
-    { headers: { accessToken: user.accessToken } },
+    {},
+    { headers: { accessToken } },
   );
 
   return res.data;
 }
 
-async function httpGetCurrentUser(userMetadata) {
+async function httpGetCurrentUser(accessToken) {
   const res = await axios.post(
     CURRENT_USER_URL,
-    { ...userMetadata },
-    { headers: { accessToken: userMetadata.accessToken } },
+    {},
+    { headers: { accessToken } },
   );
   return res.data;
 }

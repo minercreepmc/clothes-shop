@@ -4,10 +4,12 @@ import { toast } from 'react-toastify';
 
 import FormGroup from 'components/form-group/form-group.component';
 
-import { signUpWithEmailAndPassword } from 'utils/firebase/firebase.utils';
-import { httpPostUser } from 'hooks/requests.hook';
+import {
+  loginUserWithEmailAndPassword,
+  signUpWithEmailAndPassword,
+} from 'utils/firebase/firebase.utils';
+
 const newUserTemplate = {
-  displayName: '',
   email: '',
   password: '',
   passwordConfirm: '',
@@ -15,13 +17,12 @@ const newUserTemplate = {
 
 const SignUp = () => {
   const [newUser, setNewUser] = useState(newUserTemplate);
-
-  const { displayName, email, password, passwordConfirm } = newUser;
+  const { email, password, passwordConfirm } = newUser;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email || !password || !passwordConfirm || !displayName) {
+    if (!email || !password || !passwordConfirm) {
       toast.error('Please fill in all required fields');
       return;
     }
@@ -32,16 +33,9 @@ const SignUp = () => {
     }
 
     try {
-      const user = await signUpWithEmailAndPassword(email, password);
-      if (user) {
-        user.displayName = displayName;
-      }
-      await httpPostUser(user);
-
+      await signUpWithEmailAndPassword(email, password);
       toast.success('A confirmation has been sent to your email');
-
       window.localStorage.setItem('emailToVerify', email);
-
       setNewUser(newUserTemplate);
     } catch (errors) {
       toast.error(errors.message);
@@ -57,14 +51,6 @@ const SignUp = () => {
     <Form onChange={handleChange} onSubmit={handleSubmit}>
       <h1>Sign Up</h1>
       <Form.Text>You don't have an account?</Form.Text>
-      <FormGroup
-        label="Display Name"
-        placeholder="Enter a display name"
-        type="text"
-        name="displayName"
-        value={displayName}
-        onChange={() => { }}
-      />
       <FormGroup
         label="Email"
         placeholder="Enter email"
