@@ -53,7 +53,7 @@ const DashboardInformation = () => {
         label="Password"
         placeholder="********"
         value={password}
-        onChange={() => {}}
+        onChange={() => { }}
       ></FormGroup>
 
       <Button type="submit" variant="outline-dark" onClick={handleEnableChange}>
