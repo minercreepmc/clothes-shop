@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
-import { setShowModalPassword } from 'store/modal/modal.action';
-import { selectModalPasswordShow } from 'store/modal/modal.selector';
+import {
+  setIsChanging,
+  setShowModalPassword,
+} from 'store/dashboard/dashboard.action';
+import { selectModalPasswordShow } from 'store/dashboard/dashboard.selector';
 import { reAuthenticateWithPassword } from 'utils/firebase/firebase.utils';
 
 const ModalPassword = () => {
@@ -20,14 +24,22 @@ const ModalPassword = () => {
     setPassword(input.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!password) {
+      toast.error('Please enter password');
+      return;
+    }
+
     try {
-      console.log(password);
-      await reAuthenticateWithPassword(password);
+      const { user } = await reAuthenticateWithPassword(password);
 
       dispatch(setShowModalPassword(!modalPasswordShow));
-    } catch (errors) {
-      console.log(errors);
+      dispatch(setIsChanging(true));
+      toast.success('Password entered successfully');
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -37,7 +49,7 @@ const ModalPassword = () => {
         <Modal.Title>Type in password to continue </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onChange={handleChange}>
+        <Form onChange={handleChange} onSubmit={handleSubmit} id="modal-form">
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" autoFocus />
@@ -48,7 +60,7 @@ const ModalPassword = () => {
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
+        <Button variant="dark" type="submit" form="modal-form">
           Submit
         </Button>
       </Modal.Footer>

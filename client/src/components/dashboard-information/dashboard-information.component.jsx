@@ -5,10 +5,17 @@ import { Button, Form } from 'react-bootstrap';
 import FormGroup from 'components/form-group/form-group.component';
 
 import { selectCurrentUserEmail } from 'store/user/user.selector';
-import { selectModalPasswordShow } from 'store/modal/modal.selector';
-import { setShowModalPassword } from 'store/modal/modal.action';
+import {
+  selectIsChanging,
+  selectModalPasswordShow,
+} from 'store/dashboard/dashboard.selector';
+import {
+  setIsChanging,
+  setShowModalPassword,
+} from 'store/dashboard/dashboard.action';
 
 import { updateUserPassword } from 'utils/firebase/firebase.utils';
+import { toast } from 'react-toastify';
 
 const userInformationTemplate = {
   password: '',
@@ -19,6 +26,7 @@ const DashboardInformation = () => {
 
   const currentUserEmail = useSelector(selectCurrentUserEmail);
   const modalPasswordShow = useSelector(selectModalPasswordShow);
+  const isChanging = useSelector(selectIsChanging);
 
   const [userInfo, setUserInfo] = useState(userInformationTemplate);
 
@@ -28,6 +36,19 @@ const DashboardInformation = () => {
     e.preventDefault();
 
     dispatch(setShowModalPassword(!modalPasswordShow));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await updateUserPassword(userInfo.password);
+
+      dispatch(setIsChanging(false));
+      toast.success('Successfully updated informations');
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleChange = (e) => {
@@ -53,12 +74,16 @@ const DashboardInformation = () => {
         label="Password"
         placeholder="********"
         value={password}
-        disabled
-        onChange={() => { }}
+        disabled={!isChanging}
+        onChange={() => {}}
       ></FormGroup>
 
-      <Button type="submit" variant="outline-dark" onClick={handleEnableChange}>
-        Update Informations
+      <Button
+        type="submit"
+        variant="outline-dark"
+        onClick={!isChanging ? handleEnableChange : handleSubmit}
+      >
+        {!isChanging ? 'Update Informations' : 'Submit'}
       </Button>
     </Form>
   );

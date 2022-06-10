@@ -25,7 +25,7 @@ import {
   settingsResetPasswordRedirect,
 } from './firebase.configs';
 
-import { handleError } from './firebase.errors';
+import { reThrowingError } from './firebase.errors';
 
 initializeApp(firebaseConfig);
 const auth = getAuth();
@@ -46,7 +46,7 @@ export const signUpWithEmailAndPassword = async (email, password) => {
 
     return user;
   } catch (error) {
-    handleError(error);
+    reThrowingError(error);
   }
 };
 
@@ -64,6 +64,8 @@ export const verifyEmail = async (email) => {
   }
 };
 
+export const verifyToken = async (token) => {};
+
 export const onAuthStateChangeListener = (callback) => {
   return onAuthStateChanged(auth, callback);
 };
@@ -72,7 +74,7 @@ export const loginUserWithEmailAndPassword = async (email, password) => {
   try {
     return await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
-    handleError(error);
+    reThrowingError(error);
   }
 };
 
@@ -89,11 +91,6 @@ export const getCurrentUser = () => {
   return auth.currentUser;
 };
 
-export const updateUserPassword = async (newPassword) => {
-  const currentUser = getCurrentUser();
-  return await updatePassword(currentUser, newPassword);
-};
-
 export const resetPasswordWithEmailLink = async (email) => {
   try {
     return await sendPasswordResetEmail(
@@ -102,14 +99,22 @@ export const resetPasswordWithEmailLink = async (email) => {
       settingsResetPasswordRedirect,
     );
   } catch (error) {
-    handleError(error);
+    reThrowingError(error);
   }
 };
 
 export const reAuthenticateWithPassword = async (password) => {
   const currentUser = getCurrentUser();
   const credential = EmailAuthProvider.credential(currentUser.email, password);
-  console.log(credential);
 
-  return await reauthenticateWithCredential(currentUser, credential);
+  try {
+    return await reauthenticateWithCredential(currentUser, credential);
+  } catch (error) {
+    reThrowingError(error);
+  }
+};
+
+export const updateUserPassword = async (newPassword) => {
+  const currentUser = getCurrentUser();
+  return await updatePassword(currentUser, newPassword);
 };
