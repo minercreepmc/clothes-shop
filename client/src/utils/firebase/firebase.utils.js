@@ -15,37 +15,23 @@ import {
   updateProfile,
 } from 'firebase/auth';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyC-NoYWpYi5Qk6L26NK8iWDIfRzsAcOHMw',
-  authDomain: 'clothes-shop-users-db-77d65.firebaseapp.com',
-  projectId: 'clothes-shop-users-db-77d65',
-  storageBucket: 'clothes-shop-users-db-77d65.appspot.com',
-  messagingSenderId: '831625397643',
-  appId: '1:831625397643:web:9eeb92d6e60e53aa171b8e',
-};
+import {
+  firebaseConfig,
+  settingsSignUpRedirect,
+  settingsSignUpEmailPassword,
+  settingsResetPasswordRedirect,
+} from './firebase.configs';
 
-const app = initializeApp(firebaseConfig);
+import { handleError } from './firebase.errors';
+
+initializeApp(firebaseConfig);
 const auth = getAuth();
 
 export const signUpWithEmail = async (email) => {
-  const actionCodeSettings = {
-    url: process.env.REACT_APP_SIGN_UP_REDIRECT,
-    handleCodeInApp: true,
-  };
-  await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+  await sendSignInLinkToEmail(auth, email, settingsSignUpRedirect);
 };
 
 export const signUpWithEmailAndPassword = async (email, password) => {
-  const actionCodeSettings = {
-    url: process.env.REACT_APP_SIGN_UP_REDIRECT,
-    handleCodeInApp: true,
-  };
-  if (!email || !password) {
-    // TODO: fancy this
-    alert('Missing email and password');
-    return;
-  }
-
   try {
     const { user } = await createUserWithEmailAndPassword(
       auth,
@@ -53,14 +39,11 @@ export const signUpWithEmailAndPassword = async (email, password) => {
       password,
     );
 
-    await sendEmailVerification(user, actionCodeSettings);
+    await sendEmailVerification(user, settingsSignUpEmailPassword);
 
     return user;
   } catch (error) {
-    console.dir(error);
-    if (error.code === 'auth/email-already-in-use') {
-      throw new Error('Email already in use');
-    }
+    handleError(error);
   }
 };
 
@@ -82,8 +65,6 @@ export const onAuthStateChangeListener = (callback) => {
   return onAuthStateChanged(auth, callback);
 };
 
-export const refreshSession = async () => { };
-
 export const loginUserWithEmailAndPassword = async (email, password) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
@@ -97,27 +78,16 @@ export const logOutUser = async () => {
   return signOut(auth);
 };
 
+export const updatePassword = async () => { };
+
 export const resetPasswordWithEmailLink = async (email) => {
-  const actionCodeSettings = {
-    url: process.env.REACT_APP_RESET_PASSWORD_REDIRECT,
-    handleCodeInApp: true,
-  };
-
   try {
-    return await sendPasswordResetEmail(auth, email, actionCodeSettings);
+    return await sendPasswordResetEmail(
+      auth,
+      email,
+      settingsResetPasswordRedirect,
+    );
   } catch (error) {
-    if (error.code === 'auth/user-not-found') {
-      throw new Error('Email does not exist');
-    }
-
-    if (error.code === 'auth/invalid-email') {
-      throw new Error('Email is not valid');
-    }
-
-    throw error;
+    handleError(error);
   }
-};
-
-export const getCurrentLoggedInUser = () => {
-  return auth.currentUser;
 };
