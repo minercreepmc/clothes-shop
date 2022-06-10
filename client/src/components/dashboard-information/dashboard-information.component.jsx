@@ -5,8 +5,8 @@ import { Button, Form } from 'react-bootstrap';
 import FormGroup from 'components/form-group/form-group.component';
 
 import { selectCurrentUserEmail } from 'store/user/user.selector';
-import { selectModalShow } from 'store/modal/modal.selector';
-import { setShow } from 'store/modal/modal.action';
+import { selectModalPasswordShow } from 'store/modal/modal.selector';
+import { setShowModalPassword } from 'store/modal/modal.action';
 
 import { updateUserPassword } from 'utils/firebase/firebase.utils';
 
@@ -18,7 +18,7 @@ const DashboardInformation = () => {
   const dispatch = useDispatch();
 
   const currentUserEmail = useSelector(selectCurrentUserEmail);
-  const isModalShow = useSelector(selectModalShow);
+  const modalPasswordShow = useSelector(selectModalPasswordShow);
 
   const [userInfo, setUserInfo] = useState(userInformationTemplate);
 
@@ -27,7 +27,7 @@ const DashboardInformation = () => {
   const handleEnableChange = (e) => {
     e.preventDefault();
 
-    dispatch(setShow(!isModalShow));
+    dispatch(setShowModalPassword(!modalPasswordShow));
   };
 
   const handleChange = (e) => {

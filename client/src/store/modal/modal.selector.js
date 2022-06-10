@@ -1,1 +1,1 @@
-export const selectModalShow = (state) => state.modal.show;
+export const selectModalPasswordShow = (state) => state.modal.showModalPassword;

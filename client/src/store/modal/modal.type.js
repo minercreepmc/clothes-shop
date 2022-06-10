@@ -1,3 +1,3 @@
 export const MODAL_ACTION_TYPE = {
-  SET_SHOW: 'modal/SET_SHOW',
+  SET_SHOW_MODAL_PASSWORD: 'modal/SET_SHOW_MODAL_PASSWORD',
 };

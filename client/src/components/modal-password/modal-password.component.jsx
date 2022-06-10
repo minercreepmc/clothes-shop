@@ -1,18 +1,17 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setShow } from 'store/modal/modal.action';
-import { selectModalShow } from 'store/modal/modal.selector';
+import { setShowModalPassword } from 'store/modal/modal.action';
+import { selectModalPasswordShow } from 'store/modal/modal.selector';
 
-const ModalContainer = () => {
+const ModalPassword = () => {
   const dispatch = useDispatch();
 
-  const modalShow = useSelector(selectModalShow);
-  console.log(modalShow);
-  const handleClose = () => dispatch(setShow(!modalShow));
+  const modalPasswordShow = useSelector(selectModalPasswordShow);
+  const handleClose = () => dispatch(setShowModalPassword(!modalPasswordShow));
 
   return (
-    <Modal show={modalShow} onHide={handleClose}>
+    <Modal show={modalPasswordShow} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Modal heading</Modal.Title>
       </Modal.Header>
@@ -29,4 +28,4 @@ const ModalContainer = () => {
   );
 };
 
-export default ModalContainer;
+export default ModalPassword;
