@@ -13,6 +13,7 @@ import {
   sendPasswordResetEmail,
   GoogleAuthProvider,
   updateProfile,
+  updatePassword,
 } from 'firebase/auth';
 
 import {
@@ -78,7 +79,15 @@ export const logOutUser = async () => {
   return signOut(auth);
 };
 
-export const updatePassword = async () => { };
+export const getCurrentUser = () => {
+  return auth.currentUser;
+};
+
+export const updateUserPassword = async (newPassword) => {
+  const currentUser = getCurrentUser();
+  console.log(newPassword);
+  return await updatePassword(currentUser, newPassword);
+};
 
 export const resetPasswordWithEmailLink = async (email) => {
   try {

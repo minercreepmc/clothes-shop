@@ -1,7 +1,9 @@
-const { combineReducers } = require('redux');
+import { combineReducers } from 'redux';
 
-const { userReducer } = require('./user/user.reducer');
+import { userReducer } from './user/user.reducer';
+import { modalReducer } from './modal/modal.reducer';
 
 export const rootReducer = combineReducers({
   user: userReducer,
+  modal: modalReducer,
 });

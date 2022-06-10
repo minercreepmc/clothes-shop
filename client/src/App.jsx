@@ -8,6 +8,7 @@ import Home from 'routes/home/home.component';
 import Navbar from 'routes/navbar/navbar.component';
 import UserDashboard from 'routes/user-dashboard/user-dashboard.component';
 import NotFound from 'routes/notfound/notfound.component';
+import Modal from 'components/modal/modal.component';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { onAuthStateChangeListener } from 'utils/firebase/firebase.utils';
@@ -41,6 +42,7 @@ const App = () => {
         </Route>
       </Routes>
       <ToastContainer />
+      <Modal />
     </>
   );
 };

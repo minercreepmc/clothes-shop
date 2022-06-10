@@ -1,10 +1,13 @@
-import { Form } from 'react-bootstrap';
+import { Form, InputGroup } from 'react-bootstrap';
 
-const FormGroup = ({ label, ...controlProps }) => {
+const FormGroup = ({ label, children, ...controlProps }) => {
   return (
     <Form.Group className="mb-3">
       <Form.Label>{label}</Form.Label>
-      <Form.Control {...controlProps} />
+      <InputGroup>
+        <Form.Control {...controlProps} />
+        {children}
+      </InputGroup>
     </Form.Group>
   );
 };
