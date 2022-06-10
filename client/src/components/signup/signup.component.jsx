@@ -31,6 +31,7 @@ const SignUp = () => {
 
     try {
       await signUpWithEmailAndPassword(email, password);
+
       toast.success('A confirmation has been sent to your email');
       window.localStorage.setItem('emailToVerify', email);
       setNewUser(newUserTemplate);
@@ -54,7 +55,7 @@ const SignUp = () => {
         type="email"
         name="email"
         value={email}
-        onChange={() => { }}
+        onChange={() => {}}
       />
       <FormGroup
         label="Password"
@@ -62,7 +63,7 @@ const SignUp = () => {
         type="password"
         name="password"
         value={password}
-        onChange={() => { }}
+        onChange={() => {}}
       />
       <FormGroup
         label="Confirm Password"
@@ -70,7 +71,7 @@ const SignUp = () => {
         type="password"
         name="passwordConfirm"
         value={passwordConfirm}
-        onChange={() => { }}
+        onChange={() => {}}
       />
       <Button variant="dark" type="submit">
         Sign Up

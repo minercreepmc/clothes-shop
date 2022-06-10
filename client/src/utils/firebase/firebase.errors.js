@@ -1,9 +1,9 @@
-export async function handleError(error) {
+export function handleError(error) {
   switch (error.code) {
     case 'auth/email-already-in-use':
       throw new Error('Email already in use');
     case 'auth/user-not-found':
-      throw new Error('Email does not exist');
+      throw new Error('User not found');
     case 'auth/invalid-email':
       throw new Error('Email is not valid');
     default:

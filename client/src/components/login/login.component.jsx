@@ -42,7 +42,7 @@ const Login = () => {
 
       console.log(userCredential);
     } catch (errors) {
-      console.error(errors);
+      toast.error(errors.message);
     } finally {
       setIsLoggingIn(false);
     }

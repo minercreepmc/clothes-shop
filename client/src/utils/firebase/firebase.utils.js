@@ -14,6 +14,8 @@ import {
   GoogleAuthProvider,
   updateProfile,
   updatePassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
 } from 'firebase/auth';
 
 import {
@@ -67,7 +69,11 @@ export const onAuthStateChangeListener = (callback) => {
 };
 
 export const loginUserWithEmailAndPassword = async (email, password) => {
-  return signInWithEmailAndPassword(auth, email, password);
+  try {
+    return await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    handleError(error);
+  }
 };
 
 export const loginWithGooglePopUp = () => {
@@ -85,7 +91,6 @@ export const getCurrentUser = () => {
 
 export const updateUserPassword = async (newPassword) => {
   const currentUser = getCurrentUser();
-  console.log(newPassword);
   return await updatePassword(currentUser, newPassword);
 };
 
@@ -99,4 +104,12 @@ export const resetPasswordWithEmailLink = async (email) => {
   } catch (error) {
     handleError(error);
   }
+};
+
+export const reAuthenticateWithPassword = async (password) => {
+  const currentUser = getCurrentUser();
+  const credential = EmailAuthProvider.credential(currentUser.email, password);
+  console.log(credential);
+
+  return await reauthenticateWithCredential(currentUser, credential);
 };

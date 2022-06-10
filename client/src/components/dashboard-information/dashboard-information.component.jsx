@@ -53,6 +53,7 @@ const DashboardInformation = () => {
         label="Password"
         placeholder="********"
         value={password}
+        disabled
         onChange={() => { }}
       ></FormGroup>
 
