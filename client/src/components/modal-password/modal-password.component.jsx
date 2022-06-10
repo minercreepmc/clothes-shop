@@ -1,4 +1,4 @@
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setShowModalPassword } from 'store/modal/modal.action';
@@ -13,15 +13,22 @@ const ModalPassword = () => {
   return (
     <Modal show={modalPasswordShow} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>Type in password to continue </Modal.Title>
       </Modal.Header>
-      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+      <Modal.Body>
+        <Form>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="password" autoFocus />
+          </Form.Group>
+        </Form>
+      </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
         <Button variant="primary" onClick={handleClose}>
-          Save Changes
+          Submit
         </Button>
       </Modal.Footer>
     </Modal>
