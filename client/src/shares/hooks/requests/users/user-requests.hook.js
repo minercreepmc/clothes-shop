@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL;
-const USER_CREATE_ENDPOINT = `${API_URL}/users/create`;
-const USER_UPSERT_ENDPOINT = `${API_URL}/users/upsert`;
-const CURRENT_USER_URL = `${API_URL}/users/current-user`;
-const CURRENT_ADMIN_URL = `${API_URL}/users/current-admin`;
+import {
+  USER_CREATE_ENDPOINT,
+  USER_UPSERT_ENDPOINT,
+  CURRENT_USER_URL,
+  CURRENT_ADMIN_URL,
+} from './user-requests.constant';
 
 async function httpPostUser(accessToken) {
   const res = await axios.post(

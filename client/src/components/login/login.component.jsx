@@ -8,10 +8,10 @@ import FormGroup from 'components/form-group/form-group.component';
 import {
   loginUserWithEmailAndPassword,
   loginWithGooglePopUp,
-} from 'utils/firebase/firebase.utils';
+} from 'shares/utils/firebase/firebase.utils';
 import { AiFillGoogleCircle } from 'react-icons/ai';
 
-import { httpUpsertUser } from 'hooks/requests/user-requests.hook';
+import { httpUpsertUser } from 'shares/hooks/requests/users/user-requests.hook';
 
 const userToLogInTemplate = {
   email: '',

@@ -6,9 +6,9 @@ import { toast } from 'react-toastify';
 import {
   setIsChanging,
   setShowModalPassword,
-} from 'store/dashboard/dashboard.action';
-import { selectModalPasswordShow } from 'store/dashboard/dashboard.selector';
-import { reAuthenticateWithPassword } from 'utils/firebase/firebase.utils';
+} from 'shares/store/dashboard/dashboard.action';
+import { selectModalPasswordShow } from 'shares/store/dashboard/dashboard.selector';
+import { reAuthenticateWithPassword } from 'shares/utils/firebase/firebase.utils';
 
 const ModalPassword = () => {
   const dispatch = useDispatch();

@@ -2,10 +2,12 @@ import { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { selectCurrentUser } from 'store/user/user.selector';
-import AuthForm from 'components/auth-form/auth-form.component';
-import AuthComplete from 'routes/auth-complete/auth-complete.component';
-import ForgotPassword from 'components/forgot-password/forgot-password.component';
+import { selectCurrentUser } from 'shares/store/user/user.selector';
+
+import AuthComplete from 'pages/auth-complete/auth-complete.component';
+import ForgotPassword from 'pages/forgot-password/forgot-password.component';
+
+import AuthForm from 'layouts/auth-form/auth-form.component';
 
 const Auth = () => {
   const currentUser = useSelector(selectCurrentUser);

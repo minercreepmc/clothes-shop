@@ -4,8 +4,8 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { FaUserAlt } from 'react-icons/fa';
 
-import { selectCurrentUser } from 'store/user/user.selector';
-import { logOutUser } from 'utils/firebase/firebase.utils';
+import { selectCurrentUser } from 'shares/store/user/user.selector';
+import { logOutUser } from 'shares/utils/firebase/firebase.utils';
 
 const NavBarNavs = () => {
   const currentUser = useSelector(selectCurrentUser);

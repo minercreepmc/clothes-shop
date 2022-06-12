@@ -4,17 +4,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import FormGroup from 'components/form-group/form-group.component';
 
-import { selectCurrentUserEmail } from 'store/user/user.selector';
+import { selectCurrentUserEmail } from 'shares/store/user/user.selector';
 import {
   selectIsChanging,
   selectModalPasswordShow,
-} from 'store/dashboard/dashboard.selector';
+} from 'shares/store/dashboard/dashboard.selector';
 import {
   setIsChanging,
   setShowModalPassword,
-} from 'store/dashboard/dashboard.action';
+} from 'shares/store/dashboard/dashboard.action';
 
-import { updateUserPassword } from 'utils/firebase/firebase.utils';
+import { updateUserPassword } from 'shares/utils/firebase/firebase.utils';
 import { toast } from 'react-toastify';
 
 const userInformationTemplate = {
@@ -75,7 +75,7 @@ const DashboardInformation = () => {
         placeholder="********"
         value={password}
         disabled={!isChanging}
-        onChange={() => {}}
+        onChange={() => { }}
       ></FormGroup>
 
       <Button

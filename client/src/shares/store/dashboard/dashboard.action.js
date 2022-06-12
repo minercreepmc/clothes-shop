@@ -1,4 +1,4 @@
-import { createAction } from 'utils/reducer/reducer.utils';
+import { createAction } from 'shares/utils/reducer/reducer.utils';
 import { DASHBOARD_ACTION_TYPE } from './dashboard.type';
 
 export const setShowModalPassword = (bool) =>

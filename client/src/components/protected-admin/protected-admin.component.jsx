@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 
-import { httpCurrentAdmin } from 'hooks/requests/user-requests.hook';
-import { selectCurrentUser } from 'store/user/user.selector';
+import { httpCurrentAdmin } from 'shares/hooks/requests/users/user-requests.hook';
+import { selectCurrentUser } from 'shares/store/user/user.selector';
 
 const ProtectedAdmin = ({ children }) => {
   const currentUser = useSelector(selectCurrentUser);
