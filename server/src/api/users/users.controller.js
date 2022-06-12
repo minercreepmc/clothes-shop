@@ -11,7 +11,6 @@ const httpCreateUser = async (req, res) => {
 
 const httpUpsertUser = async (req, res) => {
   try {
-    console.log(req.user);
     const user = await usersService.createAndUpdateUser(req.user);
     return res.status(200).json(user);
   } catch (errors) {

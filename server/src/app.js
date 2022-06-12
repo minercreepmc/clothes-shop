@@ -3,7 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
-const usersRouter = require('#api/users/users.router');
+const apiRouter = require('./api');
 
 const app = express();
 
@@ -16,9 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('combined'));
 
-app.get('/', (req, res) => {
-  res.send('Hello from home');
-});
-app.use('/users', usersRouter);
+app.use('/api', apiRouter);
 
 module.exports = app;

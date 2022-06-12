@@ -9,9 +9,18 @@ import { logOutUser } from 'utils/firebase/firebase.utils';
 
 const NavBarNavs = () => {
   const currentUser = useSelector(selectCurrentUser);
+
   const handleLogOut = async () => await logOutUser();
 
   const navigate = useNavigate();
+
+  const handleRoleBaseNavigate = async () => {
+    if (currentUser.role === 'admin') {
+      navigate('/admin/dashboard');
+    } else {
+      navigate('/user/dashboard');
+    }
+  };
 
   return (
     <>
@@ -33,7 +42,7 @@ const NavBarNavs = () => {
             </Nav.Link>
           ) : (
             <NavDropdown align="end" title={<FaUserAlt />}>
-              <NavDropdown.Item onClick={() => navigate('/dashboard')}>
+              <NavDropdown.Item onClick={handleRoleBaseNavigate}>
                 Dashboard
               </NavDropdown.Item>
               <NavDropdown.Item onClick={handleLogOut}>Logout</NavDropdown.Item>

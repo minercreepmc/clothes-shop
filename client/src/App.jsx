@@ -7,8 +7,11 @@ import Auth from 'routes/auth/auth.component';
 import Home from 'routes/home/home.component';
 import Navbar from 'routes/navbar/navbar.component';
 import UserDashboard from 'routes/user-dashboard/user-dashboard.component';
+import AdminDashboard from 'routes/admin-dashboard/admin-dashboard.component';
 import NotFound from 'routes/notfound/notfound.component';
+
 import ProtectedUser from 'components/protected-user/protected-user.component';
+import ProtectedAdmin from 'components/protected-admin/protected-admin.component';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { onAuthStateChangeListener } from 'utils/firebase/firebase.utils';
@@ -24,6 +27,7 @@ const App = () => {
       if (userMetadata) {
         await httpUpsertUser(userMetadata.accessToken);
         const user = await httpGetCurrentUser(userMetadata.accessToken);
+        console.log(user);
         dispatch(
           setCurrentUser({ ...user, accessToken: userMetadata.accessToken }),
         );
@@ -40,11 +44,19 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="auth/*" element={<Auth />} />
           <Route
-            path="dashboard/*"
+            path="user/dashboard/*"
             element={
               <ProtectedUser>
                 <UserDashboard />
               </ProtectedUser>
+            }
+          />
+          <Route
+            path="admin/dashboard/*"
+            element={
+              <ProtectedAdmin>
+                <AdminDashboard />
+              </ProtectedAdmin>
             }
           />
           <Route path="*" element={<NotFound />} />

@@ -1,4 +1,4 @@
-const { authCheck } = require('#share/middlewares/auth.middleware');
+const { adminCheck } = require('#share/middlewares/auth.middleware');
 const { Router } = require('express');
 
 const {
@@ -9,8 +9,9 @@ const {
 
 const router = Router();
 
-router.post('/current-user', authCheck, httpGetCurrentUser);
-router.post('/create', authCheck, httpCreateUser);
-router.post('/upsert', authCheck, httpUpsertUser);
+router.post('/current-user', httpGetCurrentUser);
+router.post('/current-admin', adminCheck, httpGetCurrentUser);
+router.post('/create', httpCreateUser);
+router.post('/upsert', httpUpsertUser);
 
 module.exports = router;
