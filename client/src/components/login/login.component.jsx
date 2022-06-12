@@ -11,7 +11,7 @@ import {
 } from 'utils/firebase/firebase.utils';
 import { AiFillGoogleCircle } from 'react-icons/ai';
 
-import { httpUpsertUser } from 'hooks/requests.hook';
+import { httpUpsertUser } from 'hooks/requests/user-requests.hook';
 
 const userToLogInTemplate = {
   email: '',

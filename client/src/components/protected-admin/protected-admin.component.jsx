@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-import { httpCurrentAdmin } from 'hooks/requests.hook';
+import { httpCurrentAdmin } from 'hooks/requests/user-requests.hook';
 import { selectCurrentUser } from 'store/user/user.selector';
 
 const ProtectedAdmin = ({ children }) => {

@@ -17,7 +17,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { onAuthStateChangeListener } from 'utils/firebase/firebase.utils';
 import { setCurrentUser } from 'store/user/user.action';
 
-import { httpGetCurrentUser, httpUpsertUser } from 'hooks/requests.hook';
+import {
+  httpGetCurrentUser,
+  httpUpsertUser,
+} from 'hooks/requests/user-requests.hook';
 
 const App = () => {
   const dispatch = useDispatch();
