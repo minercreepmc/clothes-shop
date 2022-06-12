@@ -5,8 +5,8 @@ const DashboardNavs = ({ list }) => {
   return (
     <>
       <Nav className="d-none d-md-block">
-        {list.map((item) => (
-          <Nav.Link className="text-dark" as={Link} to={item.route}>
+        {list.map((item, index) => (
+          <Nav.Link key={index} className="text-dark" as={Link} to={item.route}>
             {item.name}
           </Nav.Link>
         ))}
