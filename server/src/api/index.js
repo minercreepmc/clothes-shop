@@ -7,6 +7,6 @@ const { authCheck } = require('#share/middlewares/auth.middleware');
 const router = Router();
 
 router.use('/users', authCheck, usersRouter);
-router.use('/categories', authCheck, categoriesRouter);
+router.use('/categories', categoriesRouter);
 
 module.exports = router;
