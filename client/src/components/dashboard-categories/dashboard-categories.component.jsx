@@ -11,6 +11,7 @@ import { selectCurrentUser } from 'shares/store/user/user.selector';
 
 import { httpPostCategory } from 'shares/hooks/requests/categories/category-requests.hook';
 import { addCategoryToCategories } from 'shares/store/shop/shop.action';
+import SearchBar from 'components/search-bar/search-bar.component';
 
 const categoryTemplate = {
   name: '',
@@ -23,6 +24,7 @@ const DashboardCategories = () => {
   const dispatch = useDispatch();
 
   const [category, setCategory] = useState(categoryTemplate);
+  const [filteredCategories, setFilteredCategories] = useState(categories);
   const [isLoading, setIsLoading] = useState(false);
 
   const { name } = category;
@@ -59,6 +61,18 @@ const DashboardCategories = () => {
     setCategory({ name: input.value });
   };
 
+  const handleSearch = (e) => {
+    const input = e.target;
+
+    // TODO: Change to string-similarity npm package
+    const newCategories = categories.filter(
+      (category) =>
+        category.name.toLowerCase().includes(input.value.toLowerCase()) ||
+        input.value.toLowerCase().includes(category.name.toLowerCase()),
+    );
+    setFilteredCategories(newCategories);
+  };
+
   return (
     <div>
       <Form className="mb-5" onSubmit={handleCreateCategory}>
@@ -77,7 +91,8 @@ const DashboardCategories = () => {
 
       <div>
         <h2>Categories available</h2>
-        <Categories categories={categories} />
+        <SearchBar handleChange={handleSearch} />
+        <Categories categories={filteredCategories} />
       </div>
     </div>
   );
