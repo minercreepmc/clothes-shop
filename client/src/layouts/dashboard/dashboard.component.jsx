@@ -7,11 +7,11 @@ const Dashboard = ({ list }) => {
   return (
     <Container>
       <Row className="justify-content-md-center">
-        <Col md={4} lg={2}>
+        <Col md={4} lg={3}>
           <DashboardNavs list={list} />
         </Col>
 
-        <Col md={8} lg={10}>
+        <Col md={8} lg={9}>
           <Outlet />
         </Col>
       </Row>
