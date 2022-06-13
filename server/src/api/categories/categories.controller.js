@@ -18,7 +18,7 @@ async function httpPostCategory(req, res) {
   }
 }
 
-async function httpUpdateCategory(req, res) {
+async function httpPutCategory(req, res) {
   try {
     const newCategory = await CategoriesService.updateCategory({
       body: req.body,
@@ -45,6 +45,6 @@ async function httpDeleteCategory(req, res) {
 module.exports = {
   httpGetCategories,
   httpPostCategory,
-  httpUpdateCategory,
+  httpPutCategory,
   httpDeleteCategory,
 };

@@ -8,7 +8,7 @@ const {
 const {
   httpGetCategories,
   httpPostCategory,
-  httpUpdateCategory,
+  httpPutCategory,
   httpDeleteCategory,
 } = require('./categories.controller');
 
@@ -16,7 +16,7 @@ const router = Router();
 
 router.get('/', httpGetCategories);
 router.post('/', authCheck, adminCheck, httpPostCategory);
-router.put('/:slug', authCheck, adminCheck, httpUpdateCategory);
+router.put('/:slug', authCheck, adminCheck, httpPutCategory);
 router.delete('/:slug', authCheck, adminCheck, httpDeleteCategory);
 
 module.exports = router;
