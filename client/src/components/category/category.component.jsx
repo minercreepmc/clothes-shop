@@ -19,18 +19,24 @@ const Category = ({ category }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async (slug) => {
-    setIsDeleting(true);
-    // TODO: fancy this by bulding async modal
-    const confirmDelete = window.confirm('Do you want to delete category?');
-    if (confirmDelete) {
-      const deletedCategory = await httpDeleteCategory({
-        slug,
-        accessToken: currentUser.accessToken,
-      });
-      dispatch(removeCategoryFromCategories(deletedCategory, categories));
-      toast.success('Deleted category successful');
+    try {
+      setIsDeleting(true);
+      // TODO: fancy this by bulding async modal
+      const confirmDelete = window.confirm('Do you want to delete category?');
+      if (confirmDelete) {
+        const deletedCategory = await httpDeleteCategory({
+          slug,
+          accessToken: currentUser.accessToken,
+        });
+        dispatch(removeCategoryFromCategories(deletedCategory, categories));
+        toast.success('Deleted category successful');
+      }
+    } catch (errors) {
+      console.log(errors);
+      toast.error('Delete category failed');
+    } finally {
+      setIsDeleting(false);
     }
-    setIsDeleting(false);
   };
 
   return (
