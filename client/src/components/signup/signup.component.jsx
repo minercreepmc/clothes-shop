@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import FormGroup from 'components/form-group/form-group.component';
 
-import { signUpWithEmailAndPassword } from 'utils/firebase/firebase.utils';
+import { signUpWithEmailAndPassword } from 'shares/utils/firebase/firebase.utils';
 
 const newUserTemplate = {
   email: '',
@@ -55,7 +55,7 @@ const SignUp = () => {
         type="email"
         name="email"
         value={email}
-        onChange={() => {}}
+        onChange={() => { }}
       />
       <FormGroup
         label="Password"
@@ -63,7 +63,7 @@ const SignUp = () => {
         type="password"
         name="password"
         value={password}
-        onChange={() => {}}
+        onChange={() => { }}
       />
       <FormGroup
         label="Confirm Password"
@@ -71,7 +71,7 @@ const SignUp = () => {
         type="password"
         name="passwordConfirm"
         value={passwordConfirm}
-        onChange={() => {}}
+        onChange={() => { }}
       />
       <Button variant="dark" type="submit">
         Sign Up

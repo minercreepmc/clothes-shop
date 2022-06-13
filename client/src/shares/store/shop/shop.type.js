@@ -1,0 +1,3 @@
+export const SHOP_ACTION_TYPE = {
+  SET_CATEGORIES: 'shop/SET_CATEGORIES',
+};

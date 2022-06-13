@@ -1,4 +1,5 @@
-const API_URL = process.env.REACT_APP_API_URL;
+import { API_URL } from 'shares/constants';
+
 const USER_CREATE_ENDPOINT = `${API_URL}/users/create`;
 const USER_UPSERT_ENDPOINT = `${API_URL}/users/upsert`;
 const CURRENT_USER_URL = `${API_URL}/users/current-user`;

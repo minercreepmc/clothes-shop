@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { verifyEmail } from 'utils/firebase/firebase.utils';
+import { verifyEmail } from 'shares/utils/firebase/firebase.utils';
 
 const AuthComplete = () => {
   const navigate = useNavigate();

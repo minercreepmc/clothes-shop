@@ -1,3 +1,4 @@
+const { prettierErrors } = require('#shares/utils/mongo/mongo.utils');
 const slugify = require('slugify');
 
 const CategoriesRepo = require('./categories.repository');
@@ -15,9 +16,9 @@ async function createCategory(data) {
   };
 
   try {
-    return CategoriesRepo.createCategory(category);
+    return await CategoriesRepo.createCategory(category);
   } catch (errors) {
-    console.error(errors.message);
+    throw prettierErrors(errors);
   }
 }
 
