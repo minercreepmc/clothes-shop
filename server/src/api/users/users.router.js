@@ -1,4 +1,4 @@
-const { adminCheck } = require('#share/middlewares/auth.middleware');
+const { adminCheck } = require('#shares/middlewares/auth.middleware');
 const { Router } = require('express');
 
 const {

@@ -14,7 +14,11 @@ async function createCategory(data) {
     slug: slugify(name),
   };
 
-  return CategoriesRepo.createCategory(category);
+  try {
+    return CategoriesRepo.createCategory(category);
+  } catch (errors) {
+    console.error(errors.message);
+  }
 }
 
 async function updateCategory(data) {

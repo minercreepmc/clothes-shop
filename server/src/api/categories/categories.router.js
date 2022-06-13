@@ -1,6 +1,9 @@
 const { Router } = require('express');
 
-const { authCheck, adminCheck } = require('#share/middlewares/auth.middleware');
+const {
+  authCheck,
+  adminCheck,
+} = require('#shares/middlewares/auth.middleware');
 
 const {
   httpGetCategories,

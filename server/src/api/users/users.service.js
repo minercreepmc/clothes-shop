@@ -1,5 +1,5 @@
 const userRepo = require('./users.repository');
-const { getSubStringFromTo } = require('#share/utils/logics/logics.utils');
+const { getSubStringFromTo } = require('#shares/utils/logics/logics.utils');
 
 async function createAndUpdateUser(data) {
   const userData = {
