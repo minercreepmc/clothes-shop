@@ -5,7 +5,18 @@ async function httpGetCategories(req, res) {
     const categories = await CategoriesService.getAllCategories(req.body);
     return res.status(200).json(categories);
   } catch (error) {
-    return res.status(400).json({ message: 'Bad request' });
+    return res.status(400).json(error);
+  }
+}
+
+async function httpGetCategory(req, res) {
+  try {
+    const category = await CategoriesService.getCategoryBySlug({
+      params: req.params,
+    });
+    return res.status(200).json(category);
+  } catch (error) {
+    return res.status(400).json(error);
   }
 }
 
@@ -44,6 +55,7 @@ async function httpDeleteCategory(req, res) {
 
 module.exports = {
   httpGetCategories,
+  httpGetCategory,
   httpPostCategory,
   httpPutCategory,
   httpDeleteCategory,

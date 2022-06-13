@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Button, Card, Spinner } from 'react-bootstrap';
-import { FaRegTrashAlt } from 'react-icons/fa';
+import { Button, Card, Spinner, Stack } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -43,15 +44,18 @@ const Category = ({ category }) => {
     <Card>
       <Card.Body className="d-flex justify-content-between">
         <span>{name}</span>
-        <span>
+        <Stack direction="horizontal" gap={2}>
           {isDeleting && (
             <Spinner animation="border" size="sm" variant="danger"></Spinner>
           )}
 
+          <Link to={`/admin/dashboard/categories/${slug}`}>
+            <FaEdit />
+          </Link>
           <button onClick={() => handleDelete(slug)}>
             <FaRegTrashAlt color="#d9534f " />
           </button>
-        </span>
+        </Stack>
       </Card.Body>
     </Card>
   );

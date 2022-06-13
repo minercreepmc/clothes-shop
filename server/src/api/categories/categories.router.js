@@ -7,6 +7,7 @@ const {
 
 const {
   httpGetCategories,
+  httpGetCategory,
   httpPostCategory,
   httpPutCategory,
   httpDeleteCategory,
@@ -15,6 +16,7 @@ const {
 const router = Router();
 
 router.get('/', httpGetCategories);
+router.get('/:slug', httpGetCategory);
 router.post('/', authCheck, adminCheck, httpPostCategory);
 router.put('/:slug', authCheck, adminCheck, httpPutCategory);
 router.delete('/:slug', authCheck, adminCheck, httpDeleteCategory);

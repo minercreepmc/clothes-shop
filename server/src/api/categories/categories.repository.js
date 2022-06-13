@@ -4,6 +4,10 @@ async function getCategories() {
   return CategoriesModel.find();
 }
 
+async function getCategory(filters) {
+  return CategoriesModel.findOne({ ...filters });
+}
+
 async function createCategory(category) {
   return CategoriesModel.create(category);
 }
@@ -13,7 +17,7 @@ async function updateCategory({ filters, category }) {
   return CategoriesModel.findOneAndUpdate(
     { slug },
     { $set: { ...category } },
-    { new: true },
+    { new: true, runValidators: true },
   );
 }
 
@@ -24,6 +28,7 @@ async function deleteCategory(filters) {
 
 module.exports = {
   getCategories,
+  getCategory,
   createCategory,
   updateCategory,
   deleteCategory,

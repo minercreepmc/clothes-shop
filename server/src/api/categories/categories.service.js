@@ -7,6 +7,16 @@ async function getAllCategories() {
   return CategoriesRepo.getCategories();
 }
 
+async function getCategoryBySlug(data) {
+  const { params } = data;
+
+  const filters = {
+    slug: params.slug,
+  };
+
+  return CategoriesRepo.getCategory(filters);
+}
+
 async function createCategory(data) {
   const { name } = data;
 
@@ -44,6 +54,7 @@ async function deleteCategory(data) {
 
 module.exports = {
   getAllCategories,
+  getCategoryBySlug,
   createCategory,
   updateCategory,
   deleteCategory,

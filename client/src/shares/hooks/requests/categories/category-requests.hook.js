@@ -12,11 +12,29 @@ export async function httpGetCategories() {
   return res.data;
 }
 
+export async function httpGetCategory({ slug }) {
+  const res = await axios.get(`${CATEGORIES_GET_URL}/${slug}`, {});
+  return res.data;
+}
+
 export async function httpPostCategory({ category, accessToken }) {
   try {
     const res = await axios.post(CATEGORY_POST_URL, category, {
       headers: { accessToken },
     });
+    return res.data;
+  } catch (errors) {
+    throw errors.response.data;
+  }
+}
+
+export async function httpPutCategory({ category, accessToken }) {
+  try {
+    const res = await axios.put(
+      `${CATEGORY_PUT_URL}/${category.slug}`,
+      category,
+      { headers: { accessToken } },
+    );
     return res.data;
   } catch (errors) {
     throw errors.response.data;
