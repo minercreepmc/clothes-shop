@@ -2,43 +2,64 @@ import { SHOP_ACTION_TYPE } from './shop.type';
 
 import { createAction } from 'shares/utils/reducer/reducer.utils';
 
-const _addCategoryToCategories = (categoryToAdd, categories) => {
-  return [...categories, categoryToAdd];
-};
+import {
+  addItemToArray,
+  removeItemFromArray,
+  updateItemToArray,
+} from 'shares/utils/logics/logics.utils';
 
-const _removeCategoryFromCategories = (categoryToRemove, categories) => {
-  return categories.filter((category) => category._id !== categoryToRemove._id);
-};
-
-const _updateCategoryToCategories = (updatedCategory, categories) => {
-  return categories.map((category) => {
-    if (category._id === updatedCategory._id) return updatedCategory;
-
-    return category;
-  });
-};
+// Categories
 
 export const addCategoryToCategories = (categoryToAdd, categories) => {
-  const categoriesToSet = _addCategoryToCategories(categoryToAdd, categories);
+  const categoriesToSet = addItemToArray(categoryToAdd, categories);
   return createAction(SHOP_ACTION_TYPE.SET_CATEGORIES, categoriesToSet);
 };
 
 export const removeCategoryFromCategories = (categoryToRemove, categories) => {
-  const categoriesToSet = _removeCategoryFromCategories(
-    categoryToRemove,
-    categories,
-  );
+  const categoriesToSet = removeItemFromArray(categoryToRemove, categories);
   return createAction(SHOP_ACTION_TYPE.SET_CATEGORIES, categoriesToSet);
 };
 
 export const updateCategoryToCategories = (updatedCategory, categories) => {
-  const categoriesToSet = _updateCategoryToCategories(
-    updatedCategory,
-    categories,
-  );
+  const categoriesToSet = updateItemToArray(updatedCategory, categories);
 
   return createAction(SHOP_ACTION_TYPE.SET_CATEGORIES, categoriesToSet);
 };
 
 export const setCategories = (categories) =>
   createAction(SHOP_ACTION_TYPE.SET_CATEGORIES, categories);
+
+// Sub Categories
+export const addSubCategoryToSubCategories = (
+  subCategoryToAdd,
+  subCategories,
+) => {
+  const subCategoriesToSet = addItemToArray(subCategoryToAdd, subCategories);
+  return createAction(SHOP_ACTION_TYPE.SET_SUB_CATEGORIES, subCategoriesToSet);
+};
+
+export const removeSubCategoryFromSubCategories = (
+  subCategoryToRemove,
+  subCategories,
+) => {
+  const subCategoriesToSet = removeItemFromArray(
+    subCategoryToRemove,
+    subCategories,
+  );
+  return createAction(SHOP_ACTION_TYPE.SET_SUB_CATEGORIES, subCategoriesToSet);
+};
+
+export const updateSubCategoryToSubCategories = (
+  updatedSubCategory,
+  subCategories,
+) => {
+  const subCategoriesToSet = updateItemToArray(
+    updatedSubCategory,
+    subCategories,
+  );
+
+  return createAction(SHOP_ACTION_TYPE.SET_SUB_CATEGORIES, subCategoriesToSet);
+};
+
+export const setSubCategories = (subCategoriesToSet) =>
+  createAction(SHOP_ACTION_TYPE.SET_SUB_CATEGORIES, subCategoriesToSet);

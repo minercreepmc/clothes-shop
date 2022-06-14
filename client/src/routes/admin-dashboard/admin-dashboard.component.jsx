@@ -7,6 +7,7 @@ import DashboardCategories from 'components/dashboard-categories/dashboard-categ
 import ModalPassword from 'components/modal-password/modal-password.component';
 import DashboardCategoryUpdate from 'components/dashboard-category-update/dashboard-category-update.component';
 import DashboardSubCategories from 'components/dashboard-sub-categories/dashboard-sub-categories.component';
+import DashboardSubCategoriesUpdate from 'components/dashboard-sub-categories-update/dashboard-sub-categories-update.component';
 
 const AdminDashboard = () => {
   const list = [
@@ -26,6 +27,10 @@ const AdminDashboard = () => {
             element={<DashboardCategoryUpdate />}
           />
           <Route path="sub-categories" element={<DashboardSubCategories />} />
+          <Route
+            path="sub-categories/:slug"
+            element={<DashboardSubCategoriesUpdate />}
+          />
         </Route>
       </Routes>
       <ModalPassword />
