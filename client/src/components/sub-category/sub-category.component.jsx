@@ -29,6 +29,7 @@ const SubCategory = ({ subCategory }) => {
           slug,
           accessToken: currentUser.accessToken,
         });
+        console.log(deletedSubCategory);
         dispatch(
           removeSubCategoryFromSubCategories(deletedSubCategory, subCategories),
         );

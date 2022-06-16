@@ -6,11 +6,17 @@ import { toast } from 'react-toastify';
 import FormGroup from 'components/form-group/form-group.component';
 import Categories from 'components/categories/categories.component';
 
-import { selectCategories } from 'shares/store/shop/shop.selector';
+import {
+  selectCategories,
+  selectSearchedCategories,
+} from 'shares/store/shop/shop.selector';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 
 import { httpPostCategory } from 'shares/hooks/requests/categories/category-requests.hook';
-import { addCategoryToCategories } from 'shares/store/shop/shop.action';
+import {
+  addCategoryToCategories,
+  setCategoriesSearchText,
+} from 'shares/store/shop/shop.action';
 import SearchBar from 'components/search-bar/search-bar.component';
 
 const categoryTemplate = {
@@ -18,16 +24,15 @@ const categoryTemplate = {
 };
 
 const DashboardCategories = () => {
-  const categories = useSelector(selectCategories);
+  const [category, setCategory] = useState(categoryTemplate);
+  const [isLoading, setIsLoading] = useState(false);
+  const { name } = category;
+
   const user = useSelector(selectCurrentUser);
+  const categories = useSelector(selectCategories);
+  const searchedCategories = useSelector(selectSearchedCategories);
 
   const dispatch = useDispatch();
-
-  const [category, setCategory] = useState(categoryTemplate);
-  const [filteredCategories, setFilteredCategories] = useState(categories);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const { name } = category;
 
   const handleCreateCategory = async (e) => {
     e.preventDefault();
@@ -63,14 +68,10 @@ const DashboardCategories = () => {
 
   const handleSearch = (e) => {
     const input = e.target;
+    const searchText = input.value;
 
     // TODO: Change to string-similarity npm package
-    const newCategories = categories.filter(
-      (category) =>
-        category.name.toLowerCase().includes(input.value.toLowerCase()) ||
-        input.value.toLowerCase().includes(category.name.toLowerCase()),
-    );
-    setFilteredCategories(newCategories);
+    dispatch(setCategoriesSearchText(searchText));
   };
 
   return (
@@ -92,7 +93,7 @@ const DashboardCategories = () => {
       <div>
         <h2>Categories available</h2>
         <SearchBar handleChange={handleSearch} />
-        <Categories categories={filteredCategories} />
+        <Categories categories={searchedCategories} />
       </div>
     </div>
   );

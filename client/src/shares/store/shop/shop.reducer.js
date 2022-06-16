@@ -3,6 +3,9 @@ import { SHOP_ACTION_TYPE } from './shop.type';
 const INITIAL_STATE = {
   categories: [],
   subCategories: [],
+  products: [],
+  categoriesSearchText: '',
+  subCategoriesSearchText: '',
 };
 
 export const shopReducer = (state = INITIAL_STATE, action) => {
@@ -18,6 +21,21 @@ export const shopReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         subCategories: payload,
+      };
+    case SHOP_ACTION_TYPE.SET_PRODUCTS:
+      return {
+        ...state,
+        products: payload,
+      };
+    case SHOP_ACTION_TYPE.SET_CATEGORIES_SEARCH_TEXT:
+      return {
+        ...state,
+        categoriesSearchText: payload,
+      };
+    case SHOP_ACTION_TYPE.SET_SUB_CATEGORIES_SEARCH_TEXT:
+      return {
+        ...state,
+        subCategoriesSearchText: payload,
       };
 
     default:

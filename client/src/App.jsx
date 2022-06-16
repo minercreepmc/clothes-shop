@@ -4,7 +4,11 @@ import { useDispatch } from 'react-redux';
 
 import { onAuthStateChangeListener } from 'shares/utils/firebase/firebase.utils';
 import { setCurrentUser } from 'shares/store/user/user.action';
-import { setCategories, setSubCategories } from 'shares/store/shop/shop.action';
+import {
+  setCategories,
+  setProducts,
+  setSubCategories,
+} from 'shares/store/shop/shop.action';
 import {
   httpGetCurrentUser,
   httpUpsertUser,
@@ -14,10 +18,12 @@ import { httpGetSubCategories } from 'shares/hooks/requests/sub-categories/sub-c
 
 import AppRoute from 'routes';
 import 'react-toastify/dist/ReactToastify.css';
+import { httpGetProducts } from 'shares/hooks/requests/products/products.hook';
 
 const App = () => {
   const dispatch = useDispatch();
 
+  //TODO: Clean this
   useEffect(() => {
     async function loadCategories() {
       const categories = await httpGetCategories();
@@ -26,12 +32,20 @@ const App = () => {
 
     async function loadSubCategories() {
       const subCategories = await httpGetSubCategories();
-      console.log(subCategories);
       dispatch(setSubCategories(subCategories));
     }
+    async function loadProducts() {
+      const products = await httpGetProducts();
+      dispatch(setProducts(products));
+    }
 
-    loadCategories();
-    loadSubCategories();
+    async function loadShopData() {
+      await loadCategories();
+      await loadSubCategories();
+      await loadProducts();
+    }
+
+    loadShopData();
 
     onAuthStateChangeListener(async (userMetadata) => {
       if (userMetadata) {

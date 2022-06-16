@@ -9,12 +9,18 @@ import { httpPostSubCategory } from 'shares/hooks/requests/sub-categories/sub-ca
 import {
   selectCategories,
   selectSubCategories,
+  selectSearchedSubCategories,
 } from 'shares/store/shop/shop.selector';
+
 import { selectCurrentUser } from 'shares/store/user/user.selector';
-import { addSubCategoryToSubCategories } from 'shares/store/shop/shop.action';
+import {
+  addSubCategoryToSubCategories,
+  setSubCategoriesSearchText,
+} from 'shares/store/shop/shop.action';
 
 import FormGroup from 'components/form-group/form-group.component';
 import SubCategories from 'components/sub-categories/sub-categories.component';
+import SearchBar from 'components/search-bar/search-bar.component';
 
 const subCategoryTemplate = {
   name: '',
@@ -22,16 +28,16 @@ const subCategoryTemplate = {
 };
 
 const DashboardSubCategory = () => {
-  const categories = useSelector(selectCategories);
-  const subCategories = useSelector(selectSubCategories);
-  const admin = useSelector(selectCurrentUser);
-
   const [subCategory, setSubCategory] = useState(subCategoryTemplate);
   const [isCreating, setIsCreating] = useState(false);
+  const { name, parent } = subCategory;
+
+  const admin = useSelector(selectCurrentUser);
+  const categories = useSelector(selectCategories);
+  const subCategories = useSelector(selectSubCategories);
+  const searchedSubCategories = useSelector(selectSearchedSubCategories);
 
   const dispatch = useDispatch();
-
-  const { name, parent } = subCategory;
 
   const handleChange = (e) => {
     const input = e.target;
@@ -43,6 +49,14 @@ const DashboardSubCategory = () => {
     const category = await httpGetCategory({ slug: input.value });
 
     setSubCategory({ ...subCategory, parent: category._id });
+  };
+
+  const handleSearch = (e) => {
+    const input = e.target;
+
+    const searchText = input.value;
+    // TODO: Change to string-similarity npm package
+    dispatch(setSubCategoriesSearchText(searchText));
   };
 
   const handleCreateSubCategory = async (e) => {
@@ -108,7 +122,11 @@ const DashboardSubCategory = () => {
         </Button>
       </Form>
 
-      <SubCategories subCategories={subCategories} />
+      <div>
+        <h2>Sub categories available</h2>
+        <SearchBar handleChange={handleSearch} />
+        <SubCategories subCategories={searchedSubCategories} />
+      </div>
     </div>
   );
 };

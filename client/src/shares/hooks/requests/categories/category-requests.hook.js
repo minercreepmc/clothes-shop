@@ -1,25 +1,20 @@
 import axios from 'axios';
 
-import {
-  CATEGORIES_GET_URL,
-  CATEGORY_POST_URL,
-  CATEGORY_PUT_URL,
-  CATEGORY_DELETE_URL,
-} from './category-requests.constant';
+import { CATEGORIES_ENDPOINT } from './category-requests.constant';
 
 export async function httpGetCategories() {
-  const res = await axios.get(CATEGORIES_GET_URL, {});
+  const res = await axios.get(CATEGORIES_ENDPOINT, {});
   return res.data;
 }
 
 export async function httpGetCategory({ slug }) {
-  const res = await axios.get(`${CATEGORIES_GET_URL}/${slug}`, {});
+  const res = await axios.get(`${CATEGORIES_ENDPOINT}/${slug}`, {});
   return res.data;
 }
 
 export async function httpPostCategory({ category, accessToken }) {
   try {
-    const res = await axios.post(CATEGORY_POST_URL, category, {
+    const res = await axios.post(CATEGORIES_ENDPOINT, category, {
       headers: { accessToken },
     });
     return res.data;
@@ -31,7 +26,7 @@ export async function httpPostCategory({ category, accessToken }) {
 export async function httpPutCategory({ category, accessToken }) {
   try {
     const res = await axios.put(
-      `${CATEGORY_PUT_URL}/${category.slug}`,
+      `${CATEGORIES_ENDPOINT}/${category.slug}`,
       category,
       { headers: { accessToken } },
     );
@@ -42,7 +37,7 @@ export async function httpPutCategory({ category, accessToken }) {
 }
 
 export async function httpDeleteCategory({ slug, accessToken }) {
-  const res = await axios.delete(`${CATEGORY_DELETE_URL}/${slug}`, {
+  const res = await axios.delete(`${CATEGORIES_ENDPOINT}/${slug}`, {
     headers: { accessToken },
   });
   return res.data;
