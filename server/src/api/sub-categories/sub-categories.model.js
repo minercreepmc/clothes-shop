@@ -15,7 +15,7 @@ const subCategorySchema = new Schema(
       lowercase: true,
       index: true,
     },
-    parent: {
+    categoryId: {
       type: ObjectId,
       ref: 'Category',
       required: true,

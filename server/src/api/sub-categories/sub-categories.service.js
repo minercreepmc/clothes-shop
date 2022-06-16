@@ -13,7 +13,7 @@ async function getAllSubCategories() {
 async function getSubCategoriesByCategoryId(data) {
   const { body } = data;
 
-  const filters = { parent: body.parent };
+  const filters = { categoryId: body.categoryId };
 
   return SubCategoriesRepo.getSubCategories({ filters });
 }
@@ -29,12 +29,12 @@ async function getSubCategoryBySlug(data) {
 }
 
 async function createSubCategory(data) {
-  const { name, parent } = data;
+  const { name, categoryId } = data;
 
   const category = {
     name,
     slug: slugify(name),
-    parent: ObjectId(parent),
+    categoryId: ObjectId(categoryId),
   };
 
   try {
@@ -50,7 +50,7 @@ async function updateSubCategory(data) {
   const category = {
     name: body.name,
     slug: slugify(body.name),
-    parent: data.parent,
+    categoryId: ObjectId(data.categoryId),
   };
 
   const filters = { slug: params.slug };
