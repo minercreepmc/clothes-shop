@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import MultiSelect from 'react-select';
 
 import FormSelect from 'components/form-select/form-select.component';
 import FormGroup from 'components/form-group/form-group.component';
@@ -13,6 +14,7 @@ import {
 import { httpPostProduct } from 'shares/hooks/requests/products/products.hook';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 import { addProductToProducts } from 'shares/store/shop/shop.action';
+import { httpGetCategory } from 'shares/hooks/requests/categories/category-requests.hook';
 
 const INITIAL_STATE = {
   title: '',
@@ -22,7 +24,7 @@ const INITIAL_STATE = {
   brand: '',
   shipping: '',
   quantity: '',
-  // categoryId: '',
+  categoryId: '',
   // subCategoriesId: [],
 };
 
@@ -30,8 +32,16 @@ const DashboardProducts = () => {
   const [product, setProduct] = useState(INITIAL_STATE);
   const [isCreating, setIsCreating] = useState(false);
 
-  const { title, description, price, quantity, color, brand, shipping } =
-    product;
+  const {
+    title,
+    description,
+    price,
+    quantity,
+    color,
+    brand,
+    shipping,
+    categoryId,
+  } = product;
 
   const admin = useSelector(selectCurrentUser);
   const products = useSelector(selectProducts);
@@ -43,6 +53,16 @@ const DashboardProducts = () => {
     const input = e.target;
 
     setProduct({ ...product, [input.name]: input.value });
+  };
+
+  const handleChooseCategory = async (e) => {
+    const input = e.target;
+
+    const categories = await httpGetCategory({
+      slug: input.value,
+      subCategories: true,
+    });
+    console.log(categories);
   };
 
   const handleCreateProduct = async (e) => {
@@ -161,6 +181,26 @@ const DashboardProducts = () => {
           <option value="No">No</option>
         </FormSelect>
 
+        <FormSelect
+          label="Categories"
+          name="categoryId"
+          id="category"
+          value={categoryId}
+          onChange={handleChooseCategory}
+        >
+          <option value="">Select category</option>
+          {categories.map((category, index) => (
+            <option key={index} value={category.slug}>
+              {category.name}
+            </option>
+          ))}
+        </FormSelect>
+
+        <MultiSelect
+          className="h5"
+          options={[{ value: 'choco', label: 'Chocolate' }]}
+        />
+
         <Button variant="dark" type="submit" disabled={isCreating}>
           {!isCreating ? 'Create' : 'Creating...'}
         </Button>
@@ -168,16 +208,5 @@ const DashboardProducts = () => {
     </div>
   );
 };
-
-// <FormSelect
-//   label="Categories"
-//   name="categoryId"
-//   id="category"
-//   value={categoryId}
-// >
-//   {categories.map((category) => (
-//     <option value={category.value}>{category.name}</option>
-//   ))}
-//        </FormSelect>
 
 export default DashboardProducts;

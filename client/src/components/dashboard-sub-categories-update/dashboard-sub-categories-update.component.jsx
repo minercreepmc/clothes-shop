@@ -82,7 +82,11 @@ const DashboardSubCategoriesUpdate = () => {
   return (
     <Form onSubmit={handleUpdateCategory}>
       <Form.Label htmlFor="select-sub">Choose a category</Form.Label>
-      <Form.Select id="select-sub" name="parent" aria-label="Parent Category">
+      <Form.Select
+        id="select-sub"
+        name="categoryId"
+        aria-label="Parent Category"
+      >
         {categories.map((category, index) => (
           <option
             value={category.slug}

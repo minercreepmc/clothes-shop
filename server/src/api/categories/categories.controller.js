@@ -2,7 +2,7 @@ const CategoriesService = require('./categories.service');
 
 async function httpGetCategories(req, res) {
   try {
-    const categories = await CategoriesService.getAllCategories(req.body);
+    const categories = await CategoriesService.getAllCategories();
     return res.status(200).json(categories);
   } catch (error) {
     return res.status(400).json(error);
@@ -13,6 +13,7 @@ async function httpGetCategory(req, res) {
   try {
     const category = await CategoriesService.getCategoryBySlug({
       params: req.params,
+      query: req.query,
     });
     return res.status(200).json(category);
   } catch (error) {

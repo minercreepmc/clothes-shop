@@ -5,7 +5,11 @@ async function getCategories() {
 }
 
 async function getCategory(filters) {
-  return CategoriesModel.findOne({ ...filters });
+  return CategoriesModel.findOne(filters);
+}
+
+async function getCategoryWithSubCategories(filters) {
+  return CategoriesModel.findOne(filters).populate('subcategories');
 }
 
 async function createCategory(category) {
@@ -16,7 +20,7 @@ async function updateCategory({ filters, category }) {
   const { slug } = filters;
   return CategoriesModel.findOneAndUpdate(
     { slug },
-    { $set: { ...category } },
+    { $set: category },
     { new: true, runValidators: true },
   );
 }
@@ -29,6 +33,7 @@ async function deleteCategory(filters) {
 module.exports = {
   getCategories,
   getCategory,
+  getCategoryWithSubCategories,
   createCategory,
   updateCategory,
   deleteCategory,

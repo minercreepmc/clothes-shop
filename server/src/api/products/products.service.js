@@ -1,5 +1,9 @@
-const ProductsRepo = require('./products.repository');
 const slugify = require('slugify');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
+
+const ProductsRepo = require('./products.repository');
+const { prettierErrors } = require('#shares/utils/mongo/mongo.utils');
 
 async function getAllProducts() {
   return ProductsRepo.getProducts();
@@ -24,14 +28,17 @@ async function createProduct(data) {
     description: body.description,
     price: body.price,
     quantity: body.quantity,
-    sold: body.sold,
     brand: body.brand,
     shipping: body.shipping,
-    categoryId: body.categoryId,
-    subCategoriesId: body.subCategoriesId,
+    categoryId: ObjectId(body.categoryId),
+    subCategoriesId: ObjectId(body.subCategoriesId),
   };
 
-  return ProductsRepo.createProduct(product);
+  try {
+    return await ProductsRepo.createProduct(product);
+  } catch (errors) {
+    throw prettierErrors(errors);
+  }
 }
 
 async function updateProduct(data) {
@@ -45,15 +52,19 @@ async function updateProduct(data) {
     quantity: body.quantity,
     brand: body.brand,
     shipping: body.shipping,
-    // categoryId: body.categoryId,
-    // subCategoriesId: body.subCategoriesId,
+    categoryId: ObjectId(body.categoryId),
+    subCategoriesId: ObjectId(body.subCategoriesId),
   };
 
   const filters = {
     slug: params.slug,
   };
 
-  return ProductsRepo.updateProduct({ filters, product });
+  try {
+    return await ProductsRepo.updateProduct({ filters, product });
+  } catch (errors) {
+    throw prettierErrors(errors);
+  }
 }
 
 async function deleteProduct(data) {

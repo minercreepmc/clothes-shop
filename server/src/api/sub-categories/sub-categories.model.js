@@ -24,4 +24,4 @@ const subCategorySchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = model('SubCategory', subCategorySchema);
+module.exports = model('SubCategories', subCategorySchema, 'subCategories');

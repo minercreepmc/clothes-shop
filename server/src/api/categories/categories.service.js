@@ -1,5 +1,6 @@
 const { prettierErrors } = require('#shares/utils/mongo/mongo.utils');
 const slugify = require('slugify');
+const url = require('url');
 
 const CategoriesRepo = require('./categories.repository');
 
@@ -7,12 +8,18 @@ async function getAllCategories() {
   return CategoriesRepo.getCategories();
 }
 
-async function getCategoryBySlug(data) {
-  const { params } = data;
+async function getCategoryBySlug({ params, query }) {
+  const { slug } = params;
+  const { subCategories } = query;
 
   const filters = {
-    slug: params.slug,
+    slug,
   };
+
+  // NOTE: query string return undefined as string
+  if (subCategories) {
+    return CategoriesRepo.getCategoryWithSubCategories(filters);
+  }
 
   return CategoriesRepo.getCategory(filters);
 }

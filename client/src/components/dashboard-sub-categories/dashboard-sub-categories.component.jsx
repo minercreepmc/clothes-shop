@@ -24,13 +24,13 @@ import SearchBar from 'components/search-bar/search-bar.component';
 
 const subCategoryTemplate = {
   name: '',
-  parent: '',
+  categoryId: '',
 };
 
 const DashboardSubCategory = () => {
   const [subCategory, setSubCategory] = useState(subCategoryTemplate);
   const [isCreating, setIsCreating] = useState(false);
-  const { name, parent } = subCategory;
+  const { name, categoryId } = subCategory;
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
@@ -44,11 +44,11 @@ const DashboardSubCategory = () => {
     setSubCategory({ ...subCategory, name: input.value });
   };
 
-  const handleChooseParent = async (e) => {
+  const handleChooseCategory = async (e) => {
     const input = e.target;
     const category = await httpGetCategory({ slug: input.value });
 
-    setSubCategory({ ...subCategory, parent: category._id });
+    setSubCategory({ ...subCategory, categoryId: category._id });
   };
 
   const handleSearch = (e) => {
@@ -62,7 +62,8 @@ const DashboardSubCategory = () => {
   const handleCreateSubCategory = async (e) => {
     e.preventDefault();
 
-    if (!name || !parent) {
+    console.log(subCategory);
+    if (!name || !categoryId) {
       toast.error('Please fill all the required fields');
       return;
     }
@@ -94,10 +95,10 @@ const DashboardSubCategory = () => {
           <Form.Label htmlFor="select-sub">Choose a category</Form.Label>
           <Form.Select
             id="select-sub"
-            name="parent"
+            name="categoryId"
             aria-label="Default select example"
             defaultValue=""
-            onChange={handleChooseParent}
+            onChange={handleChooseCategory}
           >
             <option></option>
             {categories.map((category, index) => (
@@ -109,7 +110,7 @@ const DashboardSubCategory = () => {
         </div>
 
         <FormGroup
-          name="sub-category"
+          name="name"
           type="text"
           label="Create sub category"
           placeholder="Create sub new category"
