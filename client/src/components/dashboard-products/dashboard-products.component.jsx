@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import MultiSelect from 'react-select';
 
 import FormSelect from 'components/form-select/form-select.component';
 import FormGroup from 'components/form-group/form-group.component';
+import FormMultiSelect from 'components/form-multiselect/form-multiselect.component';
 
 import {
   selectCategories,
@@ -13,7 +13,10 @@ import {
 } from 'shares/store/shop/shop.selector';
 import { httpPostProduct } from 'shares/hooks/requests/products/products.hook';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
-import { addProductToProducts } from 'shares/store/shop/shop.action';
+import {
+  addProductToProducts,
+  setProducts,
+} from 'shares/store/shop/shop.action';
 import { httpGetCategory } from 'shares/hooks/requests/categories/category-requests.hook';
 
 const INITIAL_STATE = {
@@ -25,12 +28,13 @@ const INITIAL_STATE = {
   shipping: '',
   quantity: '',
   categoryId: '',
-  // subCategoriesId: [],
+  subCategoriesId: [],
 };
 
 const DashboardProducts = () => {
   const [product, setProduct] = useState(INITIAL_STATE);
   const [isCreating, setIsCreating] = useState(false);
+  const [subCategories, setSubCategories] = useState([]);
 
   const {
     title,
@@ -58,46 +62,47 @@ const DashboardProducts = () => {
   const handleChooseCategory = async (e) => {
     const input = e.target;
 
-    const categories = await httpGetCategory({
-      slug: input.value,
+    const category = await httpGetCategory({
+      _id: input.value,
       subCategories: true,
     });
-    console.log(categories);
+    setProduct({ ...product, categoryId: input.value });
+    setSubCategories(category.subcategories);
   };
 
   const handleCreateProduct = async (e) => {
     e.preventDefault();
 
-    if (
-      !title ||
-      !description ||
-      !price ||
-      !quantity ||
-      !color ||
-      !brand ||
-      !shipping
-    ) {
-      toast.error('Please fill all the required fields');
-      return;
-    }
+    console.log(product);
+    // if (
+    //   !title ||
+    //   !description ||
+    //   !price ||
+    //   !quantity ||
+    //   !color ||
+    //   !brand ||
+    //   !shipping
+    // ) {
+    //   toast.error('Please fill all the required fields');
+    //   return;
+    // }
 
-    try {
-      setIsCreating(true);
-      const newProduct = await httpPostProduct({
-        product,
-        accessToken: admin.accessToken,
-      });
-      dispatch(addProductToProducts(newProduct, products));
-      setProduct(INITIAL_STATE);
-      toast.success('Create successfully');
-    } catch (errors) {
-      console.log(errors);
-      errors.forEach((error) => {
-        toast.error(error.message);
-      });
-    } finally {
-      setIsCreating(false);
-    }
+    // try {
+    //   setIsCreating(true);
+    //   const newProduct = await httpPostProduct({
+    //     product,
+    //     accessToken: admin.accessToken,
+    //   });
+    //   dispatch(addProductToProducts(newProduct, products));
+    //   setProduct(INITIAL_STATE);
+    //   toast.success('Create successfully');
+    // } catch (errors) {
+    //   console.log(errors);
+    //   errors.forEach((error) => {
+    //     toast.error(error.message); });
+    // } finally {
+    //   setIsCreating(false);
+    // }
   };
 
   return (
@@ -190,15 +195,22 @@ const DashboardProducts = () => {
         >
           <option value="">Select category</option>
           {categories.map((category, index) => (
-            <option key={index} value={category.slug}>
+            <option key={index} value={category._id}>
               {category.name}
             </option>
           ))}
         </FormSelect>
 
-        <MultiSelect
-          className="h5"
-          options={[{ value: 'choco', label: 'Chocolate' }]}
+        <FormMultiSelect
+          name="subCategoriesId"
+          onChange={(options) =>
+            setProduct({ ...product, subCategoriesId: options })
+          }
+          value={subCategories}
+          options={subCategories.map((subCategory) => ({
+            value: subCategory._id,
+            label: subCategory.name,
+          }))}
         />
 
         <Button variant="dark" type="submit" disabled={isCreating}>

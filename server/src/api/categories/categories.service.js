@@ -24,6 +24,21 @@ async function getCategoryBySlug({ params, query }) {
   return CategoriesRepo.getCategory(filters);
 }
 
+async function getCategory({ params, query }) {
+  // TODO: EDit the fkcing name
+  const { param } = params;
+  const { subCategories } = query;
+  const filters = {
+    param,
+  };
+
+  if (subCategories) {
+    return CategoriesRepo.getCategoryWithSubCategories(filters);
+  }
+
+  return CategoriesRepo.getCategory(filters);
+}
+
 async function createCategory(data) {
   const { name } = data;
 
@@ -62,6 +77,7 @@ async function deleteCategory(data) {
 module.exports = {
   getAllCategories,
   getCategoryBySlug,
+  getCategory,
   createCategory,
   updateCategory,
   deleteCategory,

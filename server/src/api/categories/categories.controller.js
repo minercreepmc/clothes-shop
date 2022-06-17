@@ -11,12 +11,13 @@ async function httpGetCategories(req, res) {
 
 async function httpGetCategory(req, res) {
   try {
-    const category = await CategoriesService.getCategoryBySlug({
+    const category = await CategoriesService.getCategory({
       params: req.params,
       query: req.query,
     });
     return res.status(200).json(category);
   } catch (error) {
+    console.log(error);
     return res.status(400).json(error);
   }
 }

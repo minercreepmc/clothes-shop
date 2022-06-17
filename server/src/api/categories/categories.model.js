@@ -18,12 +18,12 @@ const categorySchema = new Schema(
   },
   {
     timestamps: true,
-    // toJSON: { virtuals: true },
+    toJSON: { virtuals: true },
     toObject: { virtuals: true },
   },
 );
 
-categorySchema.virtual('subCategories', {
+categorySchema.virtual('subcategories', {
   ref: 'SubCategory',
   localField: '_id',
   foreignField: 'categoryId',
