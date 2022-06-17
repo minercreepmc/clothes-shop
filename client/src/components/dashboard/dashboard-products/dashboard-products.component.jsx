@@ -28,7 +28,7 @@ const INITIAL_STATE = {
   shipping: '',
   quantity: '',
   categoryId: '',
-  subCategoriesId: [],
+  subCategoriesId: null,
 };
 
 const DashboardProducts = () => {
@@ -73,36 +73,36 @@ const DashboardProducts = () => {
   const handleCreateProduct = async (e) => {
     e.preventDefault();
 
-    console.log(product);
-    // if (
-    //   !title ||
-    //   !description ||
-    //   !price ||
-    //   !quantity ||
-    //   !color ||
-    //   !brand ||
-    //   !shipping
-    // ) {
-    //   toast.error('Please fill all the required fields');
-    //   return;
-    // }
+    if (
+      !title ||
+      !description ||
+      !price ||
+      !quantity ||
+      !color ||
+      !brand ||
+      !shipping
+    ) {
+      toast.error('Please fill all the required fields');
+      return;
+    }
 
-    // try {
-    //   setIsCreating(true);
-    //   const newProduct = await httpPostProduct({
-    //     product,
-    //     accessToken: admin.accessToken,
-    //   });
-    //   dispatch(addProductToProducts(newProduct, products));
-    //   setProduct(INITIAL_STATE);
-    //   toast.success('Create successfully');
-    // } catch (errors) {
-    //   console.log(errors);
-    //   errors.forEach((error) => {
-    //     toast.error(error.message); });
-    // } finally {
-    //   setIsCreating(false);
-    // }
+    try {
+      setIsCreating(true);
+      const newProduct = await httpPostProduct({
+        product,
+        accessToken: admin.accessToken,
+      });
+      dispatch(addProductToProducts(newProduct, products));
+      setProduct(INITIAL_STATE);
+      toast.success('Create successfully');
+    } catch (errors) {
+      console.log(errors);
+      errors.forEach((error) => {
+        toast.error(error.message);
+      });
+    } finally {
+      setIsCreating(false);
+    }
   };
 
   return (

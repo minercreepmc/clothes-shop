@@ -26,12 +26,14 @@ async function createProduct(data) {
     title: body.title,
     slug: slugify(body.title),
     description: body.description,
-    price: body.price,
-    quantity: body.quantity,
+    price: +body.price,
+    quantity: +body.quantity,
     brand: body.brand,
     shipping: body.shipping,
     categoryId: ObjectId(body.categoryId),
-    subCategoriesId: ObjectId(body.subCategoriesId),
+    subCategoriesId: body.subCategoriesId.map((subCategory) => ({
+      _id: ObjectId(subCategory.value),
+    })),
   };
 
   try {
@@ -48,8 +50,8 @@ async function updateProduct(data) {
     title: body.title,
     slug: slugify(body.title),
     description: body.description,
-    price: body.price,
-    quantity: body.quantity,
+    price: +body.price,
+    quantity: +body.quantity,
     brand: body.brand,
     shipping: body.shipping,
     categoryId: ObjectId(body.categoryId),

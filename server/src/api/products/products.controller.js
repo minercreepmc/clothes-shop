@@ -21,6 +21,7 @@ async function httpPostProduct(req, res) {
     const newProduct = await ProductsService.createProduct({ body: req.body });
     return res.status(201).json(newProduct);
   } catch (errors) {
+    console.log(errors);
     return res.status(400).json(errors);
   }
 }

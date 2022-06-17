@@ -3,7 +3,7 @@ import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();
 
-const FormMultiSelect = ({ options, onChange, name }) => {
+const FormMultiSelect = ({ options, onChange, name, value }) => {
   return (
     <Select
       name={name}
@@ -12,6 +12,7 @@ const FormMultiSelect = ({ options, onChange, name }) => {
       isMulti
       options={options}
       onChange={onChange}
+      value={value}
     />
   );
 };
