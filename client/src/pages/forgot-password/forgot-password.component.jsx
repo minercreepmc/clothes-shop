@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-import FormGroup from 'components/form-group/form-group.component';
+import FormGroup from 'components/form-group/form-input/form-input.component';
 import { resetPasswordWithEmailLink } from 'shares/utils/firebase/firebase.utils';
 
 const ForgotPassword = () => {

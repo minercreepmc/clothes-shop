@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Dashboard from 'layouts/dashboard/dashboard.component';
+import Dashboard from 'pages/dashboard/dashboard.component';
 
-import DashboardInformation from 'components/dashboard-information/dashboard-information.component';
+import DashboardInformation from 'components/dashboard/dashboard-information/dashboard-information.component';
 import Wishlist from 'components/wishlist/wishlist.component';
-import ModalPassword from 'components/modal-password/modal-password.component';
+import ModalPassword from 'components/modal/modal-password/modal-password.component';
 
 const UserDashboard = () => {
   const list = [

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import FormGroup from 'components/form-group/form-group.component';
+import FormGroup from 'components/form-group/form-input/form-input.component';
 import {
   loginUserWithEmailAndPassword,
   loginWithGooglePopUp,

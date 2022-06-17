@@ -1,14 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Dashboard from 'layouts/dashboard/dashboard.component';
+import Dashboard from 'pages/dashboard/dashboard.component';
 
-import DashboardInformation from 'components/dashboard-information/dashboard-information.component';
-import DashboardCategories from 'components/dashboard-categories/dashboard-categories.component';
-import ModalPassword from 'components/modal-password/modal-password.component';
-import DashboardCategoryUpdate from 'components/dashboard-category-update/dashboard-category-update.component';
-import DashboardSubCategories from 'components/dashboard-sub-categories/dashboard-sub-categories.component';
-import DashboardSubCategoriesUpdate from 'components/dashboard-sub-categories-update/dashboard-sub-categories-update.component';
-import DashboardProducts from 'components/dashboard-products/dashboard-products.component';
+import DashboardInformation from 'components/dashboard/dashboard-information/dashboard-information.component';
+import DashboardCategories from 'components/dashboard/dashboard-categories/dashboard-categories.component';
+import ModalPassword from 'components/modal/modal-password/modal-password.component';
+import DashboardCategoryUpdate from 'components/dashboard/dashboard-category-update/dashboard-category-update.component';
+import DashboardSubCategories from 'components/dashboard/dashboard-sub-categories/dashboard-sub-categories.component';
+import DashboardSubCategoriesUpdate from 'components/dashboard/dashboard-sub-categories-update/dashboard-sub-categories-update.component';
+import DashboardProducts from 'components/dashboard/dashboard-products/dashboard-products.component';
 
 const AdminDashboard = () => {
   const list = [

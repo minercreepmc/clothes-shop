@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 
-import DashboardNavs from 'components/dashboard-navs/dashboard-navs.component';
+import DashboardNavs from 'components/dashboard/dashboard-navs/dashboard-navs.component';
 
 const Dashboard = ({ list }) => {
   return (

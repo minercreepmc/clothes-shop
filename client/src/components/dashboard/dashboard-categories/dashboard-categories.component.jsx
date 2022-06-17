@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-import FormGroup from 'components/form-group/form-group.component';
+import FormGroup from 'components/form-group/form-input/form-input.component';
 import Categories from 'components/categories/categories.component';
 
 import {

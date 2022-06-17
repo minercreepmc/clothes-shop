@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-import FormSelect from 'components/form-select/form-select.component';
-import FormGroup from 'components/form-group/form-group.component';
-import FormMultiSelect from 'components/form-multiselect/form-multiselect.component';
+import FormSelect from 'components/form-group/form-select/form-select.component';
+import FormGroup from 'components/form-group/form-input/form-input.component';
+import FormMultiSelect from 'components/form-group/form-multiselect/form-multiselect.component';
 
 import {
   selectCategories,

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 
-import FormGroup from 'components/form-group/form-group.component';
+import FormGroup from 'components/form-group/form-input/form-input.component';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 import { selectCategories } from 'shares/store/shop/shop.selector';
 import {

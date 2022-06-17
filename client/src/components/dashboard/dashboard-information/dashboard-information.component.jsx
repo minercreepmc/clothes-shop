@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Button, Form } from 'react-bootstrap';
-import FormGroup from 'components/form-group/form-group.component';
+import FormGroup from 'components/form-group/form-input/form-input.component';
 
 import { selectCurrentUserEmail } from 'shares/store/user/user.selector';
 import {

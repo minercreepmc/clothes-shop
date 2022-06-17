@@ -18,7 +18,7 @@ import {
   setSubCategoriesSearchText,
 } from 'shares/store/shop/shop.action';
 
-import FormGroup from 'components/form-group/form-group.component';
+import FormGroup from 'components/form-group/form-input/form-input.component';
 import SubCategories from 'components/sub-categories/sub-categories.component';
 import SearchBar from 'components/search-bar/search-bar.component';
 
