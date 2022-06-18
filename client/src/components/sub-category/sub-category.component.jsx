@@ -8,7 +8,7 @@ import { removeSubCategoryFromSubCategories } from 'shares/store/shop/shop.actio
 import { httpDeleteSubCategory } from 'shares/hooks/requests/sub-categories/sub-categories.hook';
 
 import './sub-category.styles.scss';
-import CardContainer from 'components/card-container/card-container.component';
+import CardLink from 'components/card-link/card-link.component';
 
 const SubCategory = ({ subCategory }) => {
   const { name, slug } = subCategory;
@@ -44,11 +44,12 @@ const SubCategory = ({ subCategory }) => {
   };
 
   return (
-    <CardContainer
+    <CardLink
       isDeleting={isDeleting}
       slug={slug}
       handleDelete={handleDelete}
       name={name}
+      endpoint={`/admin/dashboard/sub-categories/${slug}`}
     />
   );
 };

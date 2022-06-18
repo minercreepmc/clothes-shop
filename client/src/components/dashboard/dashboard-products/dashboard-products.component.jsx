@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Form } from 'react-bootstrap';
+import { Form, Spinner, Stack } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 import FormSelect from 'components/form-group/form-select/form-select.component';
@@ -20,6 +20,8 @@ import {
 } from 'shares/store/shop/shop.action';
 import { httpGetCategory } from 'shares/hooks/requests/categories/category-requests.hook';
 import PrimaryButton from 'components/button/primary-button/primary-button.component';
+import { httpUploadImages } from 'shares/hooks/requests/images/images.hook';
+import SpinnerContainer from 'components/spinner/spinner.component';
 
 const INITIAL_STATE = {
   title: '',
@@ -31,6 +33,7 @@ const INITIAL_STATE = {
   quantity: '',
   categoryId: '',
   subCategoriesId: [],
+  images: [],
 };
 
 const DashboardProducts = () => {
@@ -48,6 +51,7 @@ const DashboardProducts = () => {
     shipping,
     categoryId,
     subCategoriesId,
+    images,
   } = product;
 
   const admin = useSelector(selectCurrentUser);
@@ -76,6 +80,7 @@ const DashboardProducts = () => {
   const handleCreateProduct = async (e) => {
     e.preventDefault();
 
+    console.log(product);
     if (
       !title ||
       !description ||
@@ -85,7 +90,8 @@ const DashboardProducts = () => {
       !brand ||
       !shipping ||
       !categoryId ||
-      subCategoriesId.length === 0
+      subCategoriesId.length === 0 ||
+      images.length === 0
     ) {
       toast.error('Please fill all the required fields');
       return;
@@ -93,6 +99,14 @@ const DashboardProducts = () => {
 
     try {
       setIsCreating(true);
+
+      const imagesLocation = await httpUploadImages({
+        images: product.images,
+        accessToken: admin.accessToken,
+      });
+
+      product.images = imagesLocation;
+
       const newProduct = await httpPostProduct({
         product,
         accessToken: admin.accessToken,
@@ -144,9 +158,10 @@ const DashboardProducts = () => {
           label="Price"
           value={price}
           onChange={() => { }}
+          min="0"
         />
 
-        <FormFile />
+        <FormFile product={product} setProduct={setProduct} />
         <FormGroup
           name="quantity"
           type="number"
@@ -154,6 +169,7 @@ const DashboardProducts = () => {
           label="Quantity"
           value={quantity}
           onChange={() => { }}
+          min="0"
         />
 
         <FormSelect
@@ -227,6 +243,8 @@ const DashboardProducts = () => {
         >
           {!isCreating ? 'Create' : 'Creating...'}
         </PrimaryButton>
+
+        <SpinnerContainer className="ms-2" isProcess={isCreating} />
       </Form>
     </div>
   );

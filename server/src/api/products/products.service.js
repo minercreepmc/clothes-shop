@@ -31,6 +31,7 @@ async function createProduct(data) {
     brand: body.brand,
     shipping: body.shipping,
     categoryId: ObjectId(body.categoryId),
+    images: body.images,
     subCategoriesId: body.subCategoriesId.map((subCategory) => ({
       _id: ObjectId(subCategory.value),
     })),
@@ -54,8 +55,11 @@ async function updateProduct(data) {
     quantity: +body.quantity,
     brand: body.brand,
     shipping: body.shipping,
+    images: body.images,
     categoryId: ObjectId(body.categoryId),
-    subCategoriesId: ObjectId(body.subCategoriesId),
+    subCategoriesId: body.subCategoriesId.map((subCategory) => ({
+      _id: ObjectId(subCategory.value),
+    })),
   };
 
   const filters = {

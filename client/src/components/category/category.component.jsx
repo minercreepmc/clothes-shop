@@ -6,7 +6,7 @@ import { httpDeleteCategory } from 'shares/hooks/requests/categories/category-re
 import { selectCategories } from 'shares/store/shop/shop.selector';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 import { removeCategoryFromCategories } from 'shares/store/shop/shop.action';
-import CardContainer from 'components/card-container/card-container.component';
+import CardLink from 'components/card-link/card-link.component';
 
 const Category = ({ category }) => {
   const { name, slug } = category;
@@ -39,11 +39,12 @@ const Category = ({ category }) => {
   };
 
   return (
-    <CardContainer
+    <CardLink
       name={name}
       handleDelete={handleDelete}
       isDeleting={isDeleting}
       slug={slug}
+      endpoint={`/admin/dashboard/categories/${slug}`}
     />
   );
 };
