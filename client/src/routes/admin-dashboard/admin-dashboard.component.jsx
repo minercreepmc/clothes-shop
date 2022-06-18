@@ -8,13 +8,15 @@ import ModalPassword from 'components/modal/modal-password/modal-password.compon
 import DashboardCategoryUpdate from 'components/dashboard/dashboard-category-update/dashboard-category-update.component';
 import DashboardSubCategories from 'components/dashboard/dashboard-sub-categories/dashboard-sub-categories.component';
 import DashboardSubCategoriesUpdate from 'components/dashboard/dashboard-sub-categories-update/dashboard-sub-categories-update.component';
-import DashboardProducts from 'components/dashboard/dashboard-products/dashboard-products.component';
+import DashboardProductCreate from 'components/dashboard/dashboard-product-create/dashboard-product-create.component';
+import DashboardProducts from 'components/dashboard/dashboard-products/dashboard-products.components';
 
 const AdminDashboard = () => {
   const list = [
     { name: 'Information', route: '' },
     { name: 'Categories', route: 'categories' },
     { name: 'Sub-categories', route: 'sub-categories' },
+    { name: 'Create product', route: 'create-product' },
     { name: 'Products', route: 'products' },
   ];
 
@@ -34,6 +36,7 @@ const AdminDashboard = () => {
             element={<DashboardSubCategoriesUpdate />}
           />
 
+          <Route path="create-product" element={<DashboardProductCreate />} />
           <Route path="products" element={<DashboardProducts />} />
         </Route>
       </Routes>

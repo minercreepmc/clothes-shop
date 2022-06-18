@@ -36,7 +36,7 @@ const INITIAL_STATE = {
   images: [],
 };
 
-const DashboardProducts = () => {
+const DashboardProductCreate = () => {
   const [product, setProduct] = useState(INITIAL_STATE);
   const [isCreating, setIsCreating] = useState(false);
   const [subCategories, setSubCategories] = useState([]);
@@ -138,7 +138,7 @@ const DashboardProducts = () => {
           label="Title"
           id="title"
           value={title}
-          onChange={() => { }}
+          onChange={() => {}}
         />
 
         <FormGroup
@@ -148,7 +148,7 @@ const DashboardProducts = () => {
           id="description"
           value={description}
           as="textarea"
-          onChange={() => { }}
+          onChange={() => {}}
         />
 
         <FormGroup
@@ -157,7 +157,7 @@ const DashboardProducts = () => {
           id="price"
           label="Price"
           value={price}
-          onChange={() => { }}
+          onChange={() => {}}
           min="0"
         />
 
@@ -168,7 +168,7 @@ const DashboardProducts = () => {
           id="quantity"
           label="Quantity"
           value={quantity}
-          onChange={() => { }}
+          onChange={() => {}}
           min="0"
         />
 
@@ -177,7 +177,7 @@ const DashboardProducts = () => {
           name="color"
           id="color"
           value={color}
-          onChange={() => { }}
+          onChange={() => {}}
         >
           <option value="">Select color</option>
           <option value="Black">Black</option>
@@ -189,7 +189,7 @@ const DashboardProducts = () => {
           name="brand"
           id="brand"
           value={brand}
-          onChange={() => { }}
+          onChange={() => {}}
         >
           <option value="">Select brand</option>
           <option value="Chanel">Chanel</option>
@@ -201,7 +201,7 @@ const DashboardProducts = () => {
           name="shipping"
           id="shipping"
           value={shipping}
-          onChange={() => { }}
+          onChange={() => {}}
         >
           <option value="">Select shipping</option>
           <option value="Yes">Yes</option>
@@ -250,4 +250,4 @@ const DashboardProducts = () => {
   );
 };
 
-export default DashboardProducts;
+export default DashboardProductCreate;
