@@ -9,6 +9,17 @@ async function getAllProducts() {
   return ProductsRepo.getProducts();
 }
 
+async function getProductsByQuery({ query }) {
+  const DEFAULT_PAGE = 1;
+  const DEFAULT_LIMIT = 10;
+
+  const page = query.page || DEFAULT_PAGE;
+  const limit = query.limit || DEFAULT_LIMIT;
+  const skip = (page - 1) * limit;
+
+  return ProductsRepo.getProducts({ limit, skip });
+}
+
 async function getProduct(data) {
   const { params } = data;
 
@@ -86,6 +97,7 @@ async function deleteProduct(data) {
 module.exports = {
   getAllProducts,
   getProduct,
+  getProductsByQuery,
   createProduct,
   updateProduct,
   deleteProduct,

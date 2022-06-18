@@ -1,7 +1,11 @@
 const ProductsModel = require('./products.model');
 
-async function getProducts() {
-  return ProductsModel.find();
+async function getProducts({ limit, skip }) {
+  return ProductsModel.find()
+    .populate('categories')
+    .populate('subcategories')
+    .limit(limit)
+    .skip(skip);
 }
 
 async function getProduct(filters) {

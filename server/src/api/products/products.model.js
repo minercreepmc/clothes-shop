@@ -60,7 +60,23 @@ const productSchema = new mongoose.Schema(
       enum: ['Hermes', 'Prada', 'Chanel', 'Ralph Lauren', 'Burberry'],
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
+  },
 );
+
+productSchema.virtual('categories', {
+  ref: 'Category',
+  localField: 'categoryId',
+  foreignField: '_id',
+});
+
+productSchema.virtual('subcategories', {
+  ref: 'SubCategory',
+  localField: 'subCategoriesId',
+  foreignField: '_id',
+});
 
 module.exports = mongoose.model('Product', productSchema);

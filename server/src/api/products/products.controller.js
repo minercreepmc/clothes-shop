@@ -2,9 +2,12 @@ const ProductsService = require('./products.service');
 
 async function httpGetProducts(req, res) {
   try {
-    const products = await ProductsService.getAllProducts();
+    const products = await ProductsService.getProductsByQuery({
+      query: req.query,
+    });
     return res.status(200).json(products);
   } catch (errors) {
+    console.log(errors);
     return res.status(400).json(errors);
   }
 }
