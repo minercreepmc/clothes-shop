@@ -1,0 +1,6 @@
+.link {
+  color: hsl(36, 10%, 80%) !important;
+  &:hover {
+    color: hsl(36, 10%, 95%) !important;
+  }
+}

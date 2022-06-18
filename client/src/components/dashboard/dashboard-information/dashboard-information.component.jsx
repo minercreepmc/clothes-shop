@@ -16,6 +16,7 @@ import {
 
 import { updateUserPassword } from 'shares/utils/firebase/firebase.utils';
 import { toast } from 'react-toastify';
+import PrimaryButton from 'components/button/primary-button/primary-button.component';
 
 const userInformationTemplate = {
   password: '',
@@ -59,7 +60,6 @@ const DashboardInformation = () => {
   return (
     <Form onChange={handleChange}>
       <FormGroup
-        className="mb-3"
         name="email"
         type="email"
         label="Email"
@@ -68,7 +68,6 @@ const DashboardInformation = () => {
       />
 
       <FormGroup
-        className="mb-3"
         name="password"
         type="password"
         label="Password"
@@ -78,13 +77,13 @@ const DashboardInformation = () => {
         onChange={() => { }}
       ></FormGroup>
 
-      <Button
+      <PrimaryButton
         type="submit"
-        variant="outline-dark"
+        variant="outline-secondary"
         onClick={!isChanging ? handleEnableChange : handleSubmit}
       >
         {!isChanging ? 'Update Informations' : 'Submit'}
-      </Button>
+      </PrimaryButton>
     </Form>
   );
 };

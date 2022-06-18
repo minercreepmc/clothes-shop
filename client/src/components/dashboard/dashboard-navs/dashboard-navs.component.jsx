@@ -1,12 +1,14 @@
 import { Dropdown, DropdownButton, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+import './dashboard-navs.styles.scss';
+
 const DashboardNavs = ({ list }) => {
   return (
     <>
       <Nav className="d-none d-md-block">
         {list.map((item, index) => (
-          <Nav.Link key={index} className="text-dark" as={Link} to={item.route}>
+          <Nav.Link key={index} className="link" as={Link} to={item.route}>
             {item.name}
           </Nav.Link>
         ))}

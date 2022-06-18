@@ -1,7 +1,4 @@
 import { useState } from 'react';
-import { Button, Card, Spinner, Stack } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -9,6 +6,9 @@ import { selectCurrentUser } from 'shares/store/user/user.selector';
 import { selectSubCategories } from 'shares/store/shop/shop.selector';
 import { removeSubCategoryFromSubCategories } from 'shares/store/shop/shop.action';
 import { httpDeleteSubCategory } from 'shares/hooks/requests/sub-categories/sub-categories.hook';
+
+import './sub-category.styles.scss';
+import CardContainer from 'components/card-container/card-container.component';
 
 const SubCategory = ({ subCategory }) => {
   const { name, slug } = subCategory;
@@ -44,23 +44,12 @@ const SubCategory = ({ subCategory }) => {
   };
 
   return (
-    <Card>
-      <Card.Body className="d-flex justify-content-between">
-        <span>{name}</span>
-        <Stack direction="horizontal" gap={2}>
-          {isDeleting && (
-            <Spinner animation="border" size="sm" variant="danger"></Spinner>
-          )}
-
-          <Link to={`/admin/dashboard/sub-categories/${slug}`}>
-            <FaEdit />
-          </Link>
-          <button onClick={() => handleDelete(slug)}>
-            <FaRegTrashAlt color="#d9534f " />
-          </button>
-        </Stack>
-      </Card.Body>
-    </Card>
+    <CardContainer
+      isDeleting={isDeleting}
+      slug={slug}
+      handleDelete={handleDelete}
+      name={name}
+    />
   );
 };
 

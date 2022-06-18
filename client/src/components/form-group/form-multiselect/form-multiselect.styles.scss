@@ -1,0 +1,21 @@
+.filter {
+  &__menu {
+    margin: 0.125rem auto !important;
+    background-color: #181a1b !important;
+  }
+
+  &__option {
+    background-color: #181a1b !important;
+    &--is-focused {
+      background-color: lightblue !important;
+    }
+  }
+
+  &__group {
+    padding: 0 !important;
+  }
+
+  &__menu-portal {
+    border: 1px solid darkblue !important;
+  }
+}

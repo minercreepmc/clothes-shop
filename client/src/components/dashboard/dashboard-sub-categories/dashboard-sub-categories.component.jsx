@@ -21,6 +21,7 @@ import {
 import FormGroup from 'components/form-group/form-input/form-input.component';
 import SubCategories from 'components/sub-categories/sub-categories.component';
 import SearchBar from 'components/search-bar/search-bar.component';
+import PrimaryButton from 'components/button/primary-button/primary-button.component';
 
 const subCategoryTemplate = {
   name: '',
@@ -118,9 +119,13 @@ const DashboardSubCategory = () => {
           onChange={handleChange}
         />
 
-        <Button variant="dark" type="submit" disabled={isCreating}>
+        <PrimaryButton
+          variant="outline-secondary"
+          type="submit"
+          disabled={isCreating}
+        >
           {!isCreating ? 'Create' : 'Creating...'}
-        </Button>
+        </PrimaryButton>
       </Form>
 
       <div>

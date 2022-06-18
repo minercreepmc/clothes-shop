@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import FormSelect from 'components/form-group/form-select/form-select.component';
 import FormGroup from 'components/form-group/form-input/form-input.component';
 import FormMultiSelect from 'components/form-group/form-multiselect/form-multiselect.component';
+import FormFile from 'components/form-group/form-file/form-file.component';
 
 import {
   selectCategories,
@@ -18,6 +19,7 @@ import {
   setProducts,
 } from 'shares/store/shop/shop.action';
 import { httpGetCategory } from 'shares/hooks/requests/categories/category-requests.hook';
+import PrimaryButton from 'components/button/primary-button/primary-button.component';
 
 const INITIAL_STATE = {
   title: '',
@@ -28,7 +30,7 @@ const INITIAL_STATE = {
   shipping: '',
   quantity: '',
   categoryId: '',
-  subCategoriesId: null,
+  subCategoriesId: [],
 };
 
 const DashboardProducts = () => {
@@ -45,6 +47,7 @@ const DashboardProducts = () => {
     brand,
     shipping,
     categoryId,
+    subCategoriesId,
   } = product;
 
   const admin = useSelector(selectCurrentUser);
@@ -80,7 +83,9 @@ const DashboardProducts = () => {
       !quantity ||
       !color ||
       !brand ||
-      !shipping
+      !shipping ||
+      !categoryId ||
+      subCategoriesId.length === 0
     ) {
       toast.error('Please fill all the required fields');
       return;
@@ -141,6 +146,7 @@ const DashboardProducts = () => {
           onChange={() => { }}
         />
 
+        <FormFile />
         <FormGroup
           name="quantity"
           type="number"
@@ -203,19 +209,24 @@ const DashboardProducts = () => {
 
         <FormMultiSelect
           name="subCategoriesId"
+          id="sub-categories"
           onChange={(options) =>
             setProduct({ ...product, subCategoriesId: options })
           }
-          value={subCategories}
+          value={subCategoriesId}
           options={subCategories.map((subCategory) => ({
             value: subCategory._id,
             label: subCategory.name,
           }))}
         />
 
-        <Button variant="dark" type="submit" disabled={isCreating}>
+        <PrimaryButton
+          variant="outline-secondary"
+          type="submit"
+          disabled={isCreating}
+        >
           {!isCreating ? 'Create' : 'Creating...'}
-        </Button>
+        </PrimaryButton>
       </Form>
     </div>
   );

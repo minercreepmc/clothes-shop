@@ -1,0 +1,9 @@
+.form-file-dark {
+  background-color: #181a1b !important;
+  border-color: #776e62 !important;
+  color: #d1cdc7 !important;
+  &::file-selector-button {
+    background-color: #232627 !important;
+    color: #d1cdc7 !important;
+  }
+}

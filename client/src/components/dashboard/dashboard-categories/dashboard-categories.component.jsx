@@ -18,6 +18,7 @@ import {
   setCategoriesSearchText,
 } from 'shares/store/shop/shop.action';
 import SearchBar from 'components/search-bar/search-bar.component';
+import PrimaryButton from 'components/button/primary-button/primary-button.component';
 
 const categoryTemplate = {
   name: '',
@@ -85,9 +86,9 @@ const DashboardCategories = () => {
           value={name}
           onChange={handleChange}
         />
-        <Button variant="dark" type="submit" disabled={isLoading}>
+        <PrimaryButton variant="dark" type="submit" disabled={isLoading}>
           {!isLoading ? 'Create' : 'Creating...'}
-        </Button>
+        </PrimaryButton>
       </Form>
 
       <div>
