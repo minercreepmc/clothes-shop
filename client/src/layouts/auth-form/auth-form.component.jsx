@@ -1,7 +1,7 @@
 import { Col, Container, Row } from 'react-bootstrap';
 
-import Login from 'components/login/login.component';
-import SignUp from 'components/signup/signup.component';
+import Login from 'components/smarts/login/login.component';
+import SignUp from 'components/smarts/signup/signup.component';
 
 const AuthForm = () => {
   return (

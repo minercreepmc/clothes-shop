@@ -1,5 +1,5 @@
-import SubCategoriesForm from 'components/form/sub-categories-form/sub-categories-form.component';
-import SubCategoriesSearch from 'components/sub-categories-search/sub-categories-search.component';
+import SubCategoriesForm from 'components/smarts/form/sub-categories-form/sub-categories-form.component';
+import SubCategoriesSearch from 'components/smarts/sub-categories-search/sub-categories-search.component';
 
 const DashboardSubCategory = () => {
   return (

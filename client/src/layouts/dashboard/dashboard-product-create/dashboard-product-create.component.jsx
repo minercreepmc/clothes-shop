@@ -1,4 +1,4 @@
-import ProductCreateForm from 'components/form/product-create-form/product-create-form.component';
+import ProductCreateForm from 'components/smarts/form/product-create-form/product-create-form.component';
 
 const DashboardProductCreate = () => {
   return (

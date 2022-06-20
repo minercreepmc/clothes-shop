@@ -1,5 +1,5 @@
-import Brand from 'components/brand/brand.component';
-import NavBarNavs from 'components/navbar-navs/navbar-navs.component';
+import Brand from 'components/reusables/brand/brand.component';
+import NavBarNavs from 'components/smarts/navbar-navs/navbar-navs.component';
 import { Container, Navbar } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 

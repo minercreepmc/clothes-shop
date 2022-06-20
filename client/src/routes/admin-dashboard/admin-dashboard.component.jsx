@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import Dashboard from 'pages/dashboard/dashboard.component';
 
-import ModalPassword from 'components/modal/modal-password/modal-password.component';
+import ModalPassword from 'components/smarts/modal/modal-password/modal-password.component';
 
 import DashboardInformation from 'layouts/dashboard/dashboard-information/dashboard-information.component';
 import DashboardCategories from 'layouts/dashboard/dashboard-categories/dashboard-categories.component';

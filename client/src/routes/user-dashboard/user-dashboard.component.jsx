@@ -2,9 +2,9 @@ import { Route, Routes } from 'react-router-dom';
 
 import Dashboard from 'pages/dashboard/dashboard.component';
 
-import DashboardInformation from 'components/dashboard/dashboard-information/dashboard-information.component';
-import Wishlist from 'components/wishlist/wishlist.component';
-import ModalPassword from 'components/modal/modal-password/modal-password.component';
+import DashboardInformation from 'layouts/dashboard/dashboard-information/dashboard-information.component';
+import Wishlist from 'layouts/wishlist/wishlist.component';
+import ModalPassword from 'components/smarts/modal/modal-password/modal-password.component';
 
 const UserDashboard = () => {
   const list = [

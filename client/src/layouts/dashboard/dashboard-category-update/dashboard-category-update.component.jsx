@@ -1,4 +1,4 @@
-import CategoryUpdateForm from 'components/form/category-update-form/category-update-form.component';
+import CategoryUpdateForm from 'components/smarts/form/category-update-form/category-update-form.component';
 
 const DashboardCategoryUpdate = () => {
   return <CategoryUpdateForm />;
