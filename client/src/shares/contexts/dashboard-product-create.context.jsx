@@ -5,21 +5,21 @@ export const DashboardProductCreateContext = createContext({
   setIsCreating: () => { },
   product: null,
   setProduct: () => { },
-  subCategory: [],
-  setSubCategory: () => { },
+  subCategories: [],
+  setSubCategories: () => { },
 });
 
 export const DashboardProductCreateProvider = ({ children }) => {
   const [isCreating, setIsCreating] = useState(false);
   const [product, setProduct] = useState(null);
-  const [subCategory, setSubCategory] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
   const value = {
     isCreating,
     setIsCreating,
     product,
     setProduct,
-    subCategory,
-    setSubCategory,
+    subCategories,
+    setSubCategories,
   };
 
   return (
