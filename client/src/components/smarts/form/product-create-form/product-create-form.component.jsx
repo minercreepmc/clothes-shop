@@ -165,7 +165,7 @@ const ProductCreateForm = () => {
         rules={{ required: true }}
         control={control}
       >
-        <option value="">Select color</option>
+        <option value="">--Select color--</option>
         <option value="Black">Black</option>
         <option value="Brown">Brown</option>
       </FormSelect>
@@ -178,7 +178,7 @@ const ProductCreateForm = () => {
         rules={{ required: true }}
         control={control}
       >
-        <option value="">Select brand</option>
+        <option value="">--Select brand--</option>
         <option value="Chanel">Chanel</option>
         <option value="Prada">Prada</option>
       </FormSelect>
@@ -191,7 +191,7 @@ const ProductCreateForm = () => {
         rules={{ required: true }}
         control={control}
       >
-        <option value="">Select shipping</option>
+        <option value="">--Select shipping--</option>
         <option value="Yes">Yes</option>
         <option value="No">No</option>
       </FormSelect>
@@ -204,7 +204,7 @@ const ProductCreateForm = () => {
         rules={{ required: true }}
         control={control}
       >
-        <option value="">Select category</option>
+        <option value="">--Select category--</option>
         {categories.map((category, index) => (
           <option key={index} value={category._id}>
             {category.name}
