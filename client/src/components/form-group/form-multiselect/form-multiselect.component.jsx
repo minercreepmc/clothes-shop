@@ -1,9 +1,7 @@
 import { Form } from 'react-bootstrap';
+import { useController } from 'react-hook-form';
 import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
 import './form-multiselect.styles.scss';
-
-const animatedComponents = makeAnimated();
 
 const colourStyles = {
   control: (styles) => ({ ...styles, backgroundColor: '#181a1b' }),
@@ -18,11 +16,27 @@ const colourStyles = {
   menuList: (styles) => ({ ...styles, backgroundColor: '#181a1b' }),
 };
 
-const FormMultiSelect = ({ options, onChange, name, value, id }) => {
+const FormMultiSelect = ({
+  options,
+  name,
+  value,
+  id,
+  control,
+  rules,
+  defaultValue,
+}) => {
+  const { field } = useController({
+    name,
+    control,
+    rules,
+    defaultValue,
+  });
+
   return (
     <Form.Group>
       <Form.Label htmlFor={id}>Sub Categories</Form.Label>
       <Select
+        {...field}
         name={name}
         styles={colourStyles}
         className="h5 mb-5"
@@ -30,7 +44,6 @@ const FormMultiSelect = ({ options, onChange, name, value, id }) => {
         openMenuOnFocus={true}
         isMulti
         options={options}
-        onChange={onChange}
         value={value}
         inputId={id}
       />

@@ -1,20 +1,18 @@
+import { useContext } from 'react';
 import { Modal } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
-import { setShowModalDelete } from 'shares/store/dashboard/dashboard.action';
 
-import { selectModalDeleteShow } from 'shares/store/dashboard/dashboard.selector';
+import { DashboardContext } from 'shares/contexts/dashboard.context';
 
 const ModalDelete = () => {
-  const dispatch = useDispatch();
+  const { isModalDeleteShow, setIsModalDeleteShow } =
+    useContext(DashboardContext);
 
-  const modalDeleteShow = useSelector(selectModalDeleteShow);
-
-  const handleHideModalDelete = () => dispatch(setShowModalDelete(false));
+  const handleHideModalDelete = () => setIsModalDeleteShow(false);
 
   return (
     <Modal
       size="sm"
-      show={modalDeleteShow}
+      show={isModalDeleteShow}
       onHide={handleHideModalDelete}
       aria-labelledby="example-modal-sizes-title-sm"
     >

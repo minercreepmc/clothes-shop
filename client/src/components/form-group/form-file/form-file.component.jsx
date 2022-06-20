@@ -1,9 +1,17 @@
 import { Form } from 'react-bootstrap';
+import { useController } from 'react-hook-form';
 import Resizer from 'react-image-file-resizer';
 
 import './form-file.styles.scss';
 
-const FormFile = ({ product, setProduct }) => {
+const FormFile = ({ item, setItem, name, control, rules, defaultValue }) => {
+  const { field } = useController({
+    name,
+    control,
+    rules,
+    defaultValue,
+  });
+
   const fileUploadAndResize = async (e) => {
     const files = Array.from(e.target.files);
 
@@ -25,13 +33,14 @@ const FormFile = ({ product, setProduct }) => {
 
     await Promise.all(resizePromises);
 
-    setProduct({ ...product, images: resizedImages });
+    setItem({ ...item, images: resizedImages });
   };
 
   return (
     <Form.Group>
       <Form.Label>Multiple files input example</Form.Label>
       <Form.Control
+        {...field}
         className="form-file-dark"
         onChange={fileUploadAndResize}
         type="file"

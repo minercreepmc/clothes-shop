@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { Button, ButtonGroup, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
-import FormGroup from 'components/form-group/form-input/form-input.component';
+import FormInput from 'components/form-group/form-input/form-input.component';
 import {
   loginUserWithEmailAndPassword,
   loginWithGooglePopUp,
@@ -12,21 +11,18 @@ import {
 import { AiFillGoogleCircle } from 'react-icons/ai';
 
 import { httpUpsertUser } from 'shares/hooks/requests/users/user-requests.hook';
-
-const userToLogInTemplate = {
-  email: '',
-  password: '',
-};
+import { useForm } from 'react-hook-form';
 
 const Login = () => {
-  const [userToLogIn, setUserToLogIn] = useState(userToLogInTemplate);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isGoogleLoggingIn, setIsGoogleLoggingIn] = useState(false);
 
-  const { email, password } = userToLogIn;
+  const { handleSubmit, control } = useForm({
+    defaultValues: { email: '', password: '' },
+  });
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    const { email, password } = data;
 
     if (!email || !password) {
       toast.error('Please fill in all required fields');
@@ -63,28 +59,31 @@ const Login = () => {
     }
   };
 
-  const handleChange = (e) => {
-    const input = e.target;
-
-    setUserToLogIn({ ...userToLogIn, [input.name]: input.value });
+  const onError = (error) => {
+    console.warn(error);
+    toast.error('Please fill in all required fields');
   };
 
   return (
-    <Form onSubmit={handleLogin} onChange={handleChange}>
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <h1>Login</h1>
       <Form.Text>Already have an account!!</Form.Text>
-      <FormGroup
+      <FormInput
         name="email"
         label="Email address"
         type="email"
         placeholder="Enter email"
+        rules={{ required: true }}
+        control={control}
       />
 
-      <FormGroup
+      <FormInput
         name="password"
         label="Password"
         type="password"
         placeholder="Enter password"
+        rules={{ required: true }}
+        control={control}
       />
 
       <ButtonGroup aria-label="Log in group">

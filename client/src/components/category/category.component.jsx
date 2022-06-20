@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import { httpDeleteCategory } from 'shares/hooks/requests/categories/category-requests.hook';
+import CardLink from 'components/card-link/card-link.component';
+
 import { selectCategories } from 'shares/store/shop/shop.selector';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 import { removeCategoryFromCategories } from 'shares/store/shop/shop.action';
-import CardLink from 'components/card-link/card-link.component';
+
+import { httpDeleteCategory } from 'shares/hooks/requests/categories/category-requests.hook';
 
 const Category = ({ category }) => {
   const { name, slug } = category;

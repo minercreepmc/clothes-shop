@@ -1,20 +1,20 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { DashboardContext } from 'shares/contexts/dashboard.context';
 
-import {
-  setIsChanging,
-  setShowModalPassword,
-} from 'shares/store/dashboard/dashboard.action';
-import { selectModalPasswordShow } from 'shares/store/dashboard/dashboard.selector';
 import { reAuthenticateWithPassword } from 'shares/utils/firebase/firebase.utils';
 
-const ModalPassword = () => {
-  const dispatch = useDispatch();
-  const handleClose = () => dispatch(setShowModalPassword(!modalPasswordShow));
+import 'components/modal/modal.styles.scss';
+import PrimaryButton from 'components/button/primary-button/primary-button.component';
 
-  const modalPasswordShow = useSelector(selectModalPasswordShow);
+const ModalPassword = () => {
+  const {
+    isModalPasswordShow,
+    setIsModalPasswordShow,
+    setIsInformationChanging,
+  } = useContext(DashboardContext);
+  const handleClose = () => setIsModalPasswordShow(false);
 
   const [password, setPassword] = useState('');
 
@@ -33,10 +33,10 @@ const ModalPassword = () => {
     }
 
     try {
-      const { user } = await reAuthenticateWithPassword(password);
+      await reAuthenticateWithPassword(password);
 
-      dispatch(setShowModalPassword(!modalPasswordShow));
-      dispatch(setIsChanging(true));
+      setIsModalPasswordShow(false);
+      setIsInformationChanging(true);
       toast.success('Password entered successfully');
     } catch (error) {
       toast.error(error.message);
@@ -44,7 +44,11 @@ const ModalPassword = () => {
   };
 
   return (
-    <Modal show={modalPasswordShow} onHide={handleClose}>
+    <Modal
+      show={isModalPasswordShow}
+      onHide={handleClose}
+      className="modal-dark"
+    >
       <Modal.Header closeButton>
         <Modal.Title>Type in password to continue </Modal.Title>
       </Modal.Header>
@@ -60,9 +64,9 @@ const ModalPassword = () => {
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="dark" type="submit" form="modal-form">
+        <PrimaryButton variant="dark" type="submit" form="modal-form">
           Submit
-        </Button>
+        </PrimaryButton>
       </Modal.Footer>
     </Modal>
   );

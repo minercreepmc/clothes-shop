@@ -1,16 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
 
 import Navbar from 'layouts/navbar/navbar.component';
-
 import Home from 'pages/home/home.component';
 import NotFound from 'pages/notfound/notfound.component';
-
 import ProtectedUser from 'components/protected/protected-user/protected-user.component';
 import ProtectedAdmin from 'components/protected/protected-admin/protected-admin.component';
-
 import Auth from './auth/auth.component';
 import AdminDashboard from './admin-dashboard/admin-dashboard.component';
 import UserDashboard from './user-dashboard/user-dashboard.component';
+
+import { DashboardProvider } from 'shares/contexts/dashboard.context';
 
 const AppRoute = () => {
   return (
@@ -21,17 +20,21 @@ const AppRoute = () => {
         <Route
           path="user/dashboard/*"
           element={
-            <ProtectedUser>
-              <UserDashboard />
-            </ProtectedUser>
+            <DashboardProvider>
+              <ProtectedUser>
+                <UserDashboard />
+              </ProtectedUser>
+            </DashboardProvider>
           }
         />
         <Route
           path="admin/dashboard/*"
           element={
-            <ProtectedAdmin>
-              <AdminDashboard />
-            </ProtectedAdmin>
+            <DashboardProvider>
+              <ProtectedAdmin>
+                <AdminDashboard />
+              </ProtectedAdmin>
+            </DashboardProvider>
           }
         />
         <Route path="*" element={<NotFound />} />
