@@ -1,6 +1,6 @@
 import SubCategory from 'components/sub-category/sub-category.component';
 
-const SubCategories = ({ subCategories }) => {
+const SubCategoriesContainer = ({ subCategories }) => {
   return (
     <>
       {subCategories.map((subCategory, index) => (
@@ -10,4 +10,4 @@ const SubCategories = ({ subCategories }) => {
   );
 };
 
-export default SubCategories;
+export default SubCategoriesContainer;

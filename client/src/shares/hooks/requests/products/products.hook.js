@@ -3,13 +3,25 @@ import axios from 'axios';
 import { PRODUCTS_ENDPOINT } from './products.constant';
 
 export async function httpGetProducts() {
-  const res = await axios.get(PRODUCTS_ENDPOINT, {});
-  return res.data;
+  const DEFAULT_LIMIT = 10;
+  try {
+    const res = await axios.get(
+      `${PRODUCTS_ENDPOINT}/?limit=${DEFAULT_LIMIT}`,
+      {},
+    );
+    return res.data;
+  } catch (errors) {
+    return errors.response.data;
+  }
 }
 
 export async function httpGetProduct({ slug }) {
-  const res = await axios.get(`${PRODUCTS_ENDPOINT}/${slug}`, {});
-  return res.data;
+  try {
+    const res = await axios.get(`${PRODUCTS_ENDPOINT}/${slug}`, {});
+    return res.data;
+  } catch (errors) {
+    return errors.response.data;
+  }
 }
 
 export async function httpPostProduct({ product, accessToken }) {

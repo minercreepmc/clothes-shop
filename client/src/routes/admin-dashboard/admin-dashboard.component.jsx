@@ -2,14 +2,15 @@ import { Route, Routes } from 'react-router-dom';
 
 import Dashboard from 'pages/dashboard/dashboard.component';
 
-import DashboardInformation from 'components/dashboard/dashboard-information/dashboard-information.component';
-import DashboardCategories from 'components/dashboard/dashboard-categories/dashboard-categories.component';
 import ModalPassword from 'components/modal/modal-password/modal-password.component';
-import DashboardCategoryUpdate from 'components/dashboard/dashboard-category-update/dashboard-category-update.component';
-import DashboardSubCategories from 'components/dashboard/dashboard-sub-categories/dashboard-sub-categories.component';
-import DashboardSubCategoriesUpdate from 'components/dashboard/dashboard-sub-categories-update/dashboard-sub-categories-update.component';
-import DashboardProductCreate from 'components/dashboard/dashboard-product-create/dashboard-product-create.component';
-import DashboardProducts from 'components/dashboard/dashboard-products/dashboard-products.components';
+
+import DashboardInformation from 'layouts/dashboard/dashboard-information/dashboard-information.component';
+import DashboardCategories from 'layouts/dashboard/dashboard-categories/dashboard-categories.component';
+import DashboardCategoryUpdate from 'layouts/dashboard/dashboard-category-update/dashboard-category-update.component';
+import DashboardSubCategories from 'layouts/dashboard/dashboard-sub-categories/dashboard-sub-categories.component';
+import DashboardSubCategoriesUpdate from 'layouts/dashboard/dashboard-sub-categories-update/dashboard-sub-categories-update.component';
+import DashboardProductCreate from 'layouts/dashboard/dashboard-product-create/dashboard-product-create.component';
+import DashboardProducts from 'layouts/dashboard/dashboard-products/dashboard-products.components';
 
 import { DashboardCategoriesProvider } from 'shares/contexts/dashboard-categories.context';
 import { DashboardSubcategoriesProvider } from 'shares/contexts/dashboard-sub-categories.context';

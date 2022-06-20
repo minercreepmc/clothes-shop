@@ -1,6 +1,6 @@
 import Category from 'components/category/category.component';
 
-const Categories = ({ categories }) => {
+const CategoriesContainer = ({ categories }) => {
   return (
     <>
       {categories.map((category, index) => (
@@ -10,4 +10,4 @@ const Categories = ({ categories }) => {
   );
 };
 
-export default Categories;
+export default CategoriesContainer;

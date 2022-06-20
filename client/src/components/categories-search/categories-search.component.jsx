@@ -1,13 +1,12 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Categories from 'components/categories/categories.component';
 import SearchBar from 'components/search-bar/search-bar.component';
-import CategoriesForm from 'components/form/categories-form/categories-form.component';
+import CategoriesContainer from 'components/categories-container/categories-container.component';
 
 import { selectSearchedCategories } from 'shares/store/shop/shop.selector';
 import { setCategoriesSearchText } from 'shares/store/shop/shop.action';
 
-const DashboardCategories = () => {
+const CategoriesSearch = () => {
   const searchedCategories = useSelector(selectSearchedCategories);
 
   const dispatch = useDispatch();
@@ -18,17 +17,13 @@ const DashboardCategories = () => {
     // TODO: Change to string-similarity npm package
     dispatch(setCategoriesSearchText(value));
   };
-
   return (
     <div>
-      <CategoriesForm />
-      <div>
-        <h2>Categories available</h2>
-        <SearchBar handleChange={handleSearch} />
-        <Categories categories={searchedCategories} />
-      </div>
+      <h2>Categories available</h2>
+      <SearchBar handleChange={handleSearch} />
+      <CategoriesContainer categories={searchedCategories} />
     </div>
   );
 };
 
-export default DashboardCategories;
+export default CategoriesSearch;
