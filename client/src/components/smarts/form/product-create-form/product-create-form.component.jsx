@@ -1,7 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import FormInput from 'components/reusables/form-group/form-input/form-input.component';
@@ -9,7 +8,7 @@ import FormSelect from 'components/reusables/form-group/form-select/form-select.
 import PrimaryButton from 'components/reusables/button/primary-button/primary-button.component';
 import SpinnerContainer from 'components/reusables/spinner/spinner.component';
 import FormMultiSelect from 'components/reusables/form-group/form-multiselect/form-multiselect.component';
-import FormFile from 'components/reusables/form-group/form-file/form-file.component';
+import FormImages from 'components/reusables/form-group/form-images/form-images.component';
 
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 
@@ -24,33 +23,31 @@ import {
   selectProducts,
 } from 'shares/store/shop/shop.selector';
 import { httpGetCategory } from 'shares/hooks/requests/categories/category-requests.hook';
+import { resizeImages } from 'shares/utils/react-image-file-resizer/react-image-file-resizer.utils';
 
 const ProductCreateForm = () => {
-  const { handleSubmit, control, reset, watch } = useForm({
-    defaultValues: {
-      title: '',
-      description: '',
-      price: 0,
-      color: '',
-      brand: '',
-      shipping: '',
-      quantity: '',
-      categoryId: '',
-      subCategoriesId: null,
-      images: null,
-    },
-  });
-
-  const watchCategoryId = watch('categoryId');
-
   const {
     product,
     setProduct,
+    INITIAL_PRODUCT_STATE,
     subCategories,
     setSubCategories,
     isCreating,
     setIsCreating,
   } = useContext(DashboardProductCreateContext);
+
+  const {
+    title,
+    description,
+    price,
+    images,
+    quantity,
+    color,
+    shipping,
+    categoryId,
+    subCategoriesId,
+    brand,
+  } = product;
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
@@ -58,23 +55,25 @@ const ProductCreateForm = () => {
 
   const dispatch = useDispatch();
 
-  const onSubmit = async (data) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
       setIsCreating(true);
-
       const imagesLocation = await httpUploadImages({
-        images: data.images,
+        images,
         accessToken: admin.accessToken,
       });
+      console.log(imagesLocation);
 
-      data.images = imagesLocation;
+      setProduct({ ...product, images: imagesLocation });
 
       const newProduct = await httpPostProduct({
-        product: data,
+        product,
         accessToken: admin.accessToken,
       });
       dispatch(addProductToProducts(newProduct, products));
-      reset();
+      setProduct(INITIAL_PRODUCT_STATE);
       toast.success('Create successfully');
     } catch (errors) {
       console.log(errors);
@@ -86,33 +85,39 @@ const ProductCreateForm = () => {
     }
   };
 
-  const onError = (error) => {
-    console.warn(error);
-    toast.error('Please fill all the required fields');
+  const handleGenericChange = (e) => {
+    const { name, value } = e.target;
+
+    setProduct({ ...product, [name]: value });
   };
 
-  useEffect(() => {
-    const populateSubCategories = async () => {
-      const category = await httpGetCategory({
-        _id: watchCategoryId,
-        subCategories: true,
-      });
-      setSubCategories(category.subcategories);
-    };
+  const handleResizeImage = async (e) => {
+    const resizedImages = await resizeImages(Array.from(e.target.files));
+    setProduct({ ...product, images: resizedImages });
+  };
 
-    populateSubCategories();
-  }, [watchCategoryId, setSubCategories]);
+  const handleChooseCategory = async (e) => {
+    const category = await httpGetCategory({
+      _id: e.target.value,
+      subCategories: true,
+    });
+    setProduct({ ...product, categoryId: e.target.value });
+    setSubCategories(category.subcategories);
+  };
 
   return (
-    <Form className="mb-5" onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form
+      className="mb-5"
+      onSubmit={handleSubmit}
+      onChange={handleGenericChange}
+    >
       <FormInput
         name="title"
         type="text"
         label="Title"
         id="title"
-        defaultValue=""
-        rules={{ required: true }}
-        control={control}
+        value={title}
+        onChange={() => { }}
       />
 
       <FormInput
@@ -121,9 +126,8 @@ const ProductCreateForm = () => {
         label="Description"
         id="description"
         as="textarea"
-        defaultValue=""
-        rules={{ required: true }}
-        control={control}
+        value={description}
+        onChange={() => { }}
       />
 
       <FormInput
@@ -132,19 +136,16 @@ const ProductCreateForm = () => {
         id="price"
         label="Price"
         min="0"
-        defaultValue=""
-        rules={{ required: true }}
-        control={control}
+        value={price}
+        onChange={() => { }}
       />
 
-      <FormFile
-        name="items"
-        id="items"
+      <FormImages
+        name="images"
+        id="images"
         label="Images"
-        defaultValue=""
-        item={product}
-        setItem={setProduct}
-        control={control}
+        files={images}
+        onChange={handleResizeImage}
       />
       <FormInput
         name="quantity"
@@ -152,18 +153,16 @@ const ProductCreateForm = () => {
         id="quantity"
         label="Quantity"
         min="0"
-        defaultValue=""
-        rules={{ required: true }}
-        control={control}
+        value={quantity}
+        onChange={() => { }}
       />
 
       <FormSelect
         name="color"
         label="Color"
         id="color"
-        defaultValue=""
-        rules={{ required: true }}
-        control={control}
+        value={color}
+        onChange={() => { }}
       >
         <option value="">--Select color--</option>
         <option value="Black">Black</option>
@@ -174,9 +173,8 @@ const ProductCreateForm = () => {
         name="brand"
         label="Brand"
         id="brand"
-        defaultValue=""
-        rules={{ required: true }}
-        control={control}
+        value={brand}
+        onChange={() => { }}
       >
         <option value="">--Select brand--</option>
         <option value="Chanel">Chanel</option>
@@ -187,9 +185,8 @@ const ProductCreateForm = () => {
         label="Shipping"
         name="shipping"
         id="shipping"
-        defaultValue=""
-        rules={{ required: true }}
-        control={control}
+        value={shipping}
+        onChange={() => { }}
       >
         <option value="">--Select shipping--</option>
         <option value="Yes">Yes</option>
@@ -200,9 +197,8 @@ const ProductCreateForm = () => {
         label="Categories"
         name="categoryId"
         id="category"
-        defaultValue=""
-        rules={{ required: true }}
-        control={control}
+        value={categoryId}
+        onChange={handleChooseCategory}
       >
         <option value="">--Select category--</option>
         {categories.map((category, index) => (
@@ -215,13 +211,13 @@ const ProductCreateForm = () => {
       <FormMultiSelect
         name="subCategoriesId"
         id="sub-categories"
-        rules={{ required: true }}
         defaultValue=""
+        value={subCategoriesId}
+        onChange={() => { }}
         options={subCategories?.map((subCategory) => ({
           value: subCategory._id,
           label: subCategory.name,
         }))}
-        control={control}
       />
 
       <PrimaryButton

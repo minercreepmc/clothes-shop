@@ -13,8 +13,10 @@ async function httpUploadImage(req, res) {
 async function httpUploadMultipleImages(req, res) {
   try {
     const result = await imagesService.uploadImages({ body: req.body });
+    console.log(req.body);
     return res.status(201).json(result);
   } catch (errors) {
+    console.log(erorrs);
     return res.status(400).json(errors);
   }
 }

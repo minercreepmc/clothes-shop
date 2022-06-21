@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import FormSelect from 'components/reusables/form-group/form-select/form-select.component';
@@ -18,13 +17,15 @@ import { selectCurrentUser } from 'shares/store/user/user.selector';
 import { DashboardSubcategoriesContext } from 'shares/contexts/dashboard-sub-categories.context';
 
 const SubCategoriesForm = () => {
-  const { handleSubmit, control, reset } = useForm({
-    defaultValues: { name: '', categoryId: '' },
-  });
+  const {
+    isCreating,
+    setIsCreating,
+    subCategory,
+    setSubCategory,
+    INITIAL_SUB_CATEGORY_STATE,
+  } = useContext(DashboardSubcategoriesContext);
 
-  const { isCreating, setIsCreating } = useContext(
-    DashboardSubcategoriesContext,
-  );
+  const { name, categoryId } = subCategory;
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
@@ -32,15 +33,22 @@ const SubCategoriesForm = () => {
 
   const dispatch = useDispatch();
 
-  const onSubmit = async (data) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!name || !categoryId) {
+      toast.error('Please provide all required fields');
+      return;
+    }
+
     try {
       setIsCreating(true);
       const newSubCategory = await httpPostSubCategory({
-        subCategory: data,
+        subCategory,
         accessToken: admin.accessToken,
       });
       dispatch(addSubCategoryToSubCategories(newSubCategory, subCategories));
-      reset();
+      setSubCategory(INITIAL_SUB_CATEGORY_STATE);
       toast.success('Create successfully');
     } catch (errors) {
       console.log(errors);
@@ -52,20 +60,24 @@ const SubCategoriesForm = () => {
     }
   };
 
-  const onError = (error) => {
-    console.warn(error);
-    toast.error('Please provide all fields');
+  const handleGenericChange = (e) => {
+    const { name, value } = e.target;
+
+    setSubCategory({ ...subCategory, [name]: value });
   };
 
   return (
-    <Form className="mb-5" onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form
+      className="mb-5"
+      onSubmit={handleSubmit}
+      onChange={handleGenericChange}
+    >
       <FormSelect
         name="categoryId"
         label="Choose a cateogory"
         id="category"
         defaultValue=""
-        rules={{ required: true }}
-        control={control}
+        onChange={() => { }}
       >
         <option value="">--Chose a category--</option>
         {categories.map((category, index) => (
@@ -80,9 +92,8 @@ const SubCategoriesForm = () => {
         type="text"
         label="Create sub category"
         id="sub-category"
-        defaultValue=""
-        rules={{ required: true }}
-        control={control}
+        value={name}
+        onChange={() => { }}
       />
 
       <PrimaryButton

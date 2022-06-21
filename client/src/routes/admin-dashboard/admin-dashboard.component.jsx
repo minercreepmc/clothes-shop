@@ -17,6 +17,8 @@ import { DashboardSubcategoriesProvider } from 'shares/contexts/dashboard-sub-ca
 import { DashboardProductCreateProvider } from 'shares/contexts/dashboard-product-create.context';
 import { DashboardCategoryUpdateProvider } from 'shares/contexts/dashboard-category-update.context';
 import { DashboardSubCategoryUpdateProvider } from 'shares/contexts/dashboard-sub-category-update.context';
+import { DashboardProductsProvider } from 'shares/contexts/dashboard-products.context';
+import { DashboardInformationProvider } from 'shares/contexts/dashboard-information.context';
 
 const AdminDashboard = () => {
   const list = [
@@ -31,7 +33,14 @@ const AdminDashboard = () => {
     <>
       <Routes>
         <Route element={<Dashboard list={list} />}>
-          <Route index element={<DashboardInformation />} />
+          <Route
+            index
+            element={
+              <DashboardInformationProvider>
+                <DashboardInformation />
+              </DashboardInformationProvider>
+            }
+          />
           <Route
             path="categories"
             element={
@@ -73,7 +82,14 @@ const AdminDashboard = () => {
               </DashboardProductCreateProvider>
             }
           />
-          <Route path="products" element={<DashboardProducts />} />
+          <Route
+            path="products"
+            element={
+              <DashboardProductsProvider>
+                <DashboardProducts />
+              </DashboardProductsProvider>
+            }
+          />
         </Route>
       </Routes>
       <ModalPassword />

@@ -1,30 +1,13 @@
 import { Form, InputGroup } from 'react-bootstrap';
-import { useController } from 'react-hook-form';
 
 import './form-input.styles.scss';
 
-const FormInput = ({
-  name,
-  control,
-  rules,
-  defaultValue,
-  label,
-  id,
-  children,
-  ...controlProps
-}) => {
-  const { field } = useController({
-    name,
-    control,
-    rules,
-    defaultValue,
-  });
-
+const FormInput = ({ name, label, id, children, ...controlProps }) => {
   return (
     <Form.Group controlId={id} className="mb-3">
       <Form.Label>{label}</Form.Label>
       <InputGroup>
-        <Form.Control {...field} className="input" {...controlProps} />
+        <Form.Control name={name} className="input" {...controlProps} />
         {children}
       </InputGroup>
     </Form.Group>

@@ -11,7 +11,7 @@ async function httpGetCategories(req, res) {
 
 async function httpGetCategory(req, res) {
   try {
-    const category = await CategoriesService.getCategory({
+    const category = await CategoriesService.getCategoryByIdOrSlug({
       params: req.params,
       query: req.query,
     });

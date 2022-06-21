@@ -16,6 +16,7 @@ export const DashboardCategoryUpdateProvider = ({ children }) => {
   const value = {
     category,
     setCategory,
+    INITIAL_CATEGORY_STATE,
     isUpdating,
     setIsUpdating,
   };

@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import FormSelect from 'components/reusables/form-group/form-select/form-select.component';
@@ -23,13 +22,13 @@ import { updateSubCategoryToSubCategories } from 'shares/store/shop/shop.action'
 
 const SubCategoryUpdateForm = () => {
   // TODO:
-  const { handleSubmit, control, reset } = useForm({});
-
   const { slug } = useParams();
 
   const { setIsUpdating, isUpdating, subCategory, setSubCategory } = useContext(
     DashboardSubCategoryUpdateContext,
   );
+
+  const { name, categoryId } = subCategory;
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
@@ -38,18 +37,19 @@ const SubCategoryUpdateForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onSubmit = async (data) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
       setIsUpdating(true);
       const updatedSubCategory = await httpPutSubCategory({
-        subCategory: { ...data, slug },
+        subCategory: { ...subCategory, slug },
         accessToken: admin.accessToken,
       });
       dispatch(
         updateSubCategoryToSubCategories(updatedSubCategory, subCategories),
       );
       toast.success('Update category successful');
-      reset();
       navigate('/admin/dashboard/sub-categories');
     } catch (errors) {
       errors.forEach((error) => {
@@ -60,37 +60,32 @@ const SubCategoryUpdateForm = () => {
     }
   };
 
-  const onError = (error) => {
-    console.warn(error);
-    toast.error('Please provide all fields');
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSubCategory({ ...subCategory, [name]: value });
+    console.log(subCategory);
   };
 
   useEffect(() => {
     const getCurrentSubCategory = async () => {
       const currentSubCategory = await httpGetSubCategory({ slug });
       setSubCategory(currentSubCategory);
-      reset(currentSubCategory);
     };
 
     getCurrentSubCategory();
-  }, [slug, reset, setSubCategory]);
+  }, [slug, setSubCategory]);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form onSubmit={handleSubmit} onChange={handleChange}>
       <FormSelect
         name="categoryId"
         label="Category"
         id="select-sub"
-        defaultValue=""
-        rules={{ required: true }}
-        control={control}
+        value={categoryId}
+        onChange={() => { }}
       >
         {categories?.map((category, index) => (
-          <option
-            value={category.slug}
-            selected={category._id === subCategory.parent}
-            key={index}
-          >
+          <option value={category._id} key={index}>
             {category.name}
           </option>
         ))}
@@ -100,10 +95,9 @@ const SubCategoryUpdateForm = () => {
         label="Update category"
         name="name"
         id="name"
-        defaultValue=""
         type="text"
-        rules={{ required: true }}
-        control={control}
+        value={name}
+        onChange={() => { }}
       />
 
       <PrimaryButton variant="dark" type="submit" disabled={isUpdating}>

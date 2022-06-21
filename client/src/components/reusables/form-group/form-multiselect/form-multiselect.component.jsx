@@ -1,5 +1,4 @@
 import { Form } from 'react-bootstrap';
-import { useController } from 'react-hook-form';
 import Select from 'react-select';
 import './form-multiselect.styles.scss';
 
@@ -16,27 +15,11 @@ const colourStyles = {
   menuList: (styles) => ({ ...styles, backgroundColor: '#181a1b' }),
 };
 
-const FormMultiSelect = ({
-  options,
-  name,
-  value,
-  id,
-  control,
-  rules,
-  defaultValue,
-}) => {
-  const { field } = useController({
-    name,
-    control,
-    rules,
-    defaultValue,
-  });
-
+const FormMultiSelect = ({ options, name, value, id }) => {
   return (
-    <Form.Group>
-      <Form.Label htmlFor={id}>Sub Categories</Form.Label>
+    <Form.Group controlId={id}>
+      <Form.Label>Sub Categories</Form.Label>
       <Select
-        {...field}
         name={name}
         styles={colourStyles}
         className="h5 mb-5"
@@ -45,7 +28,6 @@ const FormMultiSelect = ({
         isMulti
         options={options}
         value={value}
-        inputId={id}
       />
     </Form.Group>
   );

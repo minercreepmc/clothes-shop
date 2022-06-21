@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
 
 import FormInput from 'components/reusables/form-group/form-input/form-input.component';
 import PrimaryButton from 'components/reusables/button/primary-button/primary-button.component';
 
 import { DashboardContext } from 'shares/contexts/dashboard.context';
+import { DashboardInformationContext } from 'shares/contexts/dashboard-information.context';
 
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 
@@ -14,9 +14,7 @@ import { updateUserPassword } from 'shares/utils/firebase/firebase.utils';
 import { toast } from 'react-toastify';
 
 const InformationForm = () => {
-  const { handleSubmit, control } = useForm({
-    defaultValues: { email: '', password: '' },
-  });
+  const { password, setPassword } = useContext(DashboardInformationContext);
 
   const {
     isInformationChanging,
@@ -26,14 +24,17 @@ const InformationForm = () => {
 
   const { email } = useSelector(selectCurrentUser);
 
-  const handleEnableChange = (e) => {
-    e.preventDefault();
-
+  const handleEnableChange = () => {
     setIsModalPasswordShow(true);
   };
 
-  const onSubmit = async (data) => {
-    const { password } = data;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (password === '') {
+      toast.error('Please fill in password');
+      return;
+    }
 
     try {
       await updateUserPassword(password);
@@ -45,21 +46,14 @@ const InformationForm = () => {
     }
   };
 
-  const onError = (errors) => {
-    console.warn(errors);
-    toast.error(errors);
-  };
-
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form onSubmit={handleSubmit}>
       <FormInput
         name="email"
         type="email"
         label="Email"
         id="email"
-        placeholder={email}
-        defaultValue=""
-        control={control}
+        value={email}
         disabled
       />
 
@@ -69,9 +63,8 @@ const InformationForm = () => {
         label="Password"
         id="password"
         placeholder="********"
-        defaultValue=""
-        rules={{ required: 'Please provide password' }}
-        control={control}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         disabled={!isInformationChanging}
       />
 

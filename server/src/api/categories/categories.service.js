@@ -1,6 +1,8 @@
 const { prettierErrors } = require('#shares/utils/mongo/mongo.utils');
 const slugify = require('slugify');
 const url = require('url');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 const CategoriesRepo = require('./categories.repository');
 
@@ -24,13 +26,17 @@ async function getCategoryBySlug({ params, query }) {
   return CategoriesRepo.getCategory(filters);
 }
 
-async function getCategory({ params, query }) {
+async function getCategoryByIdOrSlug({ params, query }) {
   // TODO: EDit the fkcing name
   const { param } = params;
   const { subCategories } = query;
-  const filters = {
-    param,
-  };
+  const filters = {};
+
+  if (ObjectId.isValid(param)) {
+    filters._id = param;
+  } else {
+    filters.slug = param;
+  }
 
   if (subCategories) {
     return CategoriesRepo.getCategoryWithSubCategories(filters);
@@ -77,7 +83,7 @@ async function deleteCategory(data) {
 module.exports = {
   getAllCategories,
   getCategoryBySlug,
-  getCategory,
+  getCategoryByIdOrSlug,
   createCategory,
   updateCategory,
   deleteCategory,

@@ -2,7 +2,6 @@
 *::before,
 *::after {
   font-family: 'Quicksand', sans-serif;
-  font-size: 107%;
   font-weight: 500 !important ;
 }
 
@@ -10,6 +9,7 @@ body {
   background-color: #131516;
   color: #d1cdc7;
   min-height: 100vh;
+  font-size: 170%;
 }
 
 button {

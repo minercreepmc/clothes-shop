@@ -21,6 +21,7 @@ async function httpUploadImages({ images, accessToken }) {
       { images },
       { headers: { accessToken } },
     );
+    console.log(res);
     return res.data;
   } catch (errors) {
     return errors.response.data;

@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import FormInput from 'components/reusables/form-group/form-input/form-input.component';
@@ -16,28 +15,35 @@ import { httpPostCategory } from 'shares/hooks/requests/categories/category-requ
 import { addCategoryToCategories } from 'shares/store/shop/shop.action';
 
 const CategoriesForm = () => {
-  const { isCreating, setIsCreating } = useContext(DashboardCategoriesContext);
+  const {
+    category,
+    setCategory,
+    INITIAL_CATEGORY_STATE,
+    isCreating,
+    setIsCreating,
+  } = useContext(DashboardCategoriesContext);
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
 
   const dispatch = useDispatch();
 
-  const { handleSubmit, control, reset } = useForm({
-    name: '',
-  });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const onSubmit = async (data) => {
-    console.log(data);
+    if (category.name === '') {
+      toast.error('Please provide category name');
+      return;
+    }
 
     try {
       setIsCreating(true);
       const newCategory = await httpPostCategory({
-        category: data,
+        category,
         accessToken: admin.accessToken,
       });
       dispatch(addCategoryToCategories(newCategory, categories));
-      reset();
+      setCategory(INITIAL_CATEGORY_STATE);
       toast.success('Create successfully');
     } catch (errors) {
       errors.forEach((error) => {
@@ -48,22 +54,16 @@ const CategoriesForm = () => {
     }
   };
 
-  const onError = (errors) => {
-    toast.error('Please fill in the category name');
-    console.warn(errors);
-  };
-
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)} className="mb-5">
+    <Form onSubmit={handleSubmit} className="mb-5">
       <FormInput
         name="name"
         label="Create category"
         type="text"
         placeholder="Create new category"
         id="category-name"
-        defaultValue=""
-        rules={{ required: 'Please provide category name' }}
-        control={control}
+        value={category.name}
+        onChange={(e) => setCategory({ ...category, name: e.target.value })}
       />
       <PrimaryButton variant="dark" type="submit" disabled={isCreating}>
         {!isCreating ? 'Create' : 'Creating...'}

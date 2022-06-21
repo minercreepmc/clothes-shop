@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 
-const INITIAL_CATEGORY_STATE = { name: ' ' };
+const INITIAL_CATEGORY_STATE = { name: '', slug: '' };
 
 export const DashboardCategoriesContext = createContext({
   isCreating: false,
@@ -14,6 +14,7 @@ export const DashboardCategoriesProvider = ({ children }) => {
   const [category, setCategory] = useState(INITIAL_CATEGORY_STATE);
 
   const value = {
+    INITIAL_CATEGORY_STATE,
     isCreating,
     setIsCreating,
     category,

@@ -44,16 +44,17 @@ async function createSubCategory(data) {
   }
 }
 
-async function updateSubCategory(data) {
-  const { body, params } = data;
+async function updateSubCategory({ body, params }) {
+  const { name, categoryId } = body;
+  const { slug } = params;
 
   const category = {
-    name: body.name,
-    slug: slugify(body.name),
-    categoryId: ObjectId(data.categoryId),
+    name,
+    slug: slugify(name),
+    categoryId: ObjectId(categoryId),
   };
 
-  const filters = { slug: params.slug };
+  const filters = { slug };
   try {
     return await SubCategoriesRepo.updateSubCategory({ filters, category });
   } catch (errors) {
