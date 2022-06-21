@@ -4,10 +4,9 @@ import { useSelector } from 'react-redux';
 
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 
+import AuthForm from 'pages/auth-page/auth-page.component';
 import AuthComplete from 'pages/auth-complete/auth-complete.component';
 import ForgotPassword from 'pages/forgot-password/forgot-password.component';
-
-import AuthForm from 'layouts/auth-form/auth-form.component';
 
 const Auth = () => {
   const currentUser = useSelector(selectCurrentUser);

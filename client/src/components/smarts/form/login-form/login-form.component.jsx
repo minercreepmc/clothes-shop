@@ -11,18 +11,17 @@ import {
 import { AiFillGoogleCircle } from 'react-icons/ai';
 
 import { httpUpsertUser } from 'shares/hooks/requests/users/user-requests.hook';
-import { useForm } from 'react-hook-form';
 
-const Login = () => {
+const INITIAL_USER_STATE = { email: '', password: '' };
+
+const LoginForm = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isGoogleLoggingIn, setIsGoogleLoggingIn] = useState(false);
+  const [user, setUser] = useState(INITIAL_USER_STATE);
 
-  const { handleSubmit, control } = useForm({
-    defaultValues: { email: '', password: '' },
-  });
-
-  const onSubmit = async (data) => {
-    const { email, password } = data;
+  const { email, password } = user;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     if (!email || !password) {
       toast.error('Please fill in all required fields');
@@ -35,6 +34,8 @@ const Login = () => {
         email,
         password,
       );
+
+      setUser(INITIAL_USER_STATE);
 
       console.log(userCredential);
     } catch (errors) {
@@ -59,31 +60,34 @@ const Login = () => {
     }
   };
 
-  const onError = (error) => {
-    console.warn(error);
-    toast.error('Please fill in all required fields');
+  const handleGeneralChange = (e) => {
+    const { value, name } = e.target;
+
+    setUser({ ...user, [name]: value });
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form onSubmit={handleSubmit} onChange={handleGeneralChange}>
       <h1>Login</h1>
       <Form.Text>Already have an account!!</Form.Text>
       <FormInput
         name="email"
+        id="email-login"
         label="Email address"
         type="email"
         placeholder="Enter email"
-        rules={{ required: true }}
-        control={control}
+        value={email}
+        onChange={() => { }}
       />
 
       <FormInput
         name="password"
+        id="password-login"
         label="Password"
         type="password"
         placeholder="Enter password"
-        rules={{ required: true }}
-        control={control}
+        value={password}
+        onChange={() => { }}
       />
 
       <ButtonGroup aria-label="Log in group">
@@ -115,4 +119,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;

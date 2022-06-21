@@ -1,18 +1,27 @@
+import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 import FormInput from 'components/reusables/form-group/form-input/form-input.component';
 
 import { signUpWithEmailAndPassword } from 'shares/utils/firebase/firebase.utils';
-import { useForm } from 'react-hook-form';
 
-const SignUp = () => {
-  const { handleSubmit, control } = useForm({
-    defaultValues: { email: '', password: '', passwordConfirm: '' },
-  });
+const INITIAL_USER_STATE = {
+  email: '',
+  password: '',
+  passwordConfirm: '',
+};
 
-  const onSubmit = async (data) => {
-    const { email, password, passwordConfirm } = data;
+const SignUpForm = () => {
+  const [user, setUser] = useState(INITIAL_USER_STATE);
+  const { email, password, passwordConfirm } = user;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email || !password || !passwordConfirm) {
+      toast.error('Please enter all required fields');
+    }
 
     if (password !== passwordConfirm) {
       toast.error('Password did not match');
@@ -29,38 +38,41 @@ const SignUp = () => {
     }
   };
 
-  const onError = (error) => {
-    console.warn(error);
-    toast.error('Please fill in all required fields');
+  const handleGeneralChange = (e) => {
+    const { value, name } = e.target;
+
+    setUser({ ...user, [name]: value });
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form onSubmit={handleSubmit} onChange={handleGeneralChange}>
       <h1>Sign Up</h1>
       <Form.Text>You don't have an account?</Form.Text>
       <FormInput
         label="Email"
         placeholder="Enter email"
         type="email"
-        name="email"
-        rules={{ required: true }}
-        control={control}
+        name="email-signup"
+        id="email"
+        value={email}
+        onChange={() => { }}
       />
       <FormInput
         label="Password"
         placeholder="Enter password"
         type="password"
         name="password"
-        rules={{ required: true }}
-        control={control}
+        id="password-signup"
+        value={password}
+        onChange={() => { }}
       />
       <FormInput
         label="Confirm Password"
         placeholder="Enter confirm password"
         type="password"
         name="passwordConfirm"
-        rules={{ required: true }}
-        control={control}
+        id="password-confirm"
+        value={passwordConfirm}
       />
       <Button variant="dark" type="submit">
         Sign Up
@@ -69,4 +81,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpForm;
