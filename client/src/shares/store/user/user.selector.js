@@ -1,5 +1,13 @@
-export const selectCurrentUser = (state) => state.user.currentUser;
+import { createSelector } from 'reselect';
 
-export const selectCurrentUserEmail = (state) => state.user.currentUser?.email;
+const selectUserReducer = (state) => state.user;
 
-export const selectIsCurrentUserExist = (state) => state.user.length !== 0;
+export const selectCurrentUser = createSelector(
+  selectUserReducer,
+  (userReducer) => userReducer.currentUser,
+);
+
+export const selectIsCurrentUserExist = createSelector(
+  selectUserReducer,
+  (userReducer) => userReducer.length !== 0,
+);

@@ -1,27 +1,50 @@
-export const selectCategories = (state) => state.shop.categories;
+import { createSelector } from 'reselect';
 
-export const selectSearchedCategories = (state) => {
-  const categories = state.shop.categories;
-  const searchText = state.shop.categoriesSearchText;
+const selectShop = (state) => state.shop;
 
-  return categories.filter(
-    (category) =>
-      category.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      searchText.toLowerCase().includes(category.name.toLowerCase()),
-  );
-};
+export const selectCategories = createSelector(
+  selectShop,
+  (shop) => shop.categories,
+);
 
-export const selectSubCategories = (state) => state.shop.subCategories;
+export const selectCategoriesSearchText = createSelector(
+  selectShop,
+  (shop) => shop.categoriesSearchText,
+);
 
-export const selectSearchedSubCategories = (state) => {
-  const subCategories = state.shop.subCategories;
-  const searchText = state.shop.subCategoriesSearchText;
+export const selectSearchedCategories = createSelector(
+  [selectCategories, selectCategoriesSearchText],
+  (categories, searchText) => {
+    return categories.filter(
+      (category) =>
+        category.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        searchText.toLowerCase().includes(category.name.toLowerCase()),
+    );
+  },
+);
 
-  return subCategories.filter(
-    (category) =>
-      category.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      searchText.toLowerCase().includes(category.name.toLowerCase()),
-  );
-};
+export const selectSubCategories = createSelector(
+  selectShop,
+  (shop) => shop.subCategories,
+);
 
-export const selectProducts = (state) => state.shop.products;
+export const selectSubCategoriesSearchText = createSelector(
+  selectShop,
+  (shop) => shop.subCategoriesSearchText,
+);
+
+export const selectSearchedSubCategories = createSelector(
+  [selectSubCategories, selectSubCategoriesSearchText],
+  (subCategories, searchText) => {
+    return subCategories.filter(
+      (category) =>
+        category.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        searchText.toLowerCase().includes(category.name.toLowerCase()),
+    );
+  },
+);
+
+export const selectProducts = createSelector(
+  selectShop,
+  (shop) => shop.products,
+);

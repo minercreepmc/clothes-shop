@@ -24,6 +24,7 @@ const SubCategoriesForm = () => {
     setSubCategory,
     INITIAL_SUB_CATEGORY_STATE,
   } = useContext(DashboardSubcategoriesContext);
+  console.log('render');
 
   const { name, categoryId } = subCategory;
 
@@ -77,7 +78,7 @@ const SubCategoriesForm = () => {
         label="Choose a cateogory"
         id="category"
         defaultValue=""
-        onChange={() => {}}
+        onChange={() => { }}
       >
         <option value="">--Chose a category--</option>
         {categories.map((category, index) => (
@@ -93,7 +94,7 @@ const SubCategoriesForm = () => {
         label="Create sub category"
         id="sub-category"
         value={name}
-        onChange={() => {}}
+        onChange={() => { }}
       />
 
       <PrimaryButton

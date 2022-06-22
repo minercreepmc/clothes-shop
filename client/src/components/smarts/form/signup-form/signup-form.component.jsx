@@ -73,6 +73,7 @@ const SignUpForm = () => {
         name="passwordConfirm"
         id="password-confirm"
         value={passwordConfirm}
+        onChange={() => { }}
       />
       <Button variant="dark" type="submit">
         Sign Up

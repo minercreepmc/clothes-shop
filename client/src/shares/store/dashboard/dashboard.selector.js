@@ -1,8 +1,23 @@
-export const selectModalPasswordShow = (state) =>
-  state.dashboard.showModalPassword;
+import { createSelector } from 'reselect';
 
-export const selectModalDeleteShow = (state) => state.dashboard.showModalDelete;
+const selectDashboardReducer = (state) => state.dashboard;
 
-export const selectConfirmDelete = (state) => state.dashboard.confirmDelete;
+export const selectModalPasswordShow = createSelector(
+  selectDashboardReducer,
+  (dashboard) => dashboard.showModalPassword,
+);
 
-export const selectIsChanging = (state) => state.dashboard.isChanging;
+export const selectModalDeleteShow = createSelector(
+  selectDashboardReducer,
+  (dashboard) => dashboard.showModalDelete,
+);
+
+export const selectConfirmDelete = createSelector(
+  selectDashboardReducer,
+  (dashboard) => dashboard.confirmDelete,
+);
+
+export const selectIsChanging = createSelector(
+  selectDashboardReducer,
+  (dashboard) => dashboard.isChanging,
+);
