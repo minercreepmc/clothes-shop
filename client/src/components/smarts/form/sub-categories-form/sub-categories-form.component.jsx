@@ -77,11 +77,11 @@ const SubCategoriesForm = () => {
         label="Choose a cateogory"
         id="category"
         defaultValue=""
-        onChange={() => { }}
+        onChange={() => {}}
       >
         <option value="">--Chose a category--</option>
         {categories.map((category, index) => (
-          <option key={index} value={category._id}>
+          <option value={category._id} key={category._id}>
             {category.name}
           </option>
         ))}
@@ -93,7 +93,7 @@ const SubCategoriesForm = () => {
         label="Create sub category"
         id="sub-category"
         value={name}
-        onChange={() => { }}
+        onChange={() => {}}
       />
 
       <PrimaryButton

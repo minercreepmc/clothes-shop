@@ -18,9 +18,9 @@ const ProductsContainer = () => {
 
   return (
     <Container>
-      <Row>
-        {products.map((product) => (
-          <Col md={4}>
+      <Row className="justify-content-center">
+        {products.map((product, index) => (
+          <Col key={product._id} md={4}>
             <Product product={product} />
           </Col>
         ))}

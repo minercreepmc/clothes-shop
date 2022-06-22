@@ -201,8 +201,8 @@ const ProductCreateForm = () => {
         onChange={handleChooseCategory}
       >
         <option value="">--Select category--</option>
-        {categories.map((category, index) => (
-          <option key={index} value={category._id}>
+        {categories.map((category) => (
+          <option value={category._id} key={category._id}>
             {category.name}
           </option>
         ))}

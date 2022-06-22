@@ -84,8 +84,8 @@ const SubCategoryUpdateForm = () => {
         value={categoryId}
         onChange={() => { }}
       >
-        {categories?.map((category, index) => (
-          <option value={category._id} key={index}>
+        {categories?.map((category) => (
+          <option value={category._id} key={category._id}>
             {category.name}
           </option>
         ))}
