@@ -1,5 +1,5 @@
 const { verifyToken } = require('#shares/utils/firebase/firebase.utils');
-const UsersRepo = require('#api/users/users.repository');
+const UsersRepo = require('#services/user-service/data-access/repositories/user.repository');
 
 const authCheck = async (req, res, next) => {
   try {

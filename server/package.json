@@ -12,7 +12,8 @@
   "imports": {
     "#api/*": "./src/api/*.js",
     "#configs": "./src/configs/*",
-    "#shares/*": "./src/shares/*.js"
+    "#shares/*": "./src/shares/*.js",
+    "#services/*": "./src/services/*.js"
   },
   "dependencies": {
     "cloudinary": "^1.30.0",
