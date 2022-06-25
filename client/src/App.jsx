@@ -4,11 +4,11 @@ import { useDispatch } from 'react-redux';
 
 import { onAuthStateChangeListener } from 'shares/utils/firebase/firebase.utils';
 import { setCurrentUser } from 'shares/store/user/user.action';
-import {
-  setCategories,
-  setProducts,
-  setSubCategories,
-} from 'shares/store/shop/shop.action';
+
+import { setCategories } from 'shares/store/categories/categories.action';
+import { setProducts } from 'shares/store/products/products.action';
+import { setSubCategories } from 'shares/store/sub-categories/sub-categories.action';
+
 import {
   httpGetCurrentUser,
   httpUpsertUser,

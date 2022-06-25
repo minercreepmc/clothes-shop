@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { DashboardProductsContext } from 'shares/contexts/dashboard-products.context';
-import { httpGetProducts } from 'shares/hooks/requests/products/products.hook';
+import { httpGetProductsForAdmin } from 'shares/hooks/requests/products/products.hook';
 import Product from '../product/product.component';
 
 const ProductsContainer = () => {
@@ -9,7 +9,9 @@ const ProductsContainer = () => {
 
   useEffect(() => {
     const loadProducts = async () => {
-      const products = await httpGetProducts({});
+      const products = await httpGetProductsForAdmin({
+        descriptionTruncate: 30,
+      });
       setProducts(products);
     };
 
@@ -17,13 +19,14 @@ const ProductsContainer = () => {
   }, [setProducts]);
 
   return (
-    <Container>
-      <Row className="justify-content-center">
-        {products.map((product, index) => (
-          <Col key={product._id} md={4}>
-            <Product product={product} />
-          </Col>
-        ))}
+    <Container fluid>
+      <Row className="justify-content-center ">
+        {products &&
+          products.map((product) => (
+            <Col className='h-100' key={product._id} sm={6} md={6} lg={4}>
+              <Product product={product} />
+            </Col>
+          ))}
       </Row>
     </Container>
   );

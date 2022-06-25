@@ -15,6 +15,20 @@ export async function httpGetProducts() {
   }
 }
 
+export async function httpGetProductsForAdmin({ descriptionTruncate }) {
+  const DEFAULT_LIMIT = 10;
+  try {
+    const res = await axios.get(
+      `${PRODUCTS_ENDPOINT}/?limit=${DEFAULT_LIMIT}&descriptionTruncate=${descriptionTruncate}`,
+      {},
+    );
+    console.log(res.data);
+    return res.data;
+  } catch (errors) {
+    return errors.response.data;
+  }
+}
+
 export async function httpGetProduct({ slug }) {
   try {
     const res = await axios.get(`${PRODUCTS_ENDPOINT}/${slug}`, {});

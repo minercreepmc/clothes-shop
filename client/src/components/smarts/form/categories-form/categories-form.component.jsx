@@ -9,10 +9,10 @@ import PrimaryButton from 'components/reusables/button/primary-button/primary-bu
 import { DashboardCategoriesContext } from 'shares/contexts/dashboard-categories.context';
 
 import { selectCurrentUser } from 'shares/store/user/user.selector';
-import { selectCategories } from 'shares/store/shop/shop.selector';
+import { selectCategories } from 'shares/store/categories/categories.selector';
+import { addCategoryToCategories } from 'shares/store/categories/categories.action';
 
 import { httpPostCategory } from 'shares/hooks/requests/categories/category-requests.hook';
-import { addCategoryToCategories } from 'shares/store/shop/shop.action';
 
 const CategoriesForm = () => {
   const {

@@ -7,12 +7,11 @@ import FormSelect from 'components/reusables/form-group/form-select/form-select.
 import FormInput from 'components/reusables/form-group/form-input/form-input.component';
 import PrimaryButton from 'components/reusables/button/primary-button/primary-button.component';
 
-import {
-  selectCategories,
-  selectSubCategories,
-} from 'shares/store/shop/shop.selector';
+import { selectCategories } from 'shares/store/categories/categories.selector';
+import { selectSubCategories } from 'shares/store/sub-categories/sub-categories.selector';
+
 import { httpPostSubCategory } from 'shares/hooks/requests/sub-categories/sub-categories.hook';
-import { addSubCategoryToSubCategories } from 'shares/store/shop/shop.action';
+import { addSubCategoryToSubCategories } from 'shares/store/sub-categories/sub-categories.action';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 import { DashboardSubcategoriesContext } from 'shares/contexts/dashboard-sub-categories.context';
 
@@ -24,7 +23,6 @@ const SubCategoriesForm = () => {
     setSubCategory,
     INITIAL_SUB_CATEGORY_STATE,
   } = useContext(DashboardSubcategoriesContext);
-  console.log('render');
 
   const { name, categoryId } = subCategory;
 
@@ -62,6 +60,7 @@ const SubCategoriesForm = () => {
   };
 
   const handleGenericChange = (e) => {
+    console.log(e);
     const { name, value } = e.target;
 
     setSubCategory({ ...subCategory, [name]: value });
@@ -77,11 +76,11 @@ const SubCategoriesForm = () => {
         name="categoryId"
         label="Choose a cateogory"
         id="category"
-        defaultValue=""
+        value={categoryId}
         onChange={() => { }}
       >
         <option value="">--Chose a category--</option>
-        {categories.map((category, index) => (
+        {categories.map((category) => (
           <option value={category._id} key={category._id}>
             {category.name}
           </option>

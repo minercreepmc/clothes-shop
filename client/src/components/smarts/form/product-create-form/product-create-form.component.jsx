@@ -16,12 +16,11 @@ import { DashboardProductCreateContext } from 'shares/contexts/dashboard-product
 
 import { httpPostProduct } from 'shares/hooks/requests/products/products.hook';
 import { httpUploadImages } from 'shares/hooks/requests/images/images.hook';
-import { addProductToProducts } from 'shares/store/shop/shop.action';
+import { addProductToProducts } from 'shares/store/products/products.action';
 
-import {
-  selectCategories,
-  selectProducts,
-} from 'shares/store/shop/shop.selector';
+import { selectCategories } from 'shares/store/categories/categories.selector';
+import { selectProducts } from 'shares/store/products/products.selector';
+
 import { httpGetCategory } from 'shares/hooks/requests/categories/category-requests.hook';
 import { resizeImages } from 'shares/utils/react-image-file-resizer/react-image-file-resizer.utils';
 
@@ -64,9 +63,10 @@ const ProductCreateForm = () => {
         images,
         accessToken: admin.accessToken,
       });
-      console.log(imagesLocation);
+      //setProduct(({ ...product, images: imagesLocation }));
 
-      setProduct({ ...product, images: imagesLocation });
+      //TODO: fix this shit
+      product.images = imagesLocation;
 
       const newProduct = await httpPostProduct({
         product,
@@ -117,7 +117,7 @@ const ProductCreateForm = () => {
         label="Title"
         id="title"
         value={title}
-        onChange={() => { }}
+        onChange={() => {}}
       />
 
       <FormInput
@@ -127,7 +127,7 @@ const ProductCreateForm = () => {
         id="description"
         as="textarea"
         value={description}
-        onChange={() => { }}
+        onChange={() => {}}
       />
 
       <FormInput
@@ -136,15 +136,16 @@ const ProductCreateForm = () => {
         id="price"
         label="Price"
         min="0"
+        step="0.01"
         value={price}
-        onChange={() => { }}
+        onChange={() => {}}
       />
 
       <FormImages
         name="images"
         id="images"
         label="Images"
-        files={images}
+        values={images}
         onChange={handleResizeImage}
       />
       <FormInput
@@ -154,7 +155,7 @@ const ProductCreateForm = () => {
         label="Quantity"
         min="0"
         value={quantity}
-        onChange={() => { }}
+        onChange={() => {}}
       />
 
       <FormSelect
@@ -162,7 +163,7 @@ const ProductCreateForm = () => {
         label="Color"
         id="color"
         value={color}
-        onChange={() => { }}
+        onChange={() => {}}
       >
         <option value="">--Select color--</option>
         <option value="Black">Black</option>
@@ -174,7 +175,7 @@ const ProductCreateForm = () => {
         label="Brand"
         id="brand"
         value={brand}
-        onChange={() => { }}
+        onChange={() => {}}
       >
         <option value="">--Select brand--</option>
         <option value="Chanel">Chanel</option>
@@ -186,7 +187,7 @@ const ProductCreateForm = () => {
         name="shipping"
         id="shipping"
         value={shipping}
-        onChange={() => { }}
+        onChange={() => {}}
       >
         <option value="">--Select shipping--</option>
         <option value="Yes">Yes</option>
@@ -212,8 +213,10 @@ const ProductCreateForm = () => {
         name="subCategoriesId"
         id="sub-categories"
         defaultValue=""
-        value={subCategoriesId}
-        onChange={() => { }}
+        onChange={(data) => {
+          const mappedData = data.map((piece) => piece.value);
+          setProduct({ ...product, subCategoriesId: mappedData });
+        }}
         options={subCategories?.map((subCategory) => ({
           value: subCategory._id,
           label: subCategory.name,

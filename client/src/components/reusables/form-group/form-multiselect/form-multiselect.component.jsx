@@ -15,7 +15,7 @@ const colourStyles = {
   menuList: (styles) => ({ ...styles, backgroundColor: '#181a1b' }),
 };
 
-const FormMultiSelect = ({ options, name, value, id }) => {
+const FormMultiSelect = ({ options, name, value, id, ...selectProps }) => {
   return (
     <Form.Group controlId={id}>
       <Form.Label>Sub Categories</Form.Label>
@@ -28,6 +28,7 @@ const FormMultiSelect = ({ options, name, value, id }) => {
         isMulti
         options={options}
         value={value}
+        {...selectProps}
       />
     </Form.Group>
   );

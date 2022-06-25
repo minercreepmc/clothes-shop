@@ -6,9 +6,14 @@ import './product.styles.scss';
 
 const Product = ({ product }) => {
   const { title, description, images, price, subcategories } = product;
+  console.log(product);
   return (
-    <Card style={{ width: '18rem' }} className="product">
-      <Card.Img variant="top" src={images[0].secure_url} />
+    <Card className="product">
+      <Card.Img
+        variant="top"
+        src={images[0].secure_url}
+        className="product-image"
+      />
       <Card.Body>
         <Card.Title
           as={'h3'}

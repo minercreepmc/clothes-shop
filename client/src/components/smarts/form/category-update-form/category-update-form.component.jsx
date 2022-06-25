@@ -12,8 +12,10 @@ import {
   httpPutCategory,
 } from 'shares/hooks/requests/categories/category-requests.hook';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
-import { updateCategoryToCategories } from 'shares/store/shop/shop.action';
-import { selectCategories } from 'shares/store/shop/shop.selector';
+
+import { updateCategoryToCategories } from 'shares/store/categories/categories.action';
+import { selectCategories } from 'shares/store/categories/categories.selector';
+
 import { DashboardCategoryUpdateContext } from 'shares/contexts/dashboard-category-update.context';
 
 const CategoryUpdateForm = () => {

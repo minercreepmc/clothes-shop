@@ -1,14 +1,8 @@
 import { Form } from 'react-bootstrap';
-import Resizer from 'react-image-file-resizer';
-import { resizeImages } from 'shares/utils/react-image-file-resizer/react-image-file-resizer.utils';
 
 import './form-images.styles.scss';
 
-const FormImages = ({ setValue, label, name, id, defaultValue }) => {
-  const handleChange = (e) => {
-    setValue('images', e.target.files);
-  };
-
+const FormImages = ({ label, name, id, ...controlProps }) => {
   return (
     <Form.Group controlId={id}>
       <Form.Label>{label}</Form.Label>
@@ -18,7 +12,7 @@ const FormImages = ({ setValue, label, name, id, defaultValue }) => {
         type="file"
         multiple
         accept="images/*"
-        onChange={handleChange}
+        {...controlProps}
       />
     </Form.Group>
   );

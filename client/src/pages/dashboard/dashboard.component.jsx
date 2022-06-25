@@ -5,7 +5,7 @@ import DashboardNavs from 'layouts/dashboard/dashboard-navs/dashboard-navs.compo
 
 const Dashboard = ({ list }) => {
   return (
-    <Container>
+    <Container fluid>
       <Row className="justify-content-md-center">
         <Col md={4} lg={3}>
           <DashboardNavs list={list} />

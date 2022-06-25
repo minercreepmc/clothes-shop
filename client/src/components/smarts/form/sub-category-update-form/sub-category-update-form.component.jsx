@@ -9,16 +9,15 @@ import FormInput from 'components/reusables/form-group/form-input/form-input.com
 import PrimaryButton from 'components/reusables/button/primary-button/primary-button.component';
 
 import { selectCurrentUser } from 'shares/store/user/user.selector';
-import {
-  selectCategories,
-  selectSubCategories,
-} from 'shares/store/shop/shop.selector';
+import { selectCategories } from 'shares/store/categories/categories.selector';
+import { selectSubCategories } from 'shares/store/sub-categories/sub-categories.selector';
+
 import {
   httpGetSubCategory,
   httpPutSubCategory,
 } from 'shares/hooks/requests/sub-categories/sub-categories.hook';
 import { DashboardSubCategoryUpdateContext } from 'shares/contexts/dashboard-sub-category-update.context';
-import { updateSubCategoryToSubCategories } from 'shares/store/shop/shop.action';
+import { updateSubCategoryToSubCategories } from 'shares/store/sub-categories/sub-categories.action';
 
 const SubCategoryUpdateForm = () => {
   // TODO:
@@ -40,6 +39,7 @@ const SubCategoryUpdateForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log(subCategory);
     try {
       setIsUpdating(true);
       const updatedSubCategory = await httpPutSubCategory({

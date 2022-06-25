@@ -4,9 +4,9 @@ import { toast } from 'react-toastify';
 
 import CardLink from 'components/reusables/card-link/card-link.component';
 
-import { selectCategories } from 'shares/store/shop/shop.selector';
+import { selectCategories } from 'shares/store/categories/categories.selector';
+import { removeCategoryFromCategories } from 'shares/store/categories/categories.action';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
-import { removeCategoryFromCategories } from 'shares/store/shop/shop.action';
 import { httpDeleteCategory } from 'shares/hooks/requests/categories/category-requests.hook';
 
 const Category = ({ category }) => {

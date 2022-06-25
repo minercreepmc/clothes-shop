@@ -7,4 +7,8 @@
   .product-text {
     font-size: 1.1rem !important;
   }
+  .product-image {
+    object-fit: cover !important;
+    height: 10rem !important;
+  }
 }

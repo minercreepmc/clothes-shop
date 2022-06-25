@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { selectCurrentUser } from 'shares/store/user/user.selector';
-import { selectSubCategories } from 'shares/store/shop/shop.selector';
-import { removeSubCategoryFromSubCategories } from 'shares/store/shop/shop.action';
+import { selectSubCategories } from 'shares/store/sub-categories/sub-categories.selector';
+import { removeSubCategoryFromSubCategories } from 'shares/store/sub-categories/sub-categories.action';
+
 import { httpDeleteSubCategory } from 'shares/hooks/requests/sub-categories/sub-categories.hook';
 
 import './sub-category.styles.scss';

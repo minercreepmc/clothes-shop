@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import SearchBar from 'components/reusables/search-bar/search-bar.component';
 import CategoriesContainer from 'components/smarts/categories-container/categories-container.component';
 
-import { selectSearchedCategories } from 'shares/store/shop/shop.selector';
-import { setCategoriesSearchText } from 'shares/store/shop/shop.action';
+import { selectSearchedCategories } from 'shares/store/categories/categories.selector';
+import { setCategoriesSearchText } from 'shares/store/categories/categories.action';
 
 const CategoriesSearch = () => {
   const searchedCategories = useSelector(selectSearchedCategories);
