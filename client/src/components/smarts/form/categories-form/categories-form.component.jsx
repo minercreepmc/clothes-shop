@@ -9,23 +9,22 @@ import PrimaryButton from 'components/reusables/button/primary-button/primary-bu
 import { DashboardCategoriesContext } from 'shares/contexts/dashboard-categories.context';
 
 import { selectCurrentUser } from 'shares/store/user/user.selector';
-import { selectCategories } from 'shares/store/categories/categories.selector';
-import { addCategoryToCategories } from 'shares/store/categories/categories.action';
+import {
+  selectCategories,
+  selectIsCreating,
+} from 'shares/store/categories/categories.selector';
+import { addCategoryToCategoriesAsync } from 'shares/store/categories/categories.action';
 
-import { httpPostCategory } from 'shares/hooks/requests/categories/category-requests.hook';
 import { fetchSubCategoriesAsync } from 'shares/store/sub-categories/sub-categories.action';
 
 const CategoriesForm = () => {
-  const {
-    category,
-    setCategory,
-    INITIAL_CATEGORY_STATE,
-    isCreating,
-    setIsCreating,
-  } = useContext(DashboardCategoriesContext);
+  const { category, setCategory, INITIAL_CATEGORY_STATE } = useContext(
+    DashboardCategoriesContext,
+  );
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
+  const isCreating = useSelector(selectIsCreating);
 
   const dispatch = useDispatch();
 
@@ -38,12 +37,9 @@ const CategoriesForm = () => {
     }
 
     try {
-      setIsCreating(true);
-      const newCategory = await httpPostCategory({
-        category,
-        accessToken: admin.accessToken,
-      });
-      dispatch(addCategoryToCategories(newCategory, categories));
+      dispatch(
+        addCategoryToCategoriesAsync(category, categories, admin.accessToken),
+      );
       dispatch(fetchSubCategoriesAsync());
       setCategory(INITIAL_CATEGORY_STATE);
       toast.success('Create successfully');
@@ -51,8 +47,6 @@ const CategoriesForm = () => {
       errors.forEach((error) => {
         toast.error(error.message);
       });
-    } finally {
-      setIsCreating(false);
     }
   };
 

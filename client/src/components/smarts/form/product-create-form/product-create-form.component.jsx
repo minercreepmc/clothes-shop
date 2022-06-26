@@ -44,7 +44,6 @@ const ProductCreateForm = () => {
     color,
     shipping,
     categoryId,
-    subCategoriesId,
     brand,
   } = product;
 

@@ -7,25 +7,23 @@ import { toast } from 'react-toastify';
 import FormInput from 'components/reusables/form-group/form-input/form-input.component';
 import PrimaryButton from 'components/reusables/button/primary-button/primary-button.component';
 
-import {
-  httpGetCategory,
-  httpPutCategory,
-} from 'shares/hooks/requests/categories/category-requests.hook';
+import { httpGetCategory } from 'shares/hooks/requests/categories/category-requests.hook';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 
-import { updateCategoryToCategories } from 'shares/store/categories/categories.action';
-import { selectCategories } from 'shares/store/categories/categories.selector';
+import { updateCategoryToCategoriesAsync } from 'shares/store/categories/categories.action';
+import {
+  selectCategories,
+  selectIsUpdating,
+} from 'shares/store/categories/categories.selector';
 
 import { DashboardCategoryUpdateContext } from 'shares/contexts/dashboard-category-update.context';
 
 const CategoryUpdateForm = () => {
-  const { isUpdating, setIsUpdating, category, setCategory } = useContext(
-    DashboardCategoryUpdateContext,
-  );
+  const { category, setCategory } = useContext(DashboardCategoryUpdateContext);
 
-  console.log(category);
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
+  const isUpdating = useSelector(selectIsUpdating);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,27 +33,25 @@ const CategoryUpdateForm = () => {
     e.preventDefault();
 
     try {
-      setIsUpdating(true);
-      const updatedCategory = await httpPutCategory({
-        category: { ...category, slug },
-        accessToken: admin.accessToken,
-      });
-      dispatch(updateCategoryToCategories(updatedCategory, categories));
+      dispatch(
+        updateCategoryToCategoriesAsync(
+          category,
+          categories,
+          admin.accessToken,
+        ),
+      );
       toast.success('Update category successful');
       navigate('/admin/dashboard/categories');
     } catch (errors) {
       errors.forEach((error) => {
         toast.error(error.message);
       });
-    } finally {
-      setIsUpdating(false);
     }
   };
 
   useEffect(() => {
     const getCurrentCategory = async () => {
       const currentCategory = await httpGetCategory({ slug });
-      console.log(currentCategory, slug);
       setCategory(currentCategory);
     };
 
