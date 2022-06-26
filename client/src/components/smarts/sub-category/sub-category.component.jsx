@@ -10,6 +10,7 @@ import { deleteSubCategoryFromSubCategoriesAsync } from 'shares/store/sub-catego
 
 import './sub-category.styles.scss';
 import CardLink from 'components/reusables/card-link/card-link.component';
+import { useState } from 'react';
 
 const SubCategory = ({ subCategory }) => {
   const { name, slug } = subCategory;
@@ -17,7 +18,9 @@ const SubCategory = ({ subCategory }) => {
 
   const admin = useSelector(selectCurrentUser);
   const subCategories = useSelector(selectSubCategories);
-  const isDeleting = useSelector(selectIsSubCategoryDeleting);
+  const isSubCategoryDeleting = useSelector(selectIsSubCategoryDeleting);
+
+  const [isDeleting, setIsDeleting] = useState(isSubCategoryDeleting);
 
   const handleDelete = async (slug) => {
     try {

@@ -17,7 +17,9 @@ const Category = ({ category }) => {
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
-  const isDeleting = useSelector(selectIsCategoryDeleting);
+  const isCategoryDeleting = useSelector(selectIsCategoryDeleting);
+
+  const [isDeleting, _] = useState(isCategoryDeleting);
 
   const handleDelete = async (slug) => {
     try {
