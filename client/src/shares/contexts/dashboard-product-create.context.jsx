@@ -13,8 +13,6 @@ const INITIAL_PRODUCT_STATE = {
 };
 
 export const DashboardProductCreateContext = createContext({
-  isCreating: false,
-  setIsCreating: () => { },
   product: null,
   setProduct: () => { },
   subCategories: [],
@@ -22,12 +20,9 @@ export const DashboardProductCreateContext = createContext({
 });
 
 export const DashboardProductCreateProvider = ({ children }) => {
-  const [isCreating, setIsCreating] = useState(false);
   const [product, setProduct] = useState(INITIAL_PRODUCT_STATE);
   const [subCategories, setSubCategories] = useState([]);
   const value = {
-    isCreating,
-    setIsCreating,
     product,
     setProduct,
     INITIAL_PRODUCT_STATE,
