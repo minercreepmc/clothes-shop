@@ -13,6 +13,7 @@ import { selectCategories } from 'shares/store/categories/categories.selector';
 import { addCategoryToCategories } from 'shares/store/categories/categories.action';
 
 import { httpPostCategory } from 'shares/hooks/requests/categories/category-requests.hook';
+import { fetchSubCategoriesAsync } from 'shares/store/sub-categories/sub-categories.action';
 
 const CategoriesForm = () => {
   const {
@@ -43,6 +44,7 @@ const CategoriesForm = () => {
         accessToken: admin.accessToken,
       });
       dispatch(addCategoryToCategories(newCategory, categories));
+      dispatch(fetchSubCategoriesAsync());
       setCategory(INITIAL_CATEGORY_STATE);
       toast.success('Create successfully');
     } catch (errors) {

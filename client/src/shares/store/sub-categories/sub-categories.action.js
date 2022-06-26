@@ -7,6 +7,7 @@ import {
   removeItemFromArray,
   updateItemToArray,
 } from 'shares/utils/logics/logics.utils';
+import { httpGetSubCategories } from 'shares/hooks/requests/sub-categories/sub-categories.hook';
 
 // Sub Categories
 export const addSubCategoryToSubCategories = (
@@ -55,6 +56,27 @@ export const setSubCategories = (subCategoriesToSet) =>
     SUB_CATEGORIES_ACTION_TYPE.SET_SUB_CATEGORIES,
     subCategoriesToSet,
   );
+
+const fetchSubCategoriesStart = () =>
+  createAction(SUB_CATEGORIES_ACTION_TYPE.FETCH_SUB_CATEGORIES_START);
+const fetchSubCategoriesSuccess = (subCategories) =>
+  createAction(
+    SUB_CATEGORIES_ACTION_TYPE.FETCH_SUB_CATEGORIES_SUCCESS,
+    subCategories,
+  );
+const fetchSubCategoriesFailed = (errors) =>
+  createAction(SUB_CATEGORIES_ACTION_TYPE.FETCH_SUB_CATEGORIES_FAILED, errors);
+
+export const fetchSubCategoriesAsync = () => async (dispatch) => {
+  dispatch(fetchSubCategoriesStart());
+
+  try {
+    const subCategories = await httpGetSubCategories();
+    dispatch(fetchSubCategoriesSuccess(subCategories));
+  } catch (errors) {
+    dispatch(fetchSubCategoriesFailed(errors));
+  }
+};
 
 export const setSubCategoriesSearchText = (searchText) =>
   createAction(SUB_CATEGORIES_ACTION_TYPE.SET_SEARCH_TEXT, searchText);

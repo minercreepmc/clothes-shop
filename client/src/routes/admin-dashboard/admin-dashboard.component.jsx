@@ -19,6 +19,7 @@ import { DashboardCategoryUpdateProvider } from 'shares/contexts/dashboard-categ
 import { DashboardSubCategoryUpdateProvider } from 'shares/contexts/dashboard-sub-category-update.context';
 import { DashboardProductsProvider } from 'shares/contexts/dashboard-products.context';
 import { DashboardInformationProvider } from 'shares/contexts/dashboard-information.context';
+import DashboardProductUpdate from 'layouts/dashboard/dashboard-product-update/dashboard-product-update.component';
 
 const AdminDashboard = () => {
   const list = [
@@ -90,6 +91,8 @@ const AdminDashboard = () => {
               </DashboardProductsProvider>
             }
           />
+
+          <Route path="products/:slug" element={<DashboardProductUpdate />} />
         </Route>
       </Routes>
       <ModalPassword />

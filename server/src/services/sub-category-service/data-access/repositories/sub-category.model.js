@@ -1,6 +1,7 @@
-const { Schema, model, ObjectId } = require('mongoose');
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 
-const subCategorySchema = new Schema(
+const subCategorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -24,4 +25,21 @@ const subCategorySchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = model('SubCategory', subCategorySchema, 'subCategories');
+subCategorySchema.post('save', async (doc) => {
+  const { _id, categoryId } = doc;
+  const CategoryModel = mongoose.model('Category');
+  try {
+    await CategoryModel.findOneAndUpdate(
+      { _id: categoryId },
+      { $push: { subCategoriesId: _id } },
+    );
+  } catch (errors) {
+    console.error(errors);
+  }
+});
+
+module.exports = mongoose.model(
+  'SubCategory',
+  subCategorySchema,
+  'subCategories',
+);

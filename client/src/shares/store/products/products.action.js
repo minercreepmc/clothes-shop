@@ -7,6 +7,7 @@ import {
   removeItemFromArray,
   updateItemToArray,
 } from 'shares/utils/logics/logics.utils';
+import { httpGetProducts } from 'shares/hooks/requests/products/products.hook';
 // products
 
 export const addProductToProducts = (productToAdd, products) => {
@@ -26,3 +27,21 @@ export const updateProductToProducts = (productToUpdate, products) => {
 
 export const setProducts = (productsToSet) =>
   createAction(PRODUCTS_ACTION_TYPE.SET_PRODUCTS, productsToSet);
+
+const fetchProductsStart = () =>
+  createAction(PRODUCTS_ACTION_TYPE.FETCH_PRODUCTS_START);
+const fetchProductsSuccess = (products) =>
+  createAction(PRODUCTS_ACTION_TYPE.FETCH_PRODUCTS_SUCCESS, products);
+const fetchProductsErrors = (errors) =>
+  createAction(PRODUCTS_ACTION_TYPE.FETCH_PRODUCTS_FAILED, errors);
+
+export const fetchProductsAsync = () => async (dispatch) => {
+  dispatch(fetchProductsStart());
+
+  try {
+    const products = await httpGetProducts();
+    dispatch(fetchProductsSuccess(products));
+  } catch (errors) {
+    dispatch(fetchProductsErrors(errors));
+  }
+};

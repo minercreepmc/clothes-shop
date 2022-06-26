@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 
 const categorySchema = new mongoose.Schema(
   {
@@ -15,6 +16,7 @@ const categorySchema = new mongoose.Schema(
       lowercase: true,
       index: true,
     },
+    subCategoriesId: [{ type: ObjectId }],
   },
   {
     timestamps: true,
@@ -27,6 +29,14 @@ categorySchema.virtual('subcategories', {
   ref: 'SubCategory',
   localField: '_id',
   foreignField: 'categoryId',
+});
+
+categorySchema.post('findOneAndDelete', async (doc) => {
+  const { subCategoriesId } = doc;
+
+  const SubCategoryModel = mongoose.model('SubCategory');
+
+  await SubCategoryModel.remove({ _id: { $in: subCategoriesId } });
 });
 
 module.exports = mongoose.model('Category', categorySchema, 'category');
