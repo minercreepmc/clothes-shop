@@ -1,12 +1,12 @@
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { selectCurrentUser } from 'shares/store/user/user.selector';
-import { selectSubCategories } from 'shares/store/sub-categories/sub-categories.selector';
-import { removeSubCategoryFromSubCategories } from 'shares/store/sub-categories/sub-categories.action';
-
-import { httpDeleteSubCategory } from 'shares/hooks/requests/sub-categories/sub-categories.hook';
+import {
+  selectIsSubCategoryDeleting,
+  selectSubCategories,
+} from 'shares/store/sub-categories/sub-categories.selector';
+import { deleteSubCategoryFromSubCategoriesAsync } from 'shares/store/sub-categories/sub-categories.action';
 
 import './sub-category.styles.scss';
 import CardLink from 'components/reusables/card-link/card-link.component';
@@ -15,32 +15,26 @@ const SubCategory = ({ subCategory }) => {
   const { name, slug } = subCategory;
   const dispatch = useDispatch();
 
-  const currentUser = useSelector(selectCurrentUser);
+  const admin = useSelector(selectCurrentUser);
   const subCategories = useSelector(selectSubCategories);
-
-  const [isDeleting, setIsDeleting] = useState(false);
+  const isDeleting = useSelector(selectIsSubCategoryDeleting);
 
   const handleDelete = async (slug) => {
     try {
-      setIsDeleting(true);
       // TODO: fancy this by bulding async modal
       const confirmDelete = window.confirm('Do you want to delete category?');
       if (confirmDelete) {
-        const deletedSubCategory = await httpDeleteSubCategory({
-          slug,
-          accessToken: currentUser.accessToken,
-        });
-        console.log(deletedSubCategory);
         dispatch(
-          removeSubCategoryFromSubCategories(deletedSubCategory, subCategories),
+          deleteSubCategoryFromSubCategoriesAsync(
+            slug,
+            subCategories,
+            admin.accessToken,
+          ),
         );
         toast.success('Deleted category successful');
       }
     } catch (errors) {
-      console.log(errors);
       toast.error('Delete category failed');
-    } finally {
-      setIsDeleting(false);
     }
   };
 

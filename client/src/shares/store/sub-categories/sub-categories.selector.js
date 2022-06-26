@@ -2,6 +2,23 @@ import { createSelector } from 'reselect';
 
 const selectSubCategoriesReducer = (state) => state.subCategories;
 
+export const selectSubCategoriesIsLoading = createSelector(
+  selectSubCategoriesReducer,
+  (subCategories) => subCategories.isLoading,
+);
+export const selectIsSubCategoryCreating = createSelector(
+  selectSubCategoriesReducer,
+  (subCategories) => subCategories.isCreating,
+);
+export const selectIsSubCategoryUpdating = createSelector(
+  selectSubCategoriesReducer,
+  (subCategories) => subCategories.isUpdating,
+);
+export const selectIsSubCategoryDeleting = createSelector(
+  selectSubCategoriesReducer,
+  (subCategories) => subCategories.isDeleting,
+);
+
 export const selectSubCategories = createSelector(
   selectSubCategoriesReducer,
   (subCategoriesSlice) => subCategoriesSlice.subCategories,

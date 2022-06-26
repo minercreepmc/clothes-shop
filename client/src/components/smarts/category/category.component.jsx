@@ -6,7 +6,7 @@ import CardLink from 'components/reusables/card-link/card-link.component';
 
 import {
   selectCategories,
-  selectIsDeleting,
+  selectIsCategoryDeleting,
 } from 'shares/store/categories/categories.selector';
 import { deleteCategoryFromCategoriesAsync } from 'shares/store/categories/categories.action';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
@@ -17,7 +17,7 @@ const Category = ({ category }) => {
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
-  const isDeleting = useSelector(selectIsDeleting);
+  const isDeleting = useSelector(selectIsCategoryDeleting);
 
   const handleDelete = async (slug) => {
     try {

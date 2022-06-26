@@ -2,19 +2,19 @@ import { createSelector } from 'reselect';
 
 const selectCategoriesReducer = (state) => state.categories;
 
-export const selectIsLoading = createSelector(
+export const selectIsCategoriesLoading = createSelector(
   selectCategoriesReducer,
   (categories) => categories.isLoading,
 );
-export const selectIsCreating = createSelector(
+export const selectIsCategoryCreating = createSelector(
   selectCategoriesReducer,
   (categories) => categories.isCreating,
 );
-export const selectIsUpdating = createSelector(
+export const selectIsCategoryUpdating = createSelector(
   selectCategoriesReducer,
   (categories) => categories.isUpdating,
 );
-export const selectIsDeleting = createSelector(
+export const selectIsCategoryDeleting = createSelector(
   selectCategoriesReducer,
   (categories) => categories.isDeleting,
 );

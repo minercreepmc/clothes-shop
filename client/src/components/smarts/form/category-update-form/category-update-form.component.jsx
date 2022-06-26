@@ -13,7 +13,7 @@ import { selectCurrentUser } from 'shares/store/user/user.selector';
 import { updateCategoryToCategoriesAsync } from 'shares/store/categories/categories.action';
 import {
   selectCategories,
-  selectIsUpdating,
+  selectIsCategoryUpdating,
 } from 'shares/store/categories/categories.selector';
 
 import { DashboardCategoryUpdateContext } from 'shares/contexts/dashboard-category-update.context';
@@ -23,7 +23,7 @@ const CategoryUpdateForm = () => {
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
-  const isUpdating = useSelector(selectIsUpdating);
+  const isUpdating = useSelector(selectIsCategoryUpdating);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

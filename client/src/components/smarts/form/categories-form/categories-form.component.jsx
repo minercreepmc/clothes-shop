@@ -11,7 +11,7 @@ import { DashboardCategoriesContext } from 'shares/contexts/dashboard-categories
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 import {
   selectCategories,
-  selectIsCreating,
+  selectIsCategoryCreating,
 } from 'shares/store/categories/categories.selector';
 import { addCategoryToCategoriesAsync } from 'shares/store/categories/categories.action';
 
@@ -24,7 +24,7 @@ const CategoriesForm = () => {
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
-  const isCreating = useSelector(selectIsCreating);
+  const isCreating = useSelector(selectIsCategoryCreating);
 
   const dispatch = useDispatch();
 

@@ -8,27 +8,25 @@ import FormInput from 'components/reusables/form-group/form-input/form-input.com
 import PrimaryButton from 'components/reusables/button/primary-button/primary-button.component';
 
 import { selectCategories } from 'shares/store/categories/categories.selector';
-import { selectSubCategories } from 'shares/store/sub-categories/sub-categories.selector';
+import {
+  selectIsSubCategoryCreating,
+  selectSubCategories,
+} from 'shares/store/sub-categories/sub-categories.selector';
 
-import { httpPostSubCategory } from 'shares/hooks/requests/sub-categories/sub-categories.hook';
-import { addSubCategoryToSubCategories } from 'shares/store/sub-categories/sub-categories.action';
+import { addSubCategoryToSubCategoriesAsync } from 'shares/store/sub-categories/sub-categories.action';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 import { DashboardSubcategoriesContext } from 'shares/contexts/dashboard-sub-categories.context';
 
 const SubCategoriesForm = () => {
-  const {
-    isCreating,
-    setIsCreating,
-    subCategory,
-    setSubCategory,
-    INITIAL_SUB_CATEGORY_STATE,
-  } = useContext(DashboardSubcategoriesContext);
+  const { subCategory, setSubCategory, INITIAL_SUB_CATEGORY_STATE } =
+    useContext(DashboardSubcategoriesContext);
 
   const { name, categoryId } = subCategory;
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
   const subCategories = useSelector(selectSubCategories);
+  const isCreating = useSelector(selectIsSubCategoryCreating);
 
   const dispatch = useDispatch();
 
@@ -41,21 +39,19 @@ const SubCategoriesForm = () => {
     }
 
     try {
-      setIsCreating(true);
-      const newSubCategory = await httpPostSubCategory({
-        subCategory,
-        accessToken: admin.accessToken,
-      });
-      dispatch(addSubCategoryToSubCategories(newSubCategory, subCategories));
+      dispatch(
+        addSubCategoryToSubCategoriesAsync(
+          subCategory,
+          subCategories,
+          admin.accessToken,
+        ),
+      );
       setSubCategory(INITIAL_SUB_CATEGORY_STATE);
       toast.success('Create successfully');
     } catch (errors) {
-      console.log(errors);
       errors.forEach((error) => {
         toast.error(error.message);
       });
-    } finally {
-      setIsCreating(false);
     }
   };
 

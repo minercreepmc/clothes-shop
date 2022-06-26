@@ -10,20 +10,20 @@ import PrimaryButton from 'components/reusables/button/primary-button/primary-bu
 
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 import { selectCategories } from 'shares/store/categories/categories.selector';
-import { selectSubCategories } from 'shares/store/sub-categories/sub-categories.selector';
-
 import {
-  httpGetSubCategory,
-  httpPutSubCategory,
-} from 'shares/hooks/requests/sub-categories/sub-categories.hook';
+  selectIsSubCategoryUpdating,
+  selectSubCategories,
+} from 'shares/store/sub-categories/sub-categories.selector';
+
+import { httpGetSubCategory } from 'shares/hooks/requests/sub-categories/sub-categories.hook';
 import { DashboardSubCategoryUpdateContext } from 'shares/contexts/dashboard-sub-category-update.context';
-import { updateSubCategoryToSubCategories } from 'shares/store/sub-categories/sub-categories.action';
+import { updateSubCategoryToSubCategoriesAsync } from 'shares/store/sub-categories/sub-categories.action';
 
 const SubCategoryUpdateForm = () => {
   // TODO:
   const { slug } = useParams();
 
-  const { setIsUpdating, isUpdating, subCategory, setSubCategory } = useContext(
+  const { subCategory, setSubCategory } = useContext(
     DashboardSubCategoryUpdateContext,
   );
 
@@ -32,6 +32,7 @@ const SubCategoryUpdateForm = () => {
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
   const subCategories = useSelector(selectSubCategories);
+  const isUpdating = useSelector(selectIsSubCategoryUpdating);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,15 +40,13 @@ const SubCategoryUpdateForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(subCategory);
     try {
-      setIsUpdating(true);
-      const updatedSubCategory = await httpPutSubCategory({
-        subCategory: { ...subCategory, slug },
-        accessToken: admin.accessToken,
-      });
       dispatch(
-        updateSubCategoryToSubCategories(updatedSubCategory, subCategories),
+        updateSubCategoryToSubCategoriesAsync(
+          subCategory,
+          subCategories,
+          admin.accessToken,
+        ),
       );
       toast.success('Update category successful');
       navigate('/admin/dashboard/sub-categories');
@@ -55,8 +54,6 @@ const SubCategoryUpdateForm = () => {
       errors.forEach((error) => {
         toast.error(error.message);
       });
-    } finally {
-      setIsUpdating(false);
     }
   };
 
