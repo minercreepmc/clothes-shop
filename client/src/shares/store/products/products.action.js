@@ -7,23 +7,96 @@ import {
   removeItemFromArray,
   updateItemToArray,
 } from 'shares/utils/logics/logics.utils';
-import { httpGetProducts } from 'shares/hooks/requests/products/products.hook';
+import {
+  httpDeleteProduct,
+  httpGetProducts,
+  httpPostProduct,
+  httpPutProduct,
+} from 'shares/hooks/requests/products/products.hook';
 // products
 
-export const addProductToProducts = (productToAdd, products) => {
+// add
+const addProductToProductsStart = () =>
+  createAction(PRODUCTS_ACTION_TYPE.ADD_PRODUCT_START);
+
+const addProductToProductsSuccess = (productToAdd, products) => {
   const productsToSet = addItemToArray(productToAdd, products);
-  return createAction(PRODUCTS_ACTION_TYPE.SET_PRODUCTS, productsToSet);
+  return createAction(PRODUCTS_ACTION_TYPE.ADD_PRODUCT_SUCCESS, productsToSet);
 };
+const addProductToProductsFailed = (errors) =>
+  createAction(PRODUCTS_ACTION_TYPE.ADD_PRODUCT_FAILED, errors);
 
-export const removeProductFromProducts = (productToRemove, products) => {
-  const productsToSet = removeItemFromArray(productToRemove, products);
-  return createAction(PRODUCTS_ACTION_TYPE.SET_PRODUCTS, productsToSet);
-};
+export const addProductToProductsAsync =
+  (productToAdd, products, accessToken) => async (dispatch) => {
+    dispatch(addProductToProductsStart());
 
-export const updateProductToProducts = (productToUpdate, products) => {
-  const productsToSet = updateItemToArray(productToUpdate, products);
-  return createAction(PRODUCTS_ACTION_TYPE.SET_PRODUCTS, productsToSet);
+    try {
+      const newProduct = await httpPostProduct({
+        product: productToAdd,
+        accessToken,
+      });
+      dispatch(addProductToProductsSuccess(newProduct, products));
+    } catch (errors) {
+      dispatch(addProductToProductsFailed(errors));
+    }
+  };
+
+// Delete
+const deleteProductFromProductsStart = () =>
+  createAction(PRODUCTS_ACTION_TYPE.DELETE_PRODUCT_START);
+const deleteProductFromProductsSuccess = (productToDelete, products) => {
+  const productsToSet = removeItemFromArray(productToDelete, products);
+  return createAction(
+    PRODUCTS_ACTION_TYPE.DELETE_PRODUCT_SUCCESS,
+    productsToSet,
+  );
 };
+const deleteProductFromProductsFailed = (errors) =>
+  createAction(PRODUCTS_ACTION_TYPE.DELETE_PRODUCT_FAILED, errors);
+
+export const deleteProductFromProductsAsync =
+  (slug, products, accessToken) => async (dispatch) => {
+    dispatch(deleteProductFromProductsStart());
+
+    try {
+      const deletedProduct = await httpDeleteProduct({
+        slug,
+        accessToken,
+      });
+      dispatch(deleteProductFromProductsSuccess(deletedProduct, products));
+    } catch (errors) {
+      dispatch(deleteProductFromProductsFailed(errors));
+    }
+  };
+
+// update
+const updateProductToProductsStart = () =>
+  createAction(PRODUCTS_ACTION_TYPE.UPDATE_PRODUCT_START);
+const updateProductToProductsSuccess = (updatedProduct, products) => {
+  const productsToSet = updateItemToArray(updatedProduct, products);
+
+  return createAction(
+    PRODUCTS_ACTION_TYPE.UPDATE_PRODUCT_SUCCESS,
+    productsToSet,
+  );
+};
+const updateProductToProductsFailed = (errors) =>
+  createAction(PRODUCTS_ACTION_TYPE.UPDATE_PRODUCT_FAILED, errors);
+
+export const updateProductToProductsAsync =
+  (productToUpdate, products, accessToken) => async (dispatch) => {
+    dispatch(updateProductToProductsStart());
+
+    try {
+      const updatedProduct = await httpPutProduct({
+        product: productToUpdate,
+        accessToken,
+      });
+      dispatch(updateProductToProductsSuccess(updatedProduct, products));
+    } catch (errors) {
+      dispatch(updateProductToProductsFailed(errors));
+    }
+  };
 
 export const setProducts = (productsToSet) =>
   createAction(PRODUCTS_ACTION_TYPE.SET_PRODUCTS, productsToSet);

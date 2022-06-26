@@ -14,12 +14,14 @@ import { selectCurrentUser } from 'shares/store/user/user.selector';
 
 import { DashboardProductCreateContext } from 'shares/contexts/dashboard-product-create.context';
 
-import { httpPostProduct } from 'shares/hooks/requests/products/products.hook';
 import { httpUploadImages } from 'shares/hooks/requests/images/images.hook';
-import { addProductToProducts } from 'shares/store/products/products.action';
+import { addProductToProductsAsync } from 'shares/store/products/products.action';
 
 import { selectCategories } from 'shares/store/categories/categories.selector';
-import { selectProducts } from 'shares/store/products/products.selector';
+import {
+  selectIsProductCreating,
+  selectProducts,
+} from 'shares/store/products/products.selector';
 
 import { httpGetCategory } from 'shares/hooks/requests/categories/category-requests.hook';
 import { resizeImages } from 'shares/utils/react-image-file-resizer/react-image-file-resizer.utils';
@@ -31,8 +33,6 @@ const ProductCreateForm = () => {
     INITIAL_PRODUCT_STATE,
     subCategories,
     setSubCategories,
-    isCreating,
-    setIsCreating,
   } = useContext(DashboardProductCreateContext);
 
   const {
@@ -50,6 +50,7 @@ const ProductCreateForm = () => {
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
   const products = useSelector(selectProducts);
+  const isCreating = useSelector(selectIsProductCreating);
 
   const dispatch = useDispatch();
 
@@ -57,7 +58,6 @@ const ProductCreateForm = () => {
     e.preventDefault();
 
     try {
-      setIsCreating(true);
       const imagesLocation = await httpUploadImages({
         images,
         accessToken: admin.accessToken,
@@ -67,20 +67,13 @@ const ProductCreateForm = () => {
       //TODO: fix this shit
       product.images = imagesLocation;
 
-      const newProduct = await httpPostProduct({
-        product,
-        accessToken: admin.accessToken,
-      });
-      dispatch(addProductToProducts(newProduct, products));
+      dispatch(addProductToProductsAsync(product, products, admin.accessToken));
       setProduct(INITIAL_PRODUCT_STATE);
       toast.success('Create successfully');
     } catch (errors) {
-      console.log(errors);
       errors.forEach((error) => {
         toast.error(error.message);
       });
-    } finally {
-      setIsCreating(false);
     }
   };
 

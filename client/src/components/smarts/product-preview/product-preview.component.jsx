@@ -6,9 +6,8 @@ import PrimaryButton from 'components/reusables/button/primary-button/primary-bu
 
 import { truncateText } from 'shares/utils/logics/logics.utils';
 
-import { httpDeleteProduct } from 'shares/hooks/requests/products/products.hook';
 import { selectCurrentUser } from 'shares/store/user/user.selector';
-import { removeProductFromProducts } from 'shares/store/products/products.action';
+import { deleteProductFromProductsAsync } from 'shares/store/products/products.action';
 import { selectProducts } from 'shares/store/products/products.selector';
 
 import './product.styles.scss';
@@ -28,12 +27,7 @@ const ProductPreview = ({ product }) => {
     if (!confirmDelete) {
       return;
     }
-    const deletedProduct = await httpDeleteProduct({
-      slug,
-      accessToken: admin.accessToken,
-    });
-
-    dispatch(removeProductFromProducts(deletedProduct, products));
+    dispatch(deleteProductFromProductsAsync(slug, products, admin.accessToken));
   };
 
   return (
