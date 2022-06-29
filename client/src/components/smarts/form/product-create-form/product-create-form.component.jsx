@@ -14,7 +14,6 @@ import { selectCurrentUser } from 'shares/store/user/user.selector';
 
 import { DashboardProductCreateContext } from 'shares/contexts/dashboard-product-create.context';
 
-import { httpUploadImages } from 'shares/hooks/requests/images/images.hook';
 import { addProductToProductsAsync } from 'shares/store/products/products.action';
 
 import { selectCategories } from 'shares/store/categories/categories.selector';
@@ -45,6 +44,7 @@ const ProductCreateForm = () => {
     shipping,
     categoryId,
     brand,
+    subCategoriesId,
   } = product;
 
   const admin = useSelector(selectCurrentUser);
@@ -57,17 +57,30 @@ const ProductCreateForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (
+      !title ||
+      !description ||
+      !price ||
+      !quantity ||
+      !color ||
+      !shipping ||
+      !categoryId ||
+      !brand ||
+      images.length === 0 ||
+      subCategoriesId.length === 0
+    ) {
+      toast.error('Please fill all required fields');
+      return;
+    }
     try {
-      const imagesLocation = await httpUploadImages({
-        images,
-        accessToken: admin.accessToken,
-      });
-      //setProduct(({ ...product, images: imagesLocation }));
-
-      //TODO: fix this shit
-      product.images = imagesLocation;
-
-      dispatch(addProductToProductsAsync(product, products, admin.accessToken));
+      dispatch(
+        addProductToProductsAsync({
+          productToAdd: product,
+          products,
+          images,
+          accessToken: admin.accessToken,
+        }),
+      );
       setProduct(INITIAL_PRODUCT_STATE);
       toast.success('Create successfully');
     } catch (errors) {
@@ -90,7 +103,7 @@ const ProductCreateForm = () => {
 
   const handleChooseCategory = async (e) => {
     const category = await httpGetCategory({
-      _id: e.target.value,
+      param: e.target.value,
       subCategories: true,
     });
     setProduct({ ...product, categoryId: e.target.value });
@@ -209,10 +222,13 @@ const ProductCreateForm = () => {
           const mappedData = data.map((piece) => piece.value);
           setProduct({ ...product, subCategoriesId: mappedData });
         }}
-        options={subCategories?.map((subCategory) => ({
-          value: subCategory._id,
-          label: subCategory.name,
-        }))}
+        options={subCategories?.map((subCategory) => {
+          console.log(subCategory._id);
+          return {
+            value: subCategory._id,
+            label: subCategory.name,
+          };
+        })}
       />
 
       <PrimaryButton

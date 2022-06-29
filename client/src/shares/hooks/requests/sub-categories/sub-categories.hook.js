@@ -7,8 +7,8 @@ export async function httpGetSubCategories() {
   return res.data;
 }
 
-export async function httpGetSubCategory({ slug }) {
-  const res = await axios.get(`${SUB_CATEGORY_ENDPOINT}/${slug}`, {});
+export async function httpGetSubCategory({ param }) {
+  const res = await axios.get(`${SUB_CATEGORY_ENDPOINT}/${param}`, {});
   return res.data;
 }
 

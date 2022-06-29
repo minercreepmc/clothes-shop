@@ -51,7 +51,7 @@ const CategoryUpdateForm = () => {
 
   useEffect(() => {
     const getCurrentCategory = async () => {
-      const currentCategory = await httpGetCategory({ slug });
+      const currentCategory = await httpGetCategory({ param: slug });
       setCategory(currentCategory);
     };
 

@@ -47,7 +47,7 @@ const ProductPreview = ({ product }) => {
           <small className="lead">{price}$</small>
         </Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
-          {subcategories.map((subcategory, index) => (
+          {subcategories?.map((subcategory, index) => (
             <span key={index}>
               {subcategory.name}
               <span> </span>

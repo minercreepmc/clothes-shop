@@ -5,7 +5,7 @@ async function getSubCategories() {
 }
 
 async function getSubCategory(filters) {
-  return SubCategoryModel.findOne({ ...filters });
+  return SubCategoryModel.findOne(filters);
 }
 
 async function createSubCategory(category) {

@@ -15,7 +15,7 @@ const {
 } = require('./product.controller');
 
 router.get('/', httpGetProducts);
-router.get('/:slug', httpGetProduct);
+router.get('/:param', httpGetProduct);
 router.post('/', authCheck, adminCheck, httpPostProduct);
 router.put('/:slug', authCheck, adminCheck, httpPutProduct);
 router.delete('/:slug', authCheck, adminCheck, httpDeleteProduct);

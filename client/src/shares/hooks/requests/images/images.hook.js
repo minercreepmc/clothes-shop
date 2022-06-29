@@ -21,11 +21,24 @@ async function httpUploadImages({ images, accessToken }) {
       { images },
       { headers: { accessToken } },
     );
-    console.log(res);
     return res.data;
   } catch (errors) {
     return errors.response.data;
   }
 }
 
-export { httpUploadImage, httpUploadImages };
+async function httpDeleteImages({ imagesId, accessToken }) {
+  try {
+    const res = await axios.post(
+      `${IMAGES_UPLOAD_ENDPOINT}/delete`,
+      { imagesId },
+      { headers: { accessToken } },
+    );
+
+    return res.data;
+  } catch (errors) {
+    return errors.response.data;
+  }
+}
+
+export { httpUploadImage, httpUploadImages, httpDeleteImages };

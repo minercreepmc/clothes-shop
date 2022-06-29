@@ -42,6 +42,20 @@ async function getProduct(data) {
   return ProductRepo.getProduct(filters);
 }
 
+async function getProductByIdOrSlug({ params }) {
+  const { param } = params;
+
+  const filters = {};
+
+  if (ObjectId.isValid(param)) {
+    filters._id = param;
+  } else {
+    filters.slug = param;
+  }
+
+  return ProductRepo.getProduct(filters);
+}
+
 async function createProduct(data) {
   const { body } = data;
 
@@ -55,8 +69,9 @@ async function createProduct(data) {
     shipping: body.shipping,
     categoryId: ObjectId(body.categoryId),
     images: body.images,
-    subCategoriesId: body.subCategoriesId.map((subCategory) => ({
-      _id: ObjectId(subCategory.value),
+    color: body.color,
+    subCategoriesId: body.subCategoriesId.map((subCategoryId) => ({
+      _id: ObjectId(subCategoryId),
     })),
   };
 
@@ -67,22 +82,12 @@ async function createProduct(data) {
   }
 }
 
-async function updateProduct(data) {
-  const { body, params } = data;
-
+async function updateProduct({ body, params }) {
   const product = {
-    title: body.title,
+    ...body,
     slug: slugify(body.title),
-    description: body.description,
     price: +body.price,
     quantity: +body.quantity,
-    brand: body.brand,
-    shipping: body.shipping,
-    images: body.images,
-    categoryId: ObjectId(body.categoryId),
-    subCategoriesId: body.subCategoriesId.map((subCategory) => ({
-      _id: ObjectId(subCategory.value),
-    })),
   };
 
   const filters = {
@@ -109,6 +114,7 @@ async function deleteProduct(data) {
 module.exports = {
   getAllProducts,
   getProduct,
+  getProductByIdOrSlug,
   getProductsByQuery,
   createProduct,
   updateProduct,

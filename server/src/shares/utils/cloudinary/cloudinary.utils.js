@@ -17,6 +17,11 @@ async function uploadImage(image) {
   return result;
 }
 
+async function deleteImage(url) {
+  return cloudinary.uploader.destroy(url);
+}
+
 module.exports = {
   uploadImage,
+  deleteImage,
 };

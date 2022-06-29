@@ -13,6 +13,10 @@ import {
   httpPostProduct,
   httpPutProduct,
 } from 'shares/hooks/requests/products/products.hook';
+import {
+  httpDeleteImages,
+  httpUploadImages,
+} from 'shares/hooks/requests/images/images.hook';
 // products
 
 // add
@@ -27,19 +31,24 @@ const addProductToProductsFailed = (errors) =>
   createAction(PRODUCTS_ACTION_TYPE.ADD_PRODUCT_FAILED, errors);
 
 export const addProductToProductsAsync =
-  (productToAdd, products, accessToken) => async (dispatch) => {
-    dispatch(addProductToProductsStart());
+  ({ productToAdd, products, images, accessToken }) =>
+    async (dispatch) => {
+      dispatch(addProductToProductsStart());
 
-    try {
-      const newProduct = await httpPostProduct({
-        product: productToAdd,
-        accessToken,
-      });
-      dispatch(addProductToProductsSuccess(newProduct, products));
-    } catch (errors) {
-      dispatch(addProductToProductsFailed(errors));
-    }
-  };
+      try {
+        const imagesLocation = await httpUploadImages({ images, accessToken });
+        //TODO: fix this shit
+        productToAdd.images = imagesLocation;
+
+        const newProduct = await httpPostProduct({
+          product: productToAdd,
+          accessToken,
+        });
+        dispatch(addProductToProductsSuccess(newProduct, products));
+      } catch (errors) {
+        dispatch(addProductToProductsFailed(errors));
+      }
+    };
 
 // Delete
 const deleteProductFromProductsStart = () =>
@@ -63,6 +72,10 @@ export const deleteProductFromProductsAsync =
         slug,
         accessToken,
       });
+
+      const { images } = deletedProduct;
+      const imagesId = images.map((image) => image.public_id);
+      await httpDeleteImages({ imagesId, accessToken });
       dispatch(deleteProductFromProductsSuccess(deletedProduct, products));
     } catch (errors) {
       dispatch(deleteProductFromProductsFailed(errors));
@@ -84,19 +97,20 @@ const updateProductToProductsFailed = (errors) =>
   createAction(PRODUCTS_ACTION_TYPE.UPDATE_PRODUCT_FAILED, errors);
 
 export const updateProductToProductsAsync =
-  (productToUpdate, products, accessToken) => async (dispatch) => {
-    dispatch(updateProductToProductsStart());
+  ({ productToUpdate, products, accessToken }) =>
+    async (dispatch) => {
+      dispatch(updateProductToProductsStart());
 
-    try {
-      const updatedProduct = await httpPutProduct({
-        product: productToUpdate,
-        accessToken,
-      });
-      dispatch(updateProductToProductsSuccess(updatedProduct, products));
-    } catch (errors) {
-      dispatch(updateProductToProductsFailed(errors));
-    }
-  };
+      try {
+        const updatedProduct = await httpPutProduct({
+          product: productToUpdate,
+          accessToken,
+        });
+        dispatch(updateProductToProductsSuccess(updatedProduct, products));
+      } catch (errors) {
+        dispatch(updateProductToProductsFailed(errors));
+      }
+    };
 
 export const setProducts = (productsToSet) =>
   createAction(PRODUCTS_ACTION_TYPE.SET_PRODUCTS, productsToSet);

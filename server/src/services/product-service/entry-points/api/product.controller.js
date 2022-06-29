@@ -7,15 +7,17 @@ async function httpGetProducts(req, res) {
     });
     return res.status(200).json(products);
   } catch (errors) {
-    console.log(errors);
     return res.status(400).json(errors);
   }
 }
 async function httpGetProduct(req, res) {
   try {
-    const product = await ProductUseCase.getProduct({ params: req.params });
+    const product = await ProductUseCase.getProductByIdOrSlug({
+      params: req.params,
+    });
     return res.status(200).json(product);
   } catch (errors) {
+    console.log(errors);
     return res.status(400).json(errors);
   }
 }

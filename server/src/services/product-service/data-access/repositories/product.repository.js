@@ -9,8 +9,7 @@ async function getProducts({ limit, skip }) {
 }
 
 async function getProduct(filters) {
-  const { slug } = filters;
-  return ProductModel.find({ slug });
+  return ProductModel.findOne(filters);
 }
 
 async function createProduct(product) {

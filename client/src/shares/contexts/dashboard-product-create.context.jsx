@@ -1,13 +1,13 @@
 import { createContext, useState } from 'react';
 
 const INITIAL_PRODUCT_STATE = {
-  title: '',
-  description: '',
-  price: 0,
+  title: 'Fake vest',
+  description: 'This just a fake vest',
+  price: 99.99,
   images: [],
-  quantity: 0,
-  shipping: '',
-  brand: '',
+  quantity: 100,
+  shipping: 'Yes',
+  brand: 'Chanel',
   categoryId: '',
   subCategoriesId: '',
 };

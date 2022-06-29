@@ -7,10 +7,9 @@ export async function httpGetCategories() {
   return res.data;
 }
 
-export async function httpGetCategory({ slug, _id, subCategories = '' }) {
-  const params = slug || _id;
+export async function httpGetCategory({ param, subCategories = '' }) {
   const res = await axios.get(
-    `${CATEGORIES_ENDPOINT}/${params}?subCategories=${subCategories}`,
+    `${CATEGORIES_ENDPOINT}/${param}?subCategories=${subCategories}`,
     {},
   );
   return res.data;

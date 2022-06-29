@@ -11,7 +11,7 @@ async function httpGetSubCategories(req, res) {
 
 async function httpGetSubCategory(req, res) {
   try {
-    const category = await SubCategoryUseCase.getSubCategoryBySlug({
+    const category = await SubCategoryUseCase.getSubCategoryByIdOrSlug({
       params: req.params,
     });
     return res.status(200).json(category);

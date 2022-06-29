@@ -18,6 +18,19 @@ async function getSubCategoriesByCategoryId(data) {
   return SubCategoryRepo.getSubCategories({ filters });
 }
 
+async function getSubCategoryByIdOrSlug({ params }) {
+  const { param } = params;
+
+  const filters = {};
+  if (ObjectId.isValid(param)) {
+    filters._id = param;
+  } else {
+    filters.slug = param;
+  }
+
+  return SubCategoryRepo.getSubCategory(filters);
+}
+
 async function getSubCategoryBySlug(data) {
   const { params } = data;
 
@@ -74,6 +87,7 @@ module.exports = {
   getAllSubCategories,
   getSubCategoriesByCategoryId,
   getSubCategoryBySlug,
+  getSubCategoryByIdOrSlug,
   createSubCategory,
   updateSubCategory,
   deleteSubCategory,

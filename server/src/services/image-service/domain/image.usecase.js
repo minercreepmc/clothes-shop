@@ -18,4 +18,12 @@ async function uploadImages(data) {
   return Promise.all(uploadMultipleImages);
 }
 
-module.exports = { uploadImage, uploadImages };
+async function deleteImages({ body }) {
+  const { imagesId } = body;
+
+  const deleteMultipleImages = imagesId.map((id) => Cloudinary.deleteImage(id));
+
+  return Promise.all(deleteMultipleImages);
+}
+
+module.exports = { uploadImage, uploadImages, deleteImages };
