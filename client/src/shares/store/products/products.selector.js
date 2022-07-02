@@ -23,3 +23,12 @@ export const selectProducts = createSelector(
   selectProductsReducer,
   (productsSlice) => productsSlice.products,
 );
+
+export const selectHomeProducts = createSelector(selectProducts, (products) =>
+  products.slice(0, 5),
+);
+
+export const selectNewestProduct = createSelector(
+  selectProducts,
+  (products) => products[0],
+);

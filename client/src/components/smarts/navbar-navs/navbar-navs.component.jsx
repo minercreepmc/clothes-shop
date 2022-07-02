@@ -26,7 +26,7 @@ const NavBarNavs = () => {
     <>
       <Navbar.Toggle aria-controls="navbar-nav" />
       <Navbar.Collapse id="navbar-nav">
-        <Nav className="me-auto">
+        <Nav className="me-auto" navbarScroll>
           <Nav.Link>Shop</Nav.Link>
           <Nav.Link>Contact Me</Nav.Link>
         </Nav>

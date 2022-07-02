@@ -19,3 +19,8 @@ export const truncateText = (string, maxLength) => {
     ? string.slice(0, maxLength).concat('...')
     : string;
 };
+
+export const compose =
+  (...fns) =>
+    (x) =>
+      fns.reduceRight((res, fn) => fn(res), x);

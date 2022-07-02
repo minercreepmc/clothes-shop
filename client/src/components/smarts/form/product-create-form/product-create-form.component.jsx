@@ -96,11 +96,6 @@ const ProductCreateForm = () => {
     setProduct({ ...product, [name]: value });
   };
 
-  const handleResizeImage = async (e) => {
-    const resizedImages = await resizeImages(Array.from(e.target.files));
-    setProduct({ ...product, images: resizedImages });
-  };
-
   const handleChooseCategory = async (e) => {
     const category = await httpGetCategory({
       param: e.target.value,
@@ -108,6 +103,12 @@ const ProductCreateForm = () => {
     });
     setProduct({ ...product, categoryId: e.target.value });
     setSubCategories(category.subcategories);
+  };
+
+  const handleResizeImage = async (e) => {
+    const resizedImages = await resizeImages(Array.from(e.target.files));
+
+    setProduct({ ...product, images: resizedImages });
   };
 
   return (
@@ -122,7 +123,7 @@ const ProductCreateForm = () => {
         label="Title"
         id="title"
         value={title}
-        onChange={() => { }}
+        onChange={() => {}}
       />
 
       <FormInput
@@ -132,7 +133,7 @@ const ProductCreateForm = () => {
         id="description"
         as="textarea"
         value={description}
-        onChange={() => { }}
+        onChange={() => {}}
       />
 
       <FormInput
@@ -143,7 +144,7 @@ const ProductCreateForm = () => {
         min="0"
         step="0.01"
         value={price}
-        onChange={() => { }}
+        onChange={() => {}}
       />
 
       <FormImages
@@ -160,7 +161,7 @@ const ProductCreateForm = () => {
         label="Quantity"
         min="0"
         value={quantity}
-        onChange={() => { }}
+        onChange={() => {}}
       />
 
       <FormSelect
@@ -168,7 +169,7 @@ const ProductCreateForm = () => {
         label="Color"
         id="color"
         value={color}
-        onChange={() => { }}
+        onChange={() => {}}
       >
         <option value="">--Select color--</option>
         <option value="Black">Black</option>
@@ -180,7 +181,7 @@ const ProductCreateForm = () => {
         label="Brand"
         id="brand"
         value={brand}
-        onChange={() => { }}
+        onChange={() => {}}
       >
         <option value="">--Select brand--</option>
         <option value="Chanel">Chanel</option>
@@ -192,7 +193,7 @@ const ProductCreateForm = () => {
         name="shipping"
         id="shipping"
         value={shipping}
-        onChange={() => { }}
+        onChange={() => {}}
       >
         <option value="">--Select shipping--</option>
         <option value="Yes">Yes</option>
@@ -223,7 +224,6 @@ const ProductCreateForm = () => {
           setProduct({ ...product, subCategoriesId: mappedData });
         }}
         options={subCategories?.map((subCategory) => {
-          console.log(subCategory._id);
           return {
             value: subCategory._id,
             label: subCategory.name,

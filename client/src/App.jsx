@@ -34,7 +34,7 @@ const App = () => {
         dispatch(fetchCurrentUserAsync(userMetadata.accessToken));
       } else {
         dispatch(setCurrentUser(null));
-        navigate('/auth');
+        // TODO: Fix this
       }
     });
   }, [dispatch, navigate]);

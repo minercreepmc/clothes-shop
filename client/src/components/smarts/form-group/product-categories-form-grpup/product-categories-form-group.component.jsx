@@ -1,5 +1,4 @@
 import FormSelect from 'components/reusables/form-group/form-select/form-select.component';
-import { httpGetCategory } from 'shares/hooks/requests/categories/category-requests.hook';
 
 const ProductCategoriesFormGroup = ({ handleChange, value, options }) => {
   return (

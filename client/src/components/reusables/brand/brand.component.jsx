@@ -1,12 +1,12 @@
-import { Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Brand } from './brand.styles';
 
-const Brand = ({ children }) => {
+const BrandContainer = ({ children }) => {
   return (
-    <Navbar.Brand as={Link} to="/">
+    <Brand as={Link} to="/">
       {children}
-    </Navbar.Brand>
+    </Brand>
   );
 };
 
-export default Brand;
+export default BrandContainer;

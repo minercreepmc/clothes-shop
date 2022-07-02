@@ -1,13 +1,7 @@
-import { Button } from 'react-bootstrap';
+import { PrimaryButton } from './primary.styles';
 
-import './primary-button.styles.scss';
-
-const PrimaryButton = ({ children, ...otherProps }) => {
-  return (
-    <Button className="primary-button" {...otherProps}>
-      {children}
-    </Button>
-  );
+const PrimaryButtonContainer = ({ children, ...otherProps }) => {
+  return <PrimaryButton {...otherProps}>{children}</PrimaryButton>;
 };
 
-export default PrimaryButton;
+export default PrimaryButtonContainer;

@@ -12,14 +12,16 @@ async function getAllProducts() {
 async function getProductsByQuery({ query }) {
   const DEFAULT_PAGE = 1;
   const DEFAULT_LIMIT = 10;
+  const DEFAULT_SORT = { updatedAt: -1 };
 
   const page = query.page || DEFAULT_PAGE;
   const limit = query.limit || DEFAULT_LIMIT;
+  const sort = DEFAULT_SORT;
 
   const skip = (page - 1) * limit;
 
   if (query.descriptionTruncate) {
-    const products = await ProductRepo.getProducts({ limit, skip });
+    const products = await ProductRepo.getProducts({ limit, skip, sort });
     products.forEach((product) => {
       product.description = product.description
         .slice(0, +query.descriptionTruncate)
@@ -29,7 +31,7 @@ async function getProductsByQuery({ query }) {
     return products;
   }
 
-  return ProductRepo.getProducts({ limit, skip });
+  return ProductRepo.getProducts({ limit, skip, sort });
 }
 
 async function getProduct(data) {
