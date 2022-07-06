@@ -15,6 +15,7 @@ export const CategoryCaption = styled.div`
   background: rgba(244, 98, 58, 0.9);
   transition: opacity 0.25s ease;
   text-align: center;
+  cursor: pointer;
 `;
 
 export const Category = styled.a`

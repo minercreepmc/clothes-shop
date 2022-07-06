@@ -11,6 +11,7 @@ import ProtectedAdmin from 'components/smarts/protected/protected-admin/protecte
 import Auth from './auth/auth.component';
 import AdminDashboard from './admin-dashboard/admin-dashboard.component';
 import UserDashboard from './user-dashboard/user-dashboard.component';
+import ShopRoutes from './shop-routes/shop-routes.component';
 
 import { DashboardProvider } from 'shares/contexts/dashboard.context';
 
@@ -40,6 +41,8 @@ const AppRoute = () => {
             </DashboardProvider>
           }
         />
+
+        <Route path="shop" element={<ShopRoutes />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

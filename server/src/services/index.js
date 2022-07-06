@@ -6,6 +6,7 @@ const categoryRouter = require('./category-service/entry-points/api/category.rou
 const subCategoryRouter = require('./sub-category-service/entry-points/api/sub-category.router');
 const productRouter = require('./product-service/entry-points/api/product.router');
 const imageRouter = require('./image-service/entry-points/api/image.router');
+const contactRouter = require('./contact-service/entry-points/api/contact.router');
 
 const { authCheck } = require('#shares/middlewares/auth.middleware');
 
@@ -14,5 +15,6 @@ router.use('/categories', categoryRouter);
 router.use('/sub-categories', subCategoryRouter);
 router.use('/products', productRouter);
 router.use('/images', authCheck, imageRouter);
+router.use('/contact', contactRouter);
 
 module.exports = router;

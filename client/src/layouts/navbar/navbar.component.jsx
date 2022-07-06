@@ -8,9 +8,9 @@ const NavbarContainer = () => {
   const [navBarClassName, setNavBarClassName] = useState('');
 
   const handleScroll = (className) => {
-    if (className !== 'navbar-scolled' && window.scrollY >= 100) {
+    if (className !== 'navbar-scolled' && window.scrollY >= 80) {
       setNavBarClassName('navbar-scrolled');
-    } else if (className === 'navbar-scrolled' && window.scrollY < 100) {
+    } else if (className === 'navbar-scrolled' && window.scrollY < 80) {
       setNavBarClassName('navbar-scroll');
     }
   };

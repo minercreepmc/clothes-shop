@@ -1,7 +1,7 @@
 *,
 *::before,
 *::after {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Oswald', sans-serif;
 }
 
 body {
@@ -38,6 +38,18 @@ button {
 
 .fs-6 {
   font-size: 1rem !important;
+}
+
+.page-section {
+  padding-block: 8rem;
+}
+
+hr.divider {
+  height: 0.2rem;
+  max-width: 3.25rem;
+  margin: 1.5rem auto;
+  background-color: #f4623a;
+  opacity: 1;
 }
 
 /* Chrome, Safari, Edge, Opera */

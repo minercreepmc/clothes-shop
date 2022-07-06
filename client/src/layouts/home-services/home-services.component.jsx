@@ -5,9 +5,9 @@ import { Services, ServicesHeader, Divider } from './home-services.styles';
 
 import { services } from './home-services.constant';
 
-const HomeServices = () => {
+const HomeServices = ({ ...otherProps }) => {
   return (
-    <Services>
+    <Services {...otherProps}>
       <Container className="px-4 px-lg-5">
         <ServicesHeader>Our services</ServicesHeader>
         <Divider />

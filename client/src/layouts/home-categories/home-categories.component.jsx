@@ -9,13 +9,13 @@ import Accessories from 'assets/img/categories/thumbnails/3.jpg';
 
 const categories = [
   { name: 'For Men', thumbnail: ForMen },
-  { name: 'FOr Women', thumbnail: ForWomen },
+  { name: 'For Women', thumbnail: ForWomen },
   { name: 'Accessories', thumbnail: Accessories },
 ];
 
-const HomeCategories = () => {
+const HomeCategories = ({ ...otherProps }) => {
   return (
-    <CategoriesContainer>
+    <CategoriesContainer {...otherProps}>
       <Container fluid className="p-0">
         <Row className="g-0">
           {categories.map((category) => (

@@ -1,44 +1,24 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import { BiArrowFromLeft } from 'react-icons/bi';
 
-import {
-  selectHomeProducts,
-  selectProducts,
-} from 'shares/store/products/products.selector';
+import { selectHomeProducts } from 'shares/store/products/products.selector';
 import ProductCard from 'components/smarts/product-card/product-card.component';
-
-import './products-featured.styles.scss';
+import SecondaryButton from 'components/reusables/button/secondary-button/secondary-button.component';
 
 import { ProductsFeatured, Header } from './products-featured.styles';
+import 'react-multi-carousel/lib/styles.css';
+import { responsive } from './product-featured.constant';
 
-const responsive = {
-  superLargeDesktop: {
-    // the naming can be any, depends on you.
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5,
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 4,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 3,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 2,
-  },
-};
-
-const ProductsFeaturedContainer = () => {
+const ProductsFeaturedContainer = ({ ...otherProps }) => {
   const products = useSelector(selectHomeProducts);
+  const navigate = useNavigate()
 
   return (
-    <ProductsFeatured>
-      <Container fluid>
+    <ProductsFeatured {...otherProps}>
+      <Container>
         <Row className="justify-content-center text-center">
           <Col md={8} lg={6}>
             <Header>
@@ -47,7 +27,7 @@ const ProductsFeaturedContainer = () => {
             </Header>
           </Col>
         </Row>
-        <Row>
+        <Row className="mb-3">
           <Carousel responsive={responsive}>
             {products?.map((product) => (
               <Col key={product._id}>
@@ -55,6 +35,13 @@ const ProductsFeaturedContainer = () => {
               </Col>
             ))}
           </Carousel>
+        </Row>
+        <Row className="text-center">
+          <Col>
+            <SecondaryButton className="align-middle" onClick={() => navigate('/shop')}>
+              Shop more <BiArrowFromLeft className="fs-4" />
+            </SecondaryButton>
+          </Col>
         </Row>
       </Container>
     </ProductsFeatured>

@@ -2,8 +2,6 @@ import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-import { AiOutlineArrowUp } from 'react-icons/ai';
-import ScrollTop from 'react-scrolltop-button';
 
 import { onAuthStateChangeListener } from 'shares/utils/firebase/firebase.utils';
 import {
@@ -22,6 +20,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 import { APP_COLOR } from 'shares/themes';
+
+import ScrollTopContainer from 'components/reusables/scroll-top/scroll-top.component';
 const theme = {
   colors: APP_COLOR,
 };
@@ -50,18 +50,9 @@ const App = () => {
     <>
       <ThemeProvider theme={theme}>
         <AppRoute />
+        <ToastContainer />
+        <ScrollTopContainer />
       </ThemeProvider>
-      <ToastContainer />
-      <ScrollTop
-        text="Back to Top"
-        distance={100}
-        breakpoint={768}
-        style={{ backgroundColor: 'red' }}
-        className="scroll-your-role"
-        speed={1000}
-        target={75}
-        icon={<AiOutlineArrowUp />}
-      />
     </>
   );
 };

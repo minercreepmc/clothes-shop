@@ -1,36 +1,65 @@
 import styled from 'styled-components';
 
+export const IconButton = styled.a`
+  width: 40px;
+  height: 40px;
+  background-color: ${(props) => props.theme.colors.black};
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.6s ease;
+  transform: rotate(180deg);
+  cursor: pointer;
+  z-index: 1;
+  &:hover {
+    background-color: #b71c1c;
+    color: #fff;
+  }
+  &:nth-last-of-type(4) {
+    transition-delay: 0.2s;
+  }
+
+  &:nth-last-of-type(3) {
+    transition-delay: 0.15s;
+  }
+
+  &:nth-last-of-type(2) {
+    transition-delay: 0.1s;
+  }
+
+  &:nth-last-of-type(1) {
+    transition-delay: 0.05s;
+  }
+`;
 export const IconButtonGroup = styled.ul`
-  position: absolute;
-  bottom: -41px;
-  left: 20px;
-  margin: 0;
-  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
   list-style: none;
-  opacity: 0;
+  padding: 0;
   transition: bottom 0.5s, opacity 0.5s;
 `;
 
 export const BackgroundImage = styled.img`
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   z-index: -1;
   transition: all 0.3s;
   object-fit: cover;
-  object-position: top 10px center;
   transition: all 0.3s;
 `;
 
 export const SingleProduct = styled.div`
   margin-bottom: 26px;
+  height: 350px;
 
   &:hover ${IconButtonGroup} {
-    bottom: 30px;
     opacity: 1;
+  }
+  &:hover ${IconButton} {
+    transform: translateY(-60px);
   }
   &:hover ${BackgroundImage} {
     transform: scale(1.2, 1.2) rotate(5deg);
@@ -64,22 +93,10 @@ export const IconContainer = styled.li`
   margin-right: 4px;
 `;
 
-export const IconButton = styled.a`
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  background-color: #ffffff;
-  color: #444444;
-  text-align: center;
-  box-shadow: 0 2px 20px rgb(50 50 50 / 10%);
-  transition: color 0.2s;
-  &:hover {
-    color: #fe302f;
-  }
-`;
-
 export const Part2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   h4 {
     display: inline-block;
     font-size: 1rem;
@@ -87,8 +104,9 @@ export const Part2 = styled.div`
 `;
 
 export const ProductTitle = styled.h3`
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  font-weight: 300;
 `;
 
 export const ProductOldPrice = styled.h4`
@@ -108,4 +126,8 @@ export const ProductOldPrice = styled.h4`
   }
 `;
 
-export const ProductPrice = styled.h4``;
+export const ProductPrice = styled.h4`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: 600;
+`;

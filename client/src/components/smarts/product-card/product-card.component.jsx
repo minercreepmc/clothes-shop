@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaShoppingCart, FaHeart, FaPlus, FaExpand } from 'react-icons/fa';
+import { FaShoppingCart, FaHeart, FaExpandArrowsAlt } from 'react-icons/fa';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 
@@ -51,23 +51,20 @@ const ProductCard = ({ product, isNew }) => {
 
         <IconButtonGroup>
           <IconContainer>
-            <IconButton>
-              <FaShoppingCart />
+            <IconButton onClick={() => setIsOpen(true)}>
+              <FaExpandArrowsAlt />
             </IconButton>
           </IconContainer>
+
           <IconContainer>
             <IconButton>
               <FaHeart />
             </IconButton>
           </IconContainer>
+
           <IconContainer>
             <IconButton>
-              <FaPlus />
-            </IconButton>
-          </IconContainer>
-          <IconContainer>
-            <IconButton onClick={() => setIsOpen(true)}>
-              <FaExpand />
+              <FaShoppingCart />
             </IconButton>
           </IconContainer>
         </IconButtonGroup>
