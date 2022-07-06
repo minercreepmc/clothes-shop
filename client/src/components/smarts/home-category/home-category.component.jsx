@@ -4,6 +4,7 @@ import {
   Category,
   CategoryCaption,
   CategoryName,
+  CategoryThumbnail,
 } from './home-category.styles';
 
 const HomeCategory = ({ category }) => {
@@ -11,7 +12,7 @@ const HomeCategory = ({ category }) => {
 
   return (
     <Category>
-      <Image fluid src={thumbnail} alt="..." />
+      <CategoryThumbnail src={thumbnail} alt="Category Thumbnail" />
       <CategoryCaption>
         <CategoryName>{name}</CategoryName>
       </CategoryCaption>

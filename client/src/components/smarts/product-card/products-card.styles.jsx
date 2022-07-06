@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import LazyImage from 'components/reusables/lazy-image/lazy-image.component';
+import { ImageContainer } from 'components/reusables/lazy-image/lazy-image.styles';
 
 export const IconButton = styled.a`
   width: 40px;
@@ -42,13 +44,12 @@ export const IconButtonGroup = styled.ul`
   transition: bottom 0.5s, opacity 0.5s;
 `;
 
-export const BackgroundImage = styled.img`
+export const BackgroundImage = styled(LazyImage)`
   width: 100%;
   height: 100%;
-  z-index: -1;
-  transition: all 0.3s;
   object-fit: cover;
-  transition: all 0.3s;
+  z-index: -1;
+  transition: all 0.3s !important;
 `;
 
 export const SingleProduct = styled.div`

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import LazyImage from 'components/reusables/lazy-image/lazy-image.component';
 
 export const CategoryCaption = styled.div`
   display: flex;
@@ -16,6 +17,10 @@ export const CategoryCaption = styled.div`
   transition: opacity 0.25s ease;
   text-align: center;
   cursor: pointer;
+`;
+
+export const CategoryThumbnail = styled(LazyImage)`
+  width: 100%;
 `;
 
 export const Category = styled.a`

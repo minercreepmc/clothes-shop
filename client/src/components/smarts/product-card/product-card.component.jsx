@@ -27,7 +27,7 @@ const ProductCard = ({ product, isNew }) => {
     <SingleProduct>
       <Part1 imageUrl={thumpnail}>
         {isNew && <New>New</New>}
-        <BackgroundImage src={thumpnail} alt="Thumpnail" />
+        <BackgroundImage src={thumpnail} alt="product thumpnail" />
         {isOpen && (
           <Lightbox
             mainSrc={images[photoIndex].secure_url}

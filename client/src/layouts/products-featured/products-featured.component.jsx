@@ -14,7 +14,7 @@ import { responsive } from './product-featured.constant';
 
 const ProductsFeaturedContainer = ({ ...otherProps }) => {
   const products = useSelector(selectHomeProducts);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <ProductsFeatured {...otherProps}>
@@ -38,7 +38,10 @@ const ProductsFeaturedContainer = ({ ...otherProps }) => {
         </Row>
         <Row className="text-center">
           <Col>
-            <SecondaryButton className="align-middle" onClick={() => navigate('/shop')}>
+            <SecondaryButton
+              className="align-middle"
+              onClick={() => navigate('/shop')}
+            >
               Shop more <BiArrowFromLeft className="fs-4" />
             </SecondaryButton>
           </Col>
