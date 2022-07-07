@@ -1,4 +1,3 @@
 import styled from 'styled-components';
 
-
-export const  = styled. 
+export const ShopWrapper = styled.div``;

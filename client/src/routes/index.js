@@ -42,7 +42,7 @@ const AppRoute = () => {
           }
         />
 
-        <Route path="shop" element={<ShopRoutes />} />
+        <Route path="shop/*" element={<ShopRoutes />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

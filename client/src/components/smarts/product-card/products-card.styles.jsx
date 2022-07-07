@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import LazyImage from 'components/reusables/lazy-image/lazy-image.component';
-import { ImageContainer } from 'components/reusables/lazy-image/lazy-image.styles';
 
 export const IconButton = styled.a`
   width: 40px;
@@ -44,7 +43,7 @@ export const IconButtonGroup = styled.ul`
   transition: bottom 0.5s, opacity 0.5s;
 `;
 
-export const BackgroundImage = styled(LazyImage)`
+export const ProductImage = styled(LazyImage)`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -62,7 +61,7 @@ export const SingleProduct = styled.div`
   &:hover ${IconButton} {
     transform: translateY(-60px);
   }
-  &:hover ${BackgroundImage} {
+  &:hover ${ProductImage} {
     transform: scale(1.2, 1.2) rotate(5deg);
   }
 `;

@@ -14,7 +14,7 @@ import {
   ProductOldPrice,
   ProductPrice,
   New,
-  BackgroundImage,
+  ProductImage,
 } from './products-card.styles';
 
 const ProductCard = ({ product, isNew }) => {
@@ -27,7 +27,7 @@ const ProductCard = ({ product, isNew }) => {
     <SingleProduct>
       <Part1 imageUrl={thumpnail}>
         {isNew && <New>New</New>}
-        <BackgroundImage src={thumpnail} alt="product thumpnail" />
+        <ProductImage src={thumpnail} alt="product thumpnail" />
         {isOpen && (
           <Lightbox
             mainSrc={images[photoIndex].secure_url}

@@ -4,16 +4,21 @@ import landingBackground from 'assets/img/bg-masthead.jpg';
 export const LandingHeader = styled.header`
   padding-top: 10rem;
   padding-bottom: calc(10rem - 4.5rem);
-  background: linear-gradient(
-      to bottom,
-      rgba(92, 77, 66, 0.8) 0%,
-      rgba(92, 77, 66, 0.8) 100%
-    ),
-    url(${landingBackground});
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-size: cover;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url(${landingBackground}) #604c34;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+    background-blend-mode: lighten;
+    z-index: -1;
+    filter: opacity(0.5);
+  }
 
   h1 {
     font-size: 2.25rem;
