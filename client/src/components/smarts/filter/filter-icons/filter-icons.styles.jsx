@@ -1,13 +1,17 @@
 import styled, { css } from 'styled-components';
 
 const singleIcon = css`
-  margin-left: 30px;
+  margin-left: 20px;
 `;
 
 export const FilterIcons = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  @media only screen and (max-width: 767px) {
+    justify-content: space-between;
+  }
 `;
 export const IconLink = styled.li`
   display: inline-block;

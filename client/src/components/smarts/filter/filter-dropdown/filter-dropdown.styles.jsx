@@ -9,17 +9,7 @@ export const List = styled.ul`
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 `;
 
-const niceSelect = css`
-  padding-right: 35px;
-  padding-left: 0;
-
-  border-top: none;
-  border-right: none;
-  border-bottom: 2px solid #cccccc;
-  border-left: none;
-  border-radius: 0;
-  background-color: #ffffff;
-
+export const FilterDropdown = styled.div`
   ${List} {
     z-index: 99;
 
@@ -30,10 +20,7 @@ const niceSelect = css`
 
     opacity: 1;
   }
-`;
 
-export const FilterDropdown = styled.div`
-  ${niceSelect};
   @media only screen and (min-width: 992px) and (max-width: 1199px) {
     display: none;
   }

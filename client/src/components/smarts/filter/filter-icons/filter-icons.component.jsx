@@ -1,3 +1,4 @@
+import FilterDropdown from 'components/smarts/filter/filter-dropdown/filter-dropdown.component';
 import {
   FilterIcons,
   GridIcons,
@@ -15,6 +16,7 @@ import { TbLayoutList } from 'react-icons/tb';
 const FilterIconsContainer = () => {
   return (
     <FilterIcons>
+      <FilterDropdown />
       <GridIcons>
         <IconLink>
           <BsGripHorizontal />
