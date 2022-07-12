@@ -5,6 +5,7 @@ import { dashboardReducer } from './dashboard/dashboard.reducer';
 import { categoriesReducer } from './categories/categories.reducer';
 import { subCategoriesReducer } from './sub-categories/sub-categories.reducer';
 import { productsReducer } from './products/products.reducer';
+import { shopReducer } from './shop/shop.reducer';
 
 export const rootReducer = combineReducers({
   user: userReducer,
@@ -12,4 +13,5 @@ export const rootReducer = combineReducers({
   categories: categoriesReducer,
   subCategories: subCategoriesReducer,
   products: productsReducer,
+  shop: shopReducer
 });

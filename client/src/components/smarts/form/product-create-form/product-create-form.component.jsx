@@ -38,6 +38,7 @@ const ProductCreateForm = () => {
     title,
     description,
     price,
+    discount,
     images,
     quantity,
     color,
@@ -123,7 +124,7 @@ const ProductCreateForm = () => {
         label="Title"
         id="title"
         value={title}
-        onChange={() => {}}
+        onChange={() => { }}
       />
 
       <FormInput
@@ -133,7 +134,7 @@ const ProductCreateForm = () => {
         id="description"
         as="textarea"
         value={description}
-        onChange={() => {}}
+        onChange={() => { }}
       />
 
       <FormInput
@@ -144,7 +145,19 @@ const ProductCreateForm = () => {
         min="0"
         step="0.01"
         value={price}
-        onChange={() => {}}
+        onChange={() => { }}
+      />
+
+      <FormInput
+        name="discount"
+        type="number"
+        id="discount"
+        label="Discount"
+        min="0"
+        max="100"
+        step="1"
+        value={discount}
+        onChange={() => { }}
       />
 
       <FormImages
@@ -161,7 +174,7 @@ const ProductCreateForm = () => {
         label="Quantity"
         min="0"
         value={quantity}
-        onChange={() => {}}
+        onChange={() => { }}
       />
 
       <FormSelect
@@ -169,7 +182,7 @@ const ProductCreateForm = () => {
         label="Color"
         id="color"
         value={color}
-        onChange={() => {}}
+        onChange={() => { }}
       >
         <option value="">--Select color--</option>
         <option value="Black">Black</option>
@@ -181,7 +194,7 @@ const ProductCreateForm = () => {
         label="Brand"
         id="brand"
         value={brand}
-        onChange={() => {}}
+        onChange={() => { }}
       >
         <option value="">--Select brand--</option>
         <option value="Chanel">Chanel</option>
@@ -193,7 +206,7 @@ const ProductCreateForm = () => {
         name="shipping"
         id="shipping"
         value={shipping}
-        onChange={() => {}}
+        onChange={() => { }}
       >
         <option value="">--Select shipping--</option>
         <option value="Yes">Yes</option>

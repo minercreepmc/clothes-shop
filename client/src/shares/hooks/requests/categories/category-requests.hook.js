@@ -7,7 +7,7 @@ export async function httpGetCategories() {
   return res.data;
 }
 
-export async function httpGetCategory({ param, subCategories = '' }) {
+export async function httpGetCategory({ param, subCategories = false }) {
   const res = await axios.get(
     `${CATEGORIES_ENDPOINT}/${param}?subCategories=${subCategories}`,
     {},

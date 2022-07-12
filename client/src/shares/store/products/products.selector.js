@@ -32,3 +32,39 @@ export const selectNewestProduct = createSelector(
   selectProducts,
   (products) => products[0],
 );
+
+// Search Text
+export const selectProductsSearchText = createSelector(
+  selectProductsReducer,
+  (products) => products.searchText,
+);
+
+export const selectSearchedTextProducts = createSelector(
+  [selectProducts, selectProductsSearchText],
+  (products, searchText) => {
+    return products.filter(
+      (product) =>
+        product.title.toLowerCase().includes(searchText.toLowerCase()) ||
+        searchText.toLowerCase().includes(product.title.toLowerCase()),
+    );
+  },
+);
+
+// Search Price
+export const selectProductsSearchPrice = createSelector(
+  selectProductsReducer,
+  (products) => products.searchPrice,
+);
+
+export const selectSearchedPriceProducts = createSelector(
+  [selectProducts, selectProductsSearchPrice],
+  (products, searchPrice) => {
+    return products.filter((product) => product.price >= searchPrice);
+  },
+);
+
+export const selectSearchedProducts = createSelector(
+  [selectSearchedTextProducts, selectSearchedPriceProducts],
+  (products1, products2) =>
+    products1.filter((product) => products2.includes(product)),
+);

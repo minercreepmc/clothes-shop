@@ -26,6 +26,7 @@ const SubCategoryUpdateForm = () => {
   const { subCategory, setSubCategory } = useContext(
     DashboardSubCategoryUpdateContext,
   );
+  const [haveSubCategory, setHaveSubCategory] = useState(false);
 
   const { name, categoryId } = subCategory;
 
@@ -60,26 +61,28 @@ const SubCategoryUpdateForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSubCategory({ ...subCategory, [name]: value });
-    console.log(subCategory);
   };
 
   useEffect(() => {
     const getCurrentSubCategory = async () => {
-      const currentSubCategory = await httpGetSubCategory({ slug });
+      const currentSubCategory = await httpGetSubCategory({ param: slug });
+      if (!currentSubCategory) return;
+
       setSubCategory(currentSubCategory);
+      setHaveSubCategory(true);
     };
 
     getCurrentSubCategory();
-  }, [slug, setSubCategory]);
+  }, [slug, setSubCategory, setHaveSubCategory]);
 
-  return (
+  return haveSubCategory ? (
     <Form onSubmit={handleSubmit} onChange={handleChange}>
       <FormSelect
         name="categoryId"
         label="Category"
         id="select-sub"
         value={categoryId}
-        onChange={() => { }}
+        onChange={() => {}}
       >
         {categories?.map((category) => (
           <option value={category._id} key={category._id}>
@@ -94,13 +97,15 @@ const SubCategoryUpdateForm = () => {
         id="name"
         type="text"
         value={name}
-        onChange={() => { }}
+        onChange={() => {}}
       />
 
       <PrimaryButton variant="dark" type="submit" disabled={isUpdating}>
         {!isUpdating ? 'Update' : 'Updating...'}
       </PrimaryButton>
     </Form>
+  ) : (
+    <span>Sub Category did not exist :(</span>
   );
 };
 

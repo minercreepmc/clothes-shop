@@ -2,8 +2,12 @@ import axios from 'axios';
 
 import { SUB_CATEGORY_ENDPOINT } from './sub-categories.constant';
 
-export async function httpGetSubCategories() {
-  const res = await axios.get(SUB_CATEGORY_ENDPOINT, {});
+export async function httpGetSubCategories(params = {}) {
+  const { categoryId = '' } = params;
+
+  const res = await axios.get(SUB_CATEGORY_ENDPOINT, {
+    params: { categoryId },
+  });
   return res.data;
 }
 

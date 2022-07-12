@@ -29,20 +29,15 @@ const INITIAL_PRODUCT_STATE = {
   shipping: '',
   brand: '',
   categoryId: '',
+  discount: '',
   subCategoriesId: [],
 };
 
 const ProductUpdateForm = () => {
-  // const {
-  //   product,
-  //   setProduct,
-  //   INITIAL_PRODUCT_STATE,
-  //   subCategories,
-  //   setSubCategories,
-  // } = useContext(DashboardProductCreateContext);
   const [product, setProduct] = useState(INITIAL_PRODUCT_STATE);
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState([]);
+  const [haveProduct, setHaveProduct] = useState(false);
 
   const isUpdating = useSelector(selectIsProductUpdating);
 
@@ -50,6 +45,7 @@ const ProductUpdateForm = () => {
     title,
     description,
     price,
+    discount,
     images,
     quantity,
     color,
@@ -127,6 +123,9 @@ const ProductUpdateForm = () => {
     const getCurrentProduct = async () => {
       const product = await httpGetProduct({ slug });
 
+      if (!product) return;
+
+      setHaveProduct(true);
       setProduct(product);
     };
 
@@ -167,7 +166,7 @@ const ProductUpdateForm = () => {
     loadSelectedSubCategories();
   }, [subCategoriesId, subCategories]);
 
-  return (
+  return haveProduct ? (
     <Form
       className="mb-5"
       onSubmit={handleSubmit}
@@ -179,7 +178,7 @@ const ProductUpdateForm = () => {
         label="Title"
         id="title"
         value={title}
-        onChange={() => {}}
+        onChange={() => { }}
       />
 
       <FormInput
@@ -189,7 +188,7 @@ const ProductUpdateForm = () => {
         id="description"
         as="textarea"
         value={description}
-        onChange={() => {}}
+        onChange={() => { }}
       />
 
       <FormInput
@@ -200,7 +199,19 @@ const ProductUpdateForm = () => {
         min="0"
         step="0.01"
         value={price}
-        onChange={() => {}}
+        onChange={() => { }}
+      />
+
+      <FormInput
+        name="discount"
+        type="number"
+        id="discount"
+        label="Discount"
+        min="0"
+        max="100"
+        step="1"
+        value={discount}
+        onChange={() => { }}
       />
 
       <FormInput
@@ -210,7 +221,7 @@ const ProductUpdateForm = () => {
         label="Quantity"
         min="0"
         value={quantity}
-        onChange={() => {}}
+        onChange={() => { }}
       />
 
       <FormSelect
@@ -218,7 +229,7 @@ const ProductUpdateForm = () => {
         label="Color"
         id="color"
         value={color}
-        onChange={() => {}}
+        onChange={() => { }}
       >
         <option value="">--Select color--</option>
         <option value="Black">Black</option>
@@ -230,7 +241,7 @@ const ProductUpdateForm = () => {
         label="Brand"
         id="brand"
         value={brand}
-        onChange={() => {}}
+        onChange={() => { }}
       >
         <option value="">--Select brand--</option>
         <option value="Chanel">Chanel</option>
@@ -242,7 +253,7 @@ const ProductUpdateForm = () => {
         name="shipping"
         id="shipping"
         value={shipping}
-        onChange={() => {}}
+        onChange={() => { }}
       >
         <option value="">--Select shipping--</option>
         <option value="Yes">Yes</option>
@@ -275,6 +286,8 @@ const ProductUpdateForm = () => {
 
       <SpinnerContainer className="ms-2" isProcess={isUpdating} />
     </Form>
+  ) : (
+    <span>Product did not exist :(</span>
   );
 };
 

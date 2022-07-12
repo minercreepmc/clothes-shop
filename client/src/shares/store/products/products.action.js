@@ -19,6 +19,14 @@ import {
 } from 'shares/hooks/requests/images/images.hook';
 // products
 
+//searchText
+export const setProductsSearchText = (text) =>
+  createAction(PRODUCTS_ACTION_TYPE.SET_SEARCH_TEXT, text);
+
+// search price
+export const setProductsSearchPrice = (price) =>
+  createAction(PRODUCTS_ACTION_TYPE.SET_SEARCH_PRICE, price);
+
 // add
 const addProductToProductsStart = () =>
   createAction(PRODUCTS_ACTION_TYPE.ADD_PRODUCT_START);
@@ -122,13 +130,15 @@ const fetchProductsSuccess = (products) =>
 const fetchProductsErrors = (errors) =>
   createAction(PRODUCTS_ACTION_TYPE.FETCH_PRODUCTS_FAILED, errors);
 
-export const fetchProductsAsync = () => async (dispatch) => {
-  dispatch(fetchProductsStart());
+export const fetchProductsAsync =
+  (query = {}) =>
+    async (dispatch) => {
+      dispatch(fetchProductsStart());
 
-  try {
-    const products = await httpGetProducts();
-    dispatch(fetchProductsSuccess(products));
-  } catch (errors) {
-    dispatch(fetchProductsErrors(errors));
-  }
-};
+      try {
+        const products = await httpGetProducts(query);
+        dispatch(fetchProductsSuccess(products));
+      } catch (errors) {
+        dispatch(fetchProductsErrors(errors));
+      }
+    };

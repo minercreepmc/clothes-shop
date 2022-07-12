@@ -10,6 +10,17 @@ async function getAllSubCategories() {
   return SubCategoryRepo.getSubCategories();
 }
 
+async function getSubCategoriesByQuery({ query }) {
+  const { categoryId } = query;
+
+  if (categoryId) {
+    const filters = { categoryId };
+    return SubCategoryRepo.getSubCategories(filters);
+  }
+
+  return SubCategoryRepo.getSubCategories();
+}
+
 async function getSubCategoriesByCategoryId(data) {
   const { body } = data;
 
@@ -85,6 +96,7 @@ async function deleteSubCategory(data) {
 
 module.exports = {
   getAllSubCategories,
+  getSubCategoriesByQuery,
   getSubCategoriesByCategoryId,
   getSubCategoryBySlug,
   getSubCategoryByIdOrSlug,

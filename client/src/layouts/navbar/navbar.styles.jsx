@@ -18,7 +18,7 @@ export const NavBarBrand = styled(Brand)`
 
 export const NavBar = styled(Navbar)`
   transition: background-color 0.2s ease;
-  z-index: 1;
+  z-index: 10;
 
   &.navbar-scrolled {
     background-color: #1c1e1f;

@@ -2,13 +2,23 @@ import axios from 'axios';
 
 import { PRODUCTS_ENDPOINT } from './products.constant';
 
-export async function httpGetProducts() {
-  const DEFAULT_LIMIT = 10;
+export async function httpGetProducts({
+  limit = 10,
+  category = false,
+  subCategories = false,
+  categoryId = '',
+  subCategoryId = '',
+}) {
   try {
-    const res = await axios.get(
-      `${PRODUCTS_ENDPOINT}/?limit=${DEFAULT_LIMIT}`,
-      {},
-    );
+    const res = await axios.get(PRODUCTS_ENDPOINT, {
+      params: {
+        limit,
+        category,
+        subCategories,
+        categoryId,
+        subCategoryId,
+      },
+    });
     return res.data;
   } catch (errors) {
     return errors.response.data;

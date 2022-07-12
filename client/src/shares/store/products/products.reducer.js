@@ -7,6 +7,8 @@ const INITIAL_STATE = {
   isUpdating: false,
   isDeleting: false,
   errors: null,
+  searchText: '',
+  searchPrice: 0,
 };
 
 export const productsReducer = (state = INITIAL_STATE, action) => {
@@ -17,6 +19,16 @@ export const productsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         products: payload,
+      };
+    case PRODUCTS_ACTION_TYPE.SET_SEARCH_TEXT:
+      return {
+        ...state,
+        searchText: payload,
+      };
+    case PRODUCTS_ACTION_TYPE.SET_SEARCH_PRICE:
+      return {
+        ...state,
+        searchPrice: payload,
       };
     case PRODUCTS_ACTION_TYPE.FETCH_PRODUCTS_START:
       return {

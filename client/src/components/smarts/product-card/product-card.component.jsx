@@ -1,6 +1,6 @@
+import LightBoxContainer from 'components/reusables/lightbox/lightbox.component';
 import { useState } from 'react';
 import { FaShoppingCart, FaHeart, FaExpandArrowsAlt } from 'react-icons/fa';
-import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 
 import {
@@ -11,41 +11,35 @@ import {
   IconButton,
   Part2,
   ProductTitle,
-  ProductOldPrice,
-  ProductPrice,
-  New,
+  ProductMainPrice,
+  ProductDiscountedPrice,
+  SaleTag,
   ProductImage,
+  FloatingBadges,
+  ProductPriceContainer,
 } from './products-card.styles';
 
 const ProductCard = ({ product, isNew }) => {
-  const { title, price, sale: oldPrice, images } = product;
+  const { title, price, images, discount } = product;
   const thumpnail = images[0].secure_url;
   const [isOpen, setIsOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
 
+  const discoutedPrice = price - price * (discount / 100);
+
   return (
     <SingleProduct>
       <Part1 imageUrl={thumpnail}>
-        {isNew && <New>New</New>}
+        <FloatingBadges>
+          {discount && <SaleTag>-{discount}%</SaleTag>}
+        </FloatingBadges>
         <ProductImage src={thumpnail} alt="product thumpnail" />
         {isOpen && (
-          <Lightbox
-            mainSrc={images[photoIndex].secure_url}
-            nextSrc={images[(photoIndex + 1) % images.length].secure_url}
-            prevSrc={
-              images[(photoIndex + images.length - 1) % images.length]
-                .secure_url
-            }
-            onCloseRequest={() => setIsOpen(false)}
-            onMovePrevRequest={() =>
-              setPhotoIndex((photoIndex + images.length - 1) % images.length)
-            }
-            onMoveNextRequest={() =>
-              setPhotoIndex((photoIndex + 1) % images.length)
-            }
-            onImageLoad={() => {
-              window.dispatchEvent(new Event('resize'));
-            }}
+          <LightBoxContainer
+            images={images}
+            photoIndex={photoIndex}
+            setPhotoIndex={setPhotoIndex}
+            setIsOpen={setIsOpen}
           />
         )}
 
@@ -71,8 +65,13 @@ const ProductCard = ({ product, isNew }) => {
       </Part1>
       <Part2>
         <ProductTitle>{title}</ProductTitle>
-        {oldPrice && <ProductOldPrice>{oldPrice}</ProductOldPrice>}
-        <ProductPrice>{price}$</ProductPrice>
+
+        <ProductPriceContainer>
+          {discount && <ProductMainPrice> {price}$</ProductMainPrice>}
+          <ProductDiscountedPrice>
+            {discount ? discoutedPrice.toFixed(2) : price}$
+          </ProductDiscountedPrice>
+        </ProductPriceContainer>
       </Part2>
     </SingleProduct>
   );

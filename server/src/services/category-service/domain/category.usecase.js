@@ -13,7 +13,7 @@ async function getAllCategories() {
 
 async function getCategoryBySlug({ params, query }) {
   const { slug } = params;
-  const { subCategories } = query;
+  const { subCategories, products } = query;
 
   const filters = {
     slug,
@@ -24,13 +24,17 @@ async function getCategoryBySlug({ params, query }) {
     return CategoryRepo.getCategoryWithSubCategories(filters);
   }
 
+  if (products) {
+    return CategoryRepo.getCategoryWithProducts(filters);
+  }
+
   return CategoryRepo.getCategory(filters);
 }
 
 async function getCategoryByIdOrSlug({ params, query }) {
   // TODO: EDit the fkcing name
   const { param } = params;
-  const { subCategories } = query;
+  const { subCategories, products } = query;
   const filters = {};
 
   if (ObjectId.isValid(param)) {
@@ -41,6 +45,10 @@ async function getCategoryByIdOrSlug({ params, query }) {
 
   if (subCategories) {
     return CategoryRepo.getCategoryWithSubCategories(filters);
+  }
+
+  if (products) {
+    return CategoryRepo.getCategoryWithProducts(filters);
   }
 
   return CategoryRepo.getCategory(filters);

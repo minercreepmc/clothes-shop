@@ -29,6 +29,11 @@ const productSchema = new mongoose.Schema(
       trim: true,
       maxlength: [32, 'Price cannot be longer than 32 characters'],
     },
+    discount: {
+      type: Number,
+      max: [100, 'Maximum of discount is 100%'],
+      min: [1, 'Minimum of discount is 1%'],
+    },
     categoryId: {
       type: ObjectId,
       ref: 'Category',

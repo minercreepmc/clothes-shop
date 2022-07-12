@@ -150,6 +150,7 @@ export const fetchSubCategoriesAsync = () => async (dispatch) => {
     const subCategories = await httpGetSubCategories();
     dispatch(fetchSubCategoriesSuccess(subCategories));
   } catch (errors) {
+    console.log(errors);
     dispatch(fetchSubCategoriesFailed(errors));
   }
 };

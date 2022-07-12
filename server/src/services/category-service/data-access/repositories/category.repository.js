@@ -12,6 +12,10 @@ async function getCategoryWithSubCategories(filters) {
   return CategoryModel.findOne(filters).populate('subcategories');
 }
 
+async function getCategoryWithProducts(filters) {
+  return CategoryModel.findOne(filters).populate('products');
+}
+
 async function createCategory(category) {
   return CategoryModel.create(category);
 }
@@ -34,6 +38,7 @@ module.exports = {
   getCategories,
   getCategory,
   getCategoryWithSubCategories,
+  getCategoryWithProducts,
   createCategory,
   updateCategory,
   deleteCategory,

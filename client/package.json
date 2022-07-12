@@ -14,6 +14,7 @@
     "mdb-react-ui-kit": "^4.0.0",
     "react": "^18.1.0",
     "react-bootstrap": "^2.4.0",
+    "react-bootstrap-range-slider": "^3.0.8",
     "react-dom": "^18.1.0",
     "react-icons": "^4.4.0",
     "react-image-and-background-image-fade": "^1.0.8",

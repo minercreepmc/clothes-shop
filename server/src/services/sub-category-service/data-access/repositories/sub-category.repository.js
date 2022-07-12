@@ -1,7 +1,7 @@
 const SubCategoryModel = require('./sub-category.model');
 
-async function getSubCategories() {
-  return SubCategoryModel.find();
+async function getSubCategories(filters) {
+  return SubCategoryModel.find(filters);
 }
 
 async function getSubCategory(filters) {

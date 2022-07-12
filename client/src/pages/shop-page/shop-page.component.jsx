@@ -5,8 +5,7 @@ import { Shop } from './shop-page.styles';
 
 const ShopPage = () => {
   return (
-    <Shop style={{ paddingTop: '6rem' }}>
-      <ShopBreadCrumbs />
+    <Shop>
       <ShopBody />
     </Shop>
   );

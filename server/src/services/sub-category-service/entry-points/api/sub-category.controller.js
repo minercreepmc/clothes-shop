@@ -2,7 +2,9 @@ const SubCategoryUseCase = require('../../domain/sub-category.usecase');
 
 async function httpGetSubCategories(req, res) {
   try {
-    const categories = await SubCategoryUseCase.getAllSubCategories();
+    const categories = await SubCategoryUseCase.getSubCategoriesByQuery({
+      query: req.query,
+    });
     return res.status(200).json(categories);
   } catch (error) {
     return res.status(400).json(error);

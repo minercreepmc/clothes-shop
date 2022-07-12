@@ -14,13 +14,20 @@ async function getProductsByQuery({ query }) {
   const DEFAULT_LIMIT = 10;
   const DEFAULT_SORT = { updatedAt: -1 };
 
-  const page = query.page || DEFAULT_PAGE;
-  const limit = query.limit || DEFAULT_LIMIT;
+  const {
+    page = DEFAULT_PAGE,
+    limit = DEFAULT_LIMIT,
+    descriptionTruncate,
+    categoryId,
+    subCategoryId,
+    priceFrom = 0,
+  } = query;
+
   const sort = DEFAULT_SORT;
 
   const skip = (page - 1) * limit;
 
-  if (query.descriptionTruncate) {
+  if (descriptionTruncate) {
     const products = await ProductRepo.getProducts({ limit, skip, sort });
     products.forEach((product) => {
       product.description = product.description
@@ -31,7 +38,32 @@ async function getProductsByQuery({ query }) {
     return products;
   }
 
-  return ProductRepo.getProducts({ limit, skip, sort });
+  const filters = { skip, limit, sort, priceFrom: +priceFrom };
+  console.log(filters);
+
+  // if (query.category && query.subCategories) {
+  //   return ProductRepo.getProductsWithCategoryAndSubcategories({
+  //     limit,
+  //     skip,
+  //     sort,
+  //   });
+  // }
+
+  if (categoryId) {
+    return ProductRepo.getProductsByCategory({
+      ...filters,
+      categoryId: query.categoryId,
+    });
+  }
+
+  if (subCategoryId) {
+    return ProductRepo.getProductsBySubCategory({
+      ...filters,
+      subCategoryId: query.subCategoryId,
+    });
+  }
+
+  return ProductRepo.getProducts(filters);
 }
 
 async function getProduct(data) {
@@ -62,16 +94,12 @@ async function createProduct(data) {
   const { body } = data;
 
   const product = {
-    title: body.title,
+    ...body,
     slug: slugify(body.title),
-    description: body.description,
     price: +body.price,
     quantity: +body.quantity,
-    brand: body.brand,
-    shipping: body.shipping,
+    discount: +body.discount,
     categoryId: ObjectId(body.categoryId),
-    images: body.images,
-    color: body.color,
     subCategoriesId: body.subCategoriesId.map((subCategoryId) => ({
       _id: ObjectId(subCategoryId),
     })),
@@ -90,6 +118,7 @@ async function updateProduct({ body, params }) {
     slug: slugify(body.title),
     price: +body.price,
     quantity: +body.quantity,
+    discount: +body.discount,
   };
 
   const filters = {

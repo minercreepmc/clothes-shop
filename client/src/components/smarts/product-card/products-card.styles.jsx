@@ -66,6 +66,55 @@ export const SingleProduct = styled.div`
   }
 `;
 
+export const Tag = styled.span`
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 48px;
+
+  z-index: 3;
+
+  display: inline-block;
+
+  width: 48px;
+  height: 48px;
+  margin-bottom: 10px;
+
+  text-align: center;
+  text-transform: lowercase;
+
+  color: #ffffff;
+  border-radius: 100%;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media only screen and (min-width: 992px) and (max-width: 1199px) {
+    line-height: 40px;
+
+    width: 40px;
+    height: 40px;
+  }
+`;
+
+export const SaleTag = styled(Tag)`
+  background-color: #256359;
+`;
+
+export const HotTag = styled(Tag)`
+  background-color: #c61932;
+`;
+
+export const FloatingBadges = styled.div`
+  position: absolute;
+  z-index: 9;
+  top: 20px;
+  left: 20px;
+
+  display: flex;
+  flex-direction: column;
+`;
+
 export const New = styled.span`
   position: absolute;
   top: 15px;
@@ -86,6 +135,8 @@ export const Part1 = styled.div`
   max-height: 290px;
   margin-bottom: 20px;
   overflow: hidden;
+
+  cursor: pointer;
 `;
 
 export const IconContainer = styled.li`
@@ -109,25 +160,20 @@ export const ProductTitle = styled.h3`
   font-weight: 300;
 `;
 
-export const ProductOldPrice = styled.h4`
-  position: relative;
-  padding: 0 7px;
-  margin-right: 2px;
-  opacity: 0.6;
-  &::after {
-    position: absolute;
-    content: '';
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #444444;
-    transform: translateY(-50%);
-  }
+export const ProductPriceContainer = styled.div``;
+
+export const ProductMainPrice = styled.h4`
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+
+  margin-right: 5px;
+  color: ${(props) => props.theme.colors.gray};
+  text-decoration: line-through;
 `;
 
-export const ProductPrice = styled.h4`
-  margin-top: 10px;
-  margin-bottom: 10px;
+export const ProductDiscountedPrice = styled.h4`
+  font-size: 14px;
   font-weight: 600;
+  line-height: 1;
 `;

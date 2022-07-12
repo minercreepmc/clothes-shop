@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -20,6 +20,7 @@ import { DashboardCategoryUpdateContext } from 'shares/contexts/dashboard-catego
 
 const CategoryUpdateForm = () => {
   const { category, setCategory } = useContext(DashboardCategoryUpdateContext);
+  const [haveCategory, setHaveCategory] = useState(false);
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
@@ -52,13 +53,15 @@ const CategoryUpdateForm = () => {
   useEffect(() => {
     const getCurrentCategory = async () => {
       const currentCategory = await httpGetCategory({ param: slug });
+      if (!currentCategory) return;
+
       setCategory(currentCategory);
+      setHaveCategory(true);
     };
-
     getCurrentCategory();
-  }, [slug, setCategory]);
+  }, [slug, setCategory, setHaveCategory]);
 
-  return (
+  return haveCategory ? (
     <Form onSubmit={handleSubmit}>
       <FormInput
         label="Update category"
@@ -72,6 +75,8 @@ const CategoryUpdateForm = () => {
         {!isUpdating ? 'Update' : 'Updating...'}
       </PrimaryButton>
     </Form>
+  ) : (
+    <span>Category did not exist :()</span>
   );
 };
 

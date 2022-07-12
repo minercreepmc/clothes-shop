@@ -31,6 +31,12 @@ categorySchema.virtual('subcategories', {
   foreignField: 'categoryId',
 });
 
+categorySchema.virtual('products', {
+  ref: 'Product',
+  localField: '_id',
+  foreignField: 'categoryId',
+});
+
 categorySchema.post('findOneAndDelete', async (doc) => {
   const { subCategoriesId } = doc;
 
