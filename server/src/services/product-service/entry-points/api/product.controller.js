@@ -1,37 +1,35 @@
 const ProductUseCase = require('../../domain/product.usecase');
 
-async function httpGetProducts(req, res) {
+async function httpGetProducts(req, res, next) {
   try {
     const products = await ProductUseCase.getProductsByQuery({
       query: req.query,
     });
     return res.status(200).json(products);
   } catch (errors) {
-    console.log(errors);
-    return res.status(400).json(errors);
+    return next(errors);
   }
 }
-async function httpGetProduct(req, res) {
+async function httpGetProduct(req, res, next) {
   try {
     const product = await ProductUseCase.getProductByIdOrSlug({
       params: req.params,
+      next,
     });
     return res.status(200).json(product);
   } catch (errors) {
-    console.log(errors);
-    return res.status(400).json(errors);
+    return next(errors);
   }
 }
-async function httpPostProduct(req, res) {
+async function httpPostProduct(req, res, next) {
   try {
     const newProduct = await ProductUseCase.createProduct({ body: req.body });
     return res.status(201).json(newProduct);
   } catch (errors) {
-    console.log(errors);
-    return res.status(400).json(errors);
+    return next(errors);
   }
 }
-async function httpPutProduct(req, res) {
+async function httpPutProduct(req, res, next) {
   try {
     const newProduct = await ProductUseCase.updateProduct({
       body: req.body,
@@ -39,18 +37,17 @@ async function httpPutProduct(req, res) {
     });
     return res.status(200).json(newProduct);
   } catch (errors) {
-    console.log(errors);
-    return res.status(400).json(errors);
+    return next(errors);
   }
 }
-async function httpDeleteProduct(req, res) {
+async function httpDeleteProduct(req, res, next) {
   try {
     const deletedProduct = await ProductUseCase.deleteProduct({
       params: req.params,
     });
     return res.status(200).json(deletedProduct);
   } catch (errors) {
-    return res.status(400).json(errors);
+    return next(errors);
   }
 }
 

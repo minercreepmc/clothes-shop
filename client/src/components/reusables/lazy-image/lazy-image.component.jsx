@@ -2,7 +2,12 @@ import { trackWindowScroll } from 'react-lazy-load-image-component';
 import { ImageContainer } from './lazy-image.styles';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
-const LazyImageContainer = ({ className, scrollPosition, ...imageProps }) => {
+const LazyImageContainer = ({
+  className,
+  onClick,
+  scrollPosition,
+  ...imageProps
+}) => {
   const { src, alt } = imageProps;
 
   return (
@@ -15,6 +20,7 @@ const LazyImageContainer = ({ className, scrollPosition, ...imageProps }) => {
       effect="blur"
       width="100%"
       height="100%"
+      onClick={onClick}
     />
   );
 };

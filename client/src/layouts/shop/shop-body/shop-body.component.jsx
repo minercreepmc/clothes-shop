@@ -1,6 +1,7 @@
-import { ShopWrapper } from './shop-body.styles';
 import ShopHeaderContainer from '../shop-header/shop-header.component';
 import ShopContentContainer from '../shop-content/shop-content.component';
+
+import { ShopWrapper } from 'pages/shop-page/shop-page.styles';
 
 const ShopBody = () => {
   return (

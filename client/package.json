@@ -19,6 +19,7 @@
     "react-icons": "^4.4.0",
     "react-image-and-background-image-fade": "^1.0.8",
     "react-image-file-resizer": "^0.4.8",
+    "react-image-gallery": "^1.2.8",
     "react-image-lightbox": "^5.1.4",
     "react-lazy-blur-image": "^0.1.2",
     "react-lazy-load-image-component": "^1.5.4",

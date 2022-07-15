@@ -17,6 +17,9 @@
       ],
       "#services/*": [
         "./src/services/*"
+      ],
+      "#utils/*": [
+        "./src/shares/utils/*"
       ]
     }
   }

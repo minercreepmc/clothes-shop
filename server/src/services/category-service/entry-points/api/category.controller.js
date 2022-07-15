@@ -1,37 +1,36 @@
 const CategoryUseCase = require('../../domain/category.usecase');
 
-async function httpGetCategories(req, res) {
+async function httpGetCategories(req, res, next) {
   try {
     const categories = await CategoryUseCase.getAllCategories();
     return res.status(200).json(categories);
-  } catch (error) {
-    return res.status(400).json(error);
+  } catch (errors) {
+    return next;
   }
 }
 
-async function httpGetCategory(req, res) {
+async function httpGetCategory(req, res, next) {
   try {
     const category = await CategoryUseCase.getCategoryByIdOrSlug({
       params: req.params,
       query: req.query,
     });
     return res.status(200).json(category);
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json(error);
+  } catch (errors) {
+    return next(errors);
   }
 }
 
-async function httpPostCategory(req, res) {
+async function httpPostCategory(req, res, next) {
   try {
     const newCategory = await CategoryUseCase.createCategory(req.body);
     return res.status(201).json(newCategory);
-  } catch (error) {
-    return res.status(400).json(error);
+  } catch (errors) {
+    return next(errors);
   }
 }
 
-async function httpPutCategory(req, res) {
+async function httpPutCategory(req, res, next) {
   try {
     const newCategory = await CategoryUseCase.updateCategory({
       body: req.body,
@@ -39,19 +38,19 @@ async function httpPutCategory(req, res) {
     });
 
     return res.status(200).json(newCategory);
-  } catch (error) {
-    return res.status(400).json(error);
+  } catch (errors) {
+    return next(errors);
   }
 }
 
-async function httpDeleteCategory(req, res) {
+async function httpDeleteCategory(req, res, next) {
   try {
     const deletedCategory = await CategoryUseCase.deleteCategory({
       params: req.params,
     });
     return res.status(200).json(deletedCategory);
-  } catch (error) {
-    return res.status(400).json(error);
+  } catch (errors) {
+    return next(errors);
   }
 }
 

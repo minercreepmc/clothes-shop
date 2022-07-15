@@ -1,4 +1,4 @@
-import ProductCard from 'components/smarts/product-card/product-card.component';
+import ProductCard from 'components/smarts/product/product-card/product-card.component';
 import { Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { selectSearchedProducts } from 'shares/store/products/products.selector';

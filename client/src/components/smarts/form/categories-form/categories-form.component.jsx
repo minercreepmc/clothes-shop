@@ -1,12 +1,10 @@
-import { useContext } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 import FormInput from 'components/reusables/form-group/form-input/form-input.component';
 import PrimaryButton from 'components/reusables/button/primary-button/primary-button.component';
-
-import { DashboardCategoriesContext } from 'shares/contexts/dashboard-categories.context';
 
 import { selectCurrentUser } from 'shares/store/user/user.selector';
 import {
@@ -16,11 +14,10 @@ import {
 import { addCategoryToCategoriesAsync } from 'shares/store/categories/categories.action';
 
 import { fetchSubCategoriesAsync } from 'shares/store/sub-categories/sub-categories.action';
+import { INITIAL_CATEGORY_STATE } from './categories-form.constant';
 
 const CategoriesForm = () => {
-  const { category, setCategory, INITIAL_CATEGORY_STATE } = useContext(
-    DashboardCategoriesContext,
-  );
+  const [category, setCategory] = useState(INITIAL_CATEGORY_STATE);
 
   const admin = useSelector(selectCurrentUser);
   const categories = useSelector(selectCategories);
@@ -38,7 +35,7 @@ const CategoriesForm = () => {
 
     try {
       dispatch(
-        addCategoryToCategoriesAsync(category, categories, admin.accessToken),
+        addCategoryToCategoriesAsync(category, categories, admin.accessToken)
       );
       dispatch(fetchSubCategoriesAsync());
       setCategory(INITIAL_CATEGORY_STATE);

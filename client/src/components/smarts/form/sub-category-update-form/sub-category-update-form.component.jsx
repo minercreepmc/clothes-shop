@@ -82,7 +82,7 @@ const SubCategoryUpdateForm = () => {
         label="Category"
         id="select-sub"
         value={categoryId}
-        onChange={() => {}}
+        onChange={() => { }}
       >
         {categories?.map((category) => (
           <option value={category._id} key={category._id}>
@@ -97,7 +97,7 @@ const SubCategoryUpdateForm = () => {
         id="name"
         type="text"
         value={name}
-        onChange={() => {}}
+        onChange={() => { }}
       />
 
       <PrimaryButton variant="dark" type="submit" disabled={isUpdating}>

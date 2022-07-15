@@ -42,14 +42,7 @@ const AdminDashboard = () => {
               </DashboardInformationProvider>
             }
           />
-          <Route
-            path="categories"
-            element={
-              <DashboardCategoriesProvider>
-                <DashboardCategories />
-              </DashboardCategoriesProvider>
-            }
-          />
+          <Route path="categories" element={<DashboardCategories />} />
           <Route
             path="categories/:slug"
             element={

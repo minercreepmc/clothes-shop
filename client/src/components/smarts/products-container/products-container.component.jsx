@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import { selectProducts } from 'shares/store/products/products.selector';
-import ProductPreview from '../product-preview/product-preview.component';
+import ProductPreview from 'components/smarts/product/product-preview/product-preview.component';
 
 const ProductsContainer = () => {
   const products = useSelector(selectProducts);

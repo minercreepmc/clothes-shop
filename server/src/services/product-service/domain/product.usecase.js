@@ -4,6 +4,7 @@ const ObjectId = mongoose.Types.ObjectId;
 
 const ProductRepo = require('../data-access/repositories/product.repository');
 const { prettierErrors } = require('#shares/utils/mongo/mongo.utils');
+const ApiError = require('#shares/utils/errors/api-error.utils');
 
 async function getAllProducts() {
   return ProductRepo.getProducts();
@@ -87,7 +88,12 @@ async function getProductByIdOrSlug({ params }) {
     filters.slug = param;
   }
 
-  return ProductRepo.getProduct(filters);
+  const product = await ProductRepo.getProduct(filters);
+  if (!product) {
+    throw ApiError.notFound('Product did not exist');
+  }
+
+  return product;
 }
 
 async function createProduct(data) {

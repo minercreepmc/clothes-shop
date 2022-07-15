@@ -9,12 +9,19 @@ const imageRouter = require('./image-service/entry-points/api/image.router');
 const contactRouter = require('./contact-service/entry-points/api/contact.router');
 
 const { authCheck } = require('#shares/middlewares/auth.middleware');
+const {
+  returnError,
+  logError,
+} = require('#shares/middlewares/api-error-handler.middleware');
 
 router.use('/users', authCheck, userRouter);
 router.use('/categories', categoryRouter);
 router.use('/sub-categories', subCategoryRouter);
 router.use('/products', productRouter);
-router.use('/images', authCheck, imageRouter);
+router.use('/images', imageRouter);
 router.use('/contact', contactRouter);
+
+router.use(logError);
+router.use(returnError);
 
 module.exports = router;

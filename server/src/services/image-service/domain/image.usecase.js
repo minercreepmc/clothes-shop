@@ -1,5 +1,18 @@
 const Cloudinary = require('#shares/utils/cloudinary/cloudinary.utils');
 
+async function getImage({ params, query, folder = 'products' }) {
+  const { imageId } = params;
+  const { height, width } = query;
+  const transformation = [{ height, width }];
+
+  const imageUrl = await Cloudinary.getImage(
+    `${folder}/${imageId}.webp`,
+    transformation,
+  );
+
+  return imageUrl;
+}
+
 async function uploadImage(data) {
   const { body } = data;
   const { image } = body;
@@ -26,4 +39,4 @@ async function deleteImages({ body }) {
   return Promise.all(deleteMultipleImages);
 }
 
-module.exports = { uploadImage, uploadImages, deleteImages };
+module.exports = { getImage, uploadImage, uploadImages, deleteImages };

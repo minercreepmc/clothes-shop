@@ -5,7 +5,7 @@ import Carousel from 'react-multi-carousel';
 import { BiArrowFromLeft } from 'react-icons/bi';
 
 import { selectHomeProducts } from 'shares/store/products/products.selector';
-import ProductCard from 'components/smarts/product-card/product-card.component';
+import ProductCard from 'components/smarts/product/product-card/product-card.component';
 import SecondaryButton from 'components/reusables/button/secondary-button/secondary-button.component';
 
 import { ProductsFeatured, Header } from './products-featured.styles';

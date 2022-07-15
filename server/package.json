@@ -7,13 +7,14 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/server.js",
-    "watch": "nodemon src/server.js"
+    "watch": "NODE_ENV=development nodemon src/server.js"
   },
   "imports": {
     "#api/*": "./src/api/*.js",
     "#configs": "./src/configs/*",
     "#shares/*": "./src/shares/*.js",
-    "#services/*": "./src/services/*.js"
+    "#services/*": "./src/services/*.js",
+    "#utils/*": "./src/shares/utils/*/index.js"
   },
   "dependencies": {
     "cloudinary": "^1.30.0",
@@ -22,14 +23,16 @@
     "express": "^4.18.1",
     "fastest-validator": "^1.12.0",
     "firebase-admin": "^10.2.0",
+    "http-status": "^1.5.2",
     "mongoose": "^6.3.5",
     "morgan": "^1.10.0",
     "nodemailer": "^6.7.6",
-    "slugify": "^1.6.5"
+    "slugify": "^1.6.5",
+    "winston": "^3.8.1"
   },
   "devDependencies": {
-    "eslint": "^7.32.0 || ^8.2.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.2"
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1"
   }
 }

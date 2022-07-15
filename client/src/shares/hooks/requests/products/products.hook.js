@@ -30,9 +30,8 @@ export async function httpGetProductsForAdmin({ descriptionTruncate }) {
   try {
     const res = await axios.get(
       `${PRODUCTS_ENDPOINT}/?limit=${DEFAULT_LIMIT}&descriptionTruncate=${descriptionTruncate}`,
-      {},
+      {}
     );
-    console.log(res.data);
     return res.data;
   } catch (errors) {
     return errors.response.data;
@@ -44,7 +43,7 @@ export async function httpGetProduct({ slug }) {
     const res = await axios.get(`${PRODUCTS_ENDPOINT}/${slug}`, {});
     return res.data;
   } catch (errors) {
-    return errors.response.data;
+    throw errors.response.data;
   }
 }
 
@@ -64,7 +63,7 @@ export async function httpPutProduct({ product, accessToken }) {
     const res = await axios.put(
       `${PRODUCTS_ENDPOINT}/${product.slug}`,
       product,
-      { headers: { accessToken } },
+      { headers: { accessToken } }
     );
     return res.data;
   } catch (errors) {

@@ -49,6 +49,8 @@ export const ProductImage = styled(LazyImage)`
   object-fit: cover;
   z-index: -1;
   transition: all 0.3s !important;
+
+  cursor: pointer;
 `;
 
 export const SingleProduct = styled.div`
@@ -135,8 +137,6 @@ export const Part1 = styled.div`
   max-height: 290px;
   margin-bottom: 20px;
   overflow: hidden;
-
-  cursor: pointer;
 `;
 
 export const IconContainer = styled.li`

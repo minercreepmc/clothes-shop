@@ -7,6 +7,10 @@ cloudinary.config({
   secure: true,
 });
 
+async function getImage(imageName, transformation) {
+  return cloudinary.url(imageName, { transformation });
+}
+
 async function uploadImage(image) {
   const { public_id, secure_url } = await cloudinary.uploader.upload(image, {
     public_id: Date.now(),
@@ -22,6 +26,7 @@ async function deleteImage(url) {
 }
 
 module.exports = {
+  getImage,
   uploadImage,
   deleteImage,
 };

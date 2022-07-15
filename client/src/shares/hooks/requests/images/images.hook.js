@@ -1,6 +1,17 @@
 import axios from 'axios';
 import { IMAGES_UPLOAD_ENDPOINT } from './images.constant';
 
+async function httpGetImage({ imageId, query }) {
+  try {
+    const res = await axios.get(`${IMAGES_UPLOAD_ENDPOINT}/${imageId}`, {
+      params: query,
+    });
+    return res.data;
+  } catch (errors) {
+    return errors.response.data;
+  }
+}
+
 async function httpUploadImage({ image, accessToken }) {
   try {
     const res = await axios.post(
@@ -41,4 +52,4 @@ async function httpDeleteImages({ imagesId, accessToken }) {
   }
 }
 
-export { httpUploadImage, httpUploadImages, httpDeleteImages };
+export { httpGetImage, httpUploadImage, httpUploadImages, httpDeleteImages };

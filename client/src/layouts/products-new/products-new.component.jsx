@@ -1,4 +1,4 @@
-import ProductCard from 'components/smarts/product-card/product-card.component';
+import ProductCard from 'components/smarts/product/product-card/product-card.component';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
