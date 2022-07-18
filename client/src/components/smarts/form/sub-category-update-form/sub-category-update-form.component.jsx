@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
@@ -16,16 +16,15 @@ import {
 } from 'shares/store/sub-categories/sub-categories.selector';
 
 import { httpGetSubCategory } from 'shares/hooks/requests/sub-categories/sub-categories.hook';
-import { DashboardSubCategoryUpdateContext } from 'shares/contexts/dashboard-sub-category-update.context';
 import { updateSubCategoryToSubCategoriesAsync } from 'shares/store/sub-categories/sub-categories.action';
+
+import { INITIAL_SUB_CATEGORY_STATE } from './sub-category-update-form.constant';
 
 const SubCategoryUpdateForm = () => {
   // TODO:
   const { slug } = useParams();
+  const [subCategory, setSubCategory] = useState(INITIAL_SUB_CATEGORY_STATE);
 
-  const { subCategory, setSubCategory } = useContext(
-    DashboardSubCategoryUpdateContext,
-  );
   const [haveSubCategory, setHaveSubCategory] = useState(false);
 
   const { name, categoryId } = subCategory;
@@ -46,8 +45,8 @@ const SubCategoryUpdateForm = () => {
         updateSubCategoryToSubCategoriesAsync(
           subCategory,
           subCategories,
-          admin.accessToken,
-        ),
+          admin.accessToken
+        )
       );
       toast.success('Update category successful');
       navigate('/admin/dashboard/sub-categories');

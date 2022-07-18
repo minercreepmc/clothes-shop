@@ -12,13 +12,12 @@ import {
   IconButton,
   Part2,
   ProductTitle,
-  ProductMainPrice,
-  ProductDiscountedPrice,
   SaleTag,
   ProductImage,
   FloatingBadges,
-  ProductPriceContainer,
 } from './products-card.styles';
+
+import ProductPrice from 'components/smarts/product/product-price/product-price.component';
 
 const ProductCard = ({ product, isNew }) => {
   const { title, price, images, discount, slug } = product;
@@ -27,8 +26,6 @@ const ProductCard = ({ product, isNew }) => {
   const [photoIndex, setPhotoIndex] = useState(0);
 
   const navigate = useNavigate();
-
-  const discoutedPrice = price - price * (discount / 100);
 
   return (
     <SingleProduct>
@@ -73,12 +70,7 @@ const ProductCard = ({ product, isNew }) => {
       <Part2>
         <ProductTitle>{title}</ProductTitle>
 
-        <ProductPriceContainer>
-          {discount && <ProductMainPrice> {price}$</ProductMainPrice>}
-          <ProductDiscountedPrice>
-            {discount ? discoutedPrice.toFixed(2) : price}$
-          </ProductDiscountedPrice>
-        </ProductPriceContainer>
+        <ProductPrice price={price} discount={discount} />
       </Part2>
     </SingleProduct>
   );

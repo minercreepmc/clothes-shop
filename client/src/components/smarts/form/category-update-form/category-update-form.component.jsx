@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -16,10 +16,10 @@ import {
   selectIsCategoryUpdating,
 } from 'shares/store/categories/categories.selector';
 
-import { DashboardCategoryUpdateContext } from 'shares/contexts/dashboard-category-update.context';
+import { INITIAL_CATEGORY_STATE } from './category-update-form.constant';
 
 const CategoryUpdateForm = () => {
-  const { category, setCategory } = useContext(DashboardCategoryUpdateContext);
+  const [category, setCategory] = useState(INITIAL_CATEGORY_STATE);
   const [haveCategory, setHaveCategory] = useState(false);
 
   const admin = useSelector(selectCurrentUser);
@@ -35,11 +35,7 @@ const CategoryUpdateForm = () => {
 
     try {
       dispatch(
-        updateCategoryToCategoriesAsync(
-          category,
-          categories,
-          admin.accessToken,
-        ),
+        updateCategoryToCategoriesAsync(category, categories, admin.accessToken)
       );
       toast.success('Update category successful');
       navigate('/admin/dashboard/categories');

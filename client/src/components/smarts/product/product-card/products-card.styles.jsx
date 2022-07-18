@@ -148,32 +148,10 @@ export const Part2 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  h4 {
-    display: inline-block;
-    font-size: 1rem;
-  }
 `;
 
 export const ProductTitle = styled.h3`
   font-size: 0.95rem;
   letter-spacing: 0.5px;
   font-weight: 300;
-`;
-
-export const ProductPriceContainer = styled.div``;
-
-export const ProductMainPrice = styled.h4`
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1;
-
-  margin-right: 5px;
-  color: ${(props) => props.theme.colors.gray};
-  text-decoration: line-through;
-`;
-
-export const ProductDiscountedPrice = styled.h4`
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1;
 `;

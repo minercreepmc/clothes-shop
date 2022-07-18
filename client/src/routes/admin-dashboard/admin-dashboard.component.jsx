@@ -12,10 +12,8 @@ import DashboardSubCategoriesUpdate from 'layouts/dashboard/dashboard-sub-catego
 import DashboardProductCreate from 'layouts/dashboard/dashboard-product-create/dashboard-product-create.component';
 import DashboardProducts from 'layouts/dashboard/dashboard-products/dashboard-products.components';
 
-import { DashboardCategoriesProvider } from 'shares/contexts/dashboard-categories.context';
 import { DashboardSubcategoriesProvider } from 'shares/contexts/dashboard-sub-categories.context';
 import { DashboardProductCreateProvider } from 'shares/contexts/dashboard-product-create.context';
-import { DashboardCategoryUpdateProvider } from 'shares/contexts/dashboard-category-update.context';
 import { DashboardSubCategoryUpdateProvider } from 'shares/contexts/dashboard-sub-category-update.context';
 import { DashboardProductsProvider } from 'shares/contexts/dashboard-products.context';
 import { DashboardInformationProvider } from 'shares/contexts/dashboard-information.context';
@@ -45,11 +43,7 @@ const AdminDashboard = () => {
           <Route path="categories" element={<DashboardCategories />} />
           <Route
             path="categories/:slug"
-            element={
-              <DashboardCategoryUpdateProvider>
-                <DashboardCategoryUpdate />
-              </DashboardCategoryUpdateProvider>
-            }
+            element={<DashboardCategoryUpdate />}
           />
           <Route
             path="sub-categories"

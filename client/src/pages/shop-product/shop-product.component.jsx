@@ -44,7 +44,7 @@ const ShopProduct = () => {
                     <ProductImagesGallery product={product} />
                   </Col>
                   <Col lg={6}>
-                    <ShopDescription />
+                    <ShopDescription product={product} />
                   </Col>
                 </Row>
               </ProductDetailContainer>
