@@ -5,6 +5,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const ProductRepo = require('../data-access/repositories/product.repository');
 const { prettierErrors } = require('#shares/utils/mongo/mongo.utils');
 const ApiError = require('#shares/utils/errors/api-error.utils');
+const DalError = require('#shares/utils/errors/dal-error.utils');
 
 async function getAllProducts() {
   return ProductRepo.getProducts();
@@ -134,7 +135,7 @@ async function updateProduct({ body, params }) {
   try {
     return await ProductRepo.updateProduct({ filters, product });
   } catch (errors) {
-    throw prettierErrors(errors);
+    throw DalError.unprocessableEntity(errors);
   }
 }
 

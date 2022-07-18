@@ -1,6 +1,5 @@
-const http = require('http');
-
-const app = require('./app');
+import http from 'http';
+import app from './app';
 
 const { mongoConnect } = require('#shares/utils/mongo/mongo.utils');
 

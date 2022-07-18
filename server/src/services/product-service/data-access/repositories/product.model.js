@@ -64,12 +64,25 @@ const productSchema = new mongoose.Schema(
       type: String,
       enum: ['Hermes', 'Prada', 'Chanel', 'Ralph Lauren', 'Burberry'],
     },
+    variant: [
+      {
+        color: {
+          type: String,
+          enum: ['Black', 'Brown', 'Silver', 'White', 'Blue', 'Red'],
+        },
+        size: {
+          type: String,
+          enum: ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+        },
+        quantity: Number,
+      },
+    ],
   },
   {
     timestamps: true,
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
-  },
+  }
 );
 
 productSchema.virtual('categories', {

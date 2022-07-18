@@ -8,8 +8,8 @@ function logError(err, req, res, next) {
 
 function returnError(err, req, res, next) {
   return res
-    .status(err.statusCode || status.INTERNAL_SERVER_ERROR)
-    .send({ message: err.name });
+    .status(err.statusCode || status.BAD_REQUEST)
+    .send({ message: err.name || 'Problem parsing JSON' });
 }
 
 module.exports = {
