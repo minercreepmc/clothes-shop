@@ -1,26 +1,31 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "removeComments": true,
+    "baseUrl": "./src",
+    "outDir": "./dist",
     "strict": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "useUnknownInCatchVariables": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "target": "es6",
     "paths": {
-      "#api/*": [
-        "./src/api/*"
-      ],
-      "#configs/*": [
-        "./src/configs/*"
-      ],
-      "#shares/*": [
-        "./src/shares/*"
-      ],
-      "#services/*": [
-        "./src/services/*"
-      ],
-      "#utils/*": [
-        "./src/shares/utils/*"
-      ]
+      "#api/*": ["./src/api/*"],
+      "#configs/*": ["./src/configs/*"],
+      "#shares/*": ["./src/shares/*"],
+      "#services/*": ["./src/services/*"],
+      "#utils/*": ["./src/shares/utils/*"]
     }
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
