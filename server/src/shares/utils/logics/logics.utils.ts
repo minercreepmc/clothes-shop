@@ -1,9 +1,3 @@
-const getSubStringFromTo = (string, from, to) =>
-  string.substring(from, string.indexOf(to));
+export const getSubStringFromTo = (str: string, from: number, to: string) =>
+  str.substring(from, str.indexOf(to));
 
-const createRequest = (body, headers) => ({ body, headers });
-
-module.exports = {
-  getSubStringFromTo,
-  createRequest,
-};

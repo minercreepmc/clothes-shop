@@ -3,10 +3,10 @@ export type Role = 'subscriber' | 'admin';
 export interface IUser {
   email: string;
   displayName: string;
-  accessToken: string;
-  role: Role;
+  role?: Role;
+  accessToken?: string;
   status?: boolean;
   address?: string;
 }
 
-export interface IUserDocument extends IUser, MongooseDoc {}
+export interface IUserDocument extends IUser, MongooseDoc { }

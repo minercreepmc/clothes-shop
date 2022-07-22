@@ -1,13 +1,13 @@
 import userModel from './user.model';
-import { IUser, IUserDocument } from './user.types';
+import { IUser } from './user.types';
 
-export async function createUser(user: IUser): Promise<IUserDocument> {
+export async function createUser(user: IUser) {
   const newUser = await userModel.create(user);
 
   return newUser;
 }
 
-export async function upsertUser(user: IUser): Promise<IUserDocument> {
+export async function upsertUser(user: IUser) {
   const newUser = await userModel.findOneAndUpdate(
     { email: user.email },
     { $set: { ...user } },
@@ -19,13 +19,12 @@ export async function upsertUser(user: IUser): Promise<IUserDocument> {
 
 export async function getUserByEmail(
   email: string
-): Promise<IUserDocument | null> {
+) {
   const user = await userModel.findOne({ email });
 
   return user;
 }
 
-// TODO: Add return type
 export async function isUserExist(filter: object) {
   const userExist = await userModel.exists(filter);
 

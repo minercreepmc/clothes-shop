@@ -1,34 +1,29 @@
-const UserUseCase = require('../../domain/user.usecase');
+import { NextFunction, Request, Response } from 'express';
+import * as UserUseCase from '../../domain/user.usecase';
 
-const httpCreateUser = async (req, res, next) => {
+export const httpCreateUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const newUser = await UserUseCase.createUser(req.user);
+    const newUser = await UserUseCase.createUser(req.user!);
     return res.status(201).json(newUser);
   } catch (errors) {
     return next(errors);
   }
 };
 
-const httpUpsertUser = async (req, res, next) => {
+export const httpUpsertUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await UserUseCase.createAndUpdateUser(req.user);
+    const user = await UserUseCase.createAndUpdateUser(req.user!);
     return res.status(200).json(user);
   } catch (errors) {
     return next(errors);
   }
 };
 
-const httpGetCurrentUser = async (req, res, next) => {
+export const httpGetCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await UserUseCase.getCurrentUser(req.user);
+    const user = await UserUseCase.getCurrentUserByEmail(req.user!.email);
     return res.status(200).json(user);
   } catch (errors) {
     return next(errors);
   }
-};
-
-module.exports = {
-  httpCreateUser,
-  httpUpsertUser,
-  httpGetCurrentUser,
 };

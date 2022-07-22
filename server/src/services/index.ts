@@ -15,7 +15,7 @@ import categoryRouter from './category-service/entry-points/api/category.router'
 // } from 'shares/middlewares/api-error-handler.middleware';
 //
 router.use('/categories', categoryRouter);
-// router.use('/users', authCheck, userRouter);
+//router.use('/users', authCheck, userRouter);
 // router.use('/sub-categories', subCategoryRouter);
 // router.use('/products', productRouter);
 // router.use('/images', imageRouter);
