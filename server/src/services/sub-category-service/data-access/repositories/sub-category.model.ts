@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
-const { ObjectId } = mongoose.Types;
+import mongoose from 'mongoose';
+const { ObjectId } = mongoose.Schema.Types;
 
 const subCategorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
       trim: true,
-      required: 'Name is required',
+      required: [true, 'Name is required'],
       minlength: [2, 'Name is too short'],
       maxlength: [32, 'Name is too long'],
     },
@@ -38,7 +38,7 @@ subCategorySchema.post('save', async (doc) => {
   }
 });
 
-module.exports = mongoose.model(
+export default mongoose.model(
   'SubCategory',
   subCategorySchema,
   'subCategories',

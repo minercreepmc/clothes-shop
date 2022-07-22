@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { MongooseError } from './mongo.types';
+import { MongooseError, ObjectId } from './mongo.types';
 
 mongoose.connection.on('error', (error) => {
   console.error(error);
@@ -14,4 +14,8 @@ export function prettierErrors(errors: MongooseError) {
     field: error.path,
     message: error.message,
   }));
+}
+
+export function toObjectId(str: string | ObjectId): ObjectId {
+  return new mongoose.Types.ObjectId(str);
 }

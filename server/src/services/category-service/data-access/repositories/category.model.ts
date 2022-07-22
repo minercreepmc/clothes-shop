@@ -1,6 +1,5 @@
 import { Schema, model } from 'mongoose';
 
-
 import { ICategoryDocument } from './category.types';
 
 const categorySchema = new Schema(
