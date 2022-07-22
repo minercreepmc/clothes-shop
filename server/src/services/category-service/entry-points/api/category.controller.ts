@@ -6,7 +6,7 @@ export async function httpGetCategories(req: Request, res: Response, next: NextF
     const categories = await CategoryUseCase.getAllCategories();
     return res.status(200).json(categories);
   } catch (errors) {
-    return res.json('error');
+    return next(errors);
   }
 }
 

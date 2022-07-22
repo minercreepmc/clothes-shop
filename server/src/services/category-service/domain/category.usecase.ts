@@ -3,7 +3,7 @@ import url from 'url';
 import mongoose from 'mongoose';
 const ObjectId = mongoose.Types.ObjectId;
 
-// import { prettierErrors } from 'shares/utils/mongo';
+import { prettierErrors } from 'shares/utils/mongo';
 
 import * as CategoryRepo from 'services/category-service/data-access/repositories/category.repository';
 import { ICategory, ICategoryDocument, ICategoryFilter, ICategoryQuery } from 'services/category-service/data-access/repositories/category.types';
