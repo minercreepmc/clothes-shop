@@ -1,9 +1,9 @@
 require('dotenv').config();
-const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
+import express from 'express';
+import morgan from 'morgan';
+import cors from 'cors';
 
-const apiRouter = require('./services');
+import apiRouter from './services';
 
 const app = express();
 
@@ -18,4 +18,4 @@ app.use(morgan('tiny'));
 
 app.use('/api', apiRouter);
 
-module.exports = app;
+export default app;

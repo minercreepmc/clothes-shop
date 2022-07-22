@@ -1,4 +1,6 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from 'mongoose';
+
+import { IUserDocument } from './user.types';
 
 const userSchema = new Schema(
   {
@@ -14,6 +16,7 @@ const userSchema = new Schema(
     },
     accessToken: {
       type: String,
+      required: true,
     },
     role: {
       type: String,
@@ -25,7 +28,7 @@ const userSchema = new Schema(
     },
     address: String,
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-module.exports = model('User', userSchema);
+export default model<IUserDocument>('User', userSchema);

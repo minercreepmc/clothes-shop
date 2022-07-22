@@ -1,12 +1,14 @@
-const mongoose = require('mongoose');
-const { ObjectId } = mongoose.Types;
+import { Schema, model } from 'mongoose';
 
-const categorySchema = new mongoose.Schema(
+
+import { ICategoryDocument } from './category.types';
+
+const categorySchema = new Schema(
   {
     name: {
       type: String,
       trim: true,
-      required: 'Name is required',
+      required: [true, 'Name is required'],
       minlength: [2, 'Name is too short'],
       maxlength: [32, 'Name is too long'],
     },
@@ -16,13 +18,13 @@ const categorySchema = new mongoose.Schema(
       lowercase: true,
       index: true,
     },
-    subCategoriesId: [{ type: ObjectId }],
+    subCategoriesId: [{ type: Schema.Types.ObjectId }],
   },
   {
     timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  },
+  }
 );
 
 categorySchema.virtual('subcategories', {
@@ -40,9 +42,9 @@ categorySchema.virtual('products', {
 categorySchema.post('findOneAndDelete', async (doc) => {
   const { subCategoriesId } = doc;
 
-  const SubCategoryModel = mongoose.model('SubCategory');
+  const SubCategoryModel = model('SubCategory');
 
   await SubCategoryModel.remove({ _id: { $in: subCategoriesId } });
 });
 
-module.exports = mongoose.model('Category', categorySchema, 'category');
+export default model<ICategoryDocument>('Category', categorySchema, 'category');

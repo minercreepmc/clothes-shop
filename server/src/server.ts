@@ -1,9 +1,8 @@
 import http from 'http';
 import app from './app';
 
-const { mongoConnect } = require('#shares/utils/mongo/mongo.utils');
-
-const startServer = async () => {
+import { mongoConnect } from 'shares/utils/mongo';
+const startServer = async (): Promise<void> => {
   const server = http.createServer(app);
 
   await mongoConnect();

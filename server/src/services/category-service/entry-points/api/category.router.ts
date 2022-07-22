@@ -1,24 +1,21 @@
-const { Router } = require('express');
+import { Router } from 'express';
 
-const {
-  authCheck,
-  adminCheck,
-} = require('#shares/middlewares/auth.middleware');
+import { authCheck, adminCheck } from 'shares/middlewares/auth.middleware';
 
-const {
+import {
   httpGetCategories,
   httpGetCategory,
   httpPostCategory,
   httpPutCategory,
   httpDeleteCategory,
-} = require('./category.controller');
+} from './category.controller';
 
 const router = Router();
 
 router.get('/', httpGetCategories);
-router.get('/:param', httpGetCategory);
+router.get('/:slug', httpGetCategory);
 router.post('/', authCheck, adminCheck, httpPostCategory);
 router.put('/:slug', authCheck, adminCheck, httpPutCategory);
 router.delete('/:slug', authCheck, adminCheck, httpDeleteCategory);
 
-module.exports = router;
+export default router;

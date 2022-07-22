@@ -1,31 +1,21 @@
 {
+  "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
-    "removeComments": true,
-    "baseUrl": "./src",
-    "outDir": "./dist",
-    "strict": true,
-    "alwaysStrict": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strictBindCallApply": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "useUnknownInCatchVariables": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "paths": {
-      "#api/*": ["./src/api/*"],
-      "#configs/*": ["./src/configs/*"],
-      "#shares/*": ["./src/shares/*"],
-      "#services/*": ["./src/services/*"],
-      "#utils/*": ["./src/shares/utils/*"]
-    }
+    "baseUrl": "src",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "useDefineForClassFields": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
