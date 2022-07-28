@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { ISubCategoryDocument } from './sub-category.types';
 const { ObjectId } = mongoose.Schema.Types;
 
 const subCategorySchema = new mongoose.Schema(
@@ -38,7 +39,7 @@ subCategorySchema.post('save', async (doc) => {
   }
 });
 
-export default mongoose.model(
+export default mongoose.model<ISubCategoryDocument>(
   'SubCategory',
   subCategorySchema,
   'subCategories',

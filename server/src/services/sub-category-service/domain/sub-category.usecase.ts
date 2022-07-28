@@ -2,8 +2,7 @@ import slugify from 'slugify';
 import { prettierErrors, toObjectId } from 'shares/utils/mongo';
 
 import * as SubCategoryRepo from '../data-access/repositories/sub-category.repository';
-import { ISubCategory, ISubCategoryDocument, ISubCategoryParams, ISubCategoryQuery } from '../data-access/repositories/sub-category.types';
-import { MongooseError, ObjectId } from 'shares/utils/mongo/mongo.types';
+import { ISubCategory, ISubCategoryDocument, ISubCategoryParams, ISubCategoryQuery } from '../data-access/repositories/sub-category.types'; import { MongooseError, ObjectId } from 'shares/utils/mongo/mongo.types';
 
 /**
  * Get sub categories by parameter
