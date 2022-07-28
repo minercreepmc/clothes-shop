@@ -12,18 +12,18 @@ version: 0.0.11
     - [x] category-service
     - [x] sub-category-service
     - [x] user-service
-    - [-] product-service
+    - [x] product-service
     - [ ] image-service
     - [ ] contact-service
 ** shares
     - [ ] middlewares
 *** utils
      - [ ] cloudinary
-     - [-] errors
+     - [x] errors
      - [x] firebase
      - [ ] logger
      - [x] logics
-     - [ ] mongo
+     - [x] mongo
      - [ ] nodemailer
 
 
