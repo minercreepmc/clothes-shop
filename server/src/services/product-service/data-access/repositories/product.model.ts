@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
-
-const { ObjectId } = mongoose.Schema;
+import { IProductDocument } from './product.types';
+const { ObjectId } = mongoose.Schema.Types;
 
 const productSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       trim: true,
-      required: 'Title is required',
+      required: [true, 'Title is required'],
       maxlength: [32, 'Title cannot be longer than 32 characters'],
       text: true,
     },
@@ -19,13 +19,13 @@ const productSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: 'Description is required',
+      required: [true, 'Description is required'],
       maxlength: [2000, 'Description cannot be longer than 2000 characters'],
       text: true,
     },
     price: {
       type: Number,
-      required: 'Price is required',
+      required: [true, 'Price is required'],
       trim: true,
       maxlength: [32, 'Price cannot be longer than 32 characters'],
     },
@@ -97,4 +97,4 @@ productSchema.virtual('subcategories', {
   foreignField: '_id',
 });
 
-module.exports = mongoose.model('Product', productSchema);
+export default mongoose.model<IProductDocument>('Product', productSchema);

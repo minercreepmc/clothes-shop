@@ -1,45 +1,61 @@
-const ProductModel = require('./product.model');
+import ProductModel from './product.model';
+import { IProductParams, IProduct, IProductQueryWithSkip } from './product.types';
 
-async function getProducts({ limit, skip, sort, priceFrom }) {
+
+export async function getProducts(query?: IProductQueryWithSkip) {
+  if (!query) return ProductModel.find();
+
+  const { limit, skip, sort, priceFrom } = query;
   return ProductModel.find({ price: { $gte: priceFrom } })
     .limit(limit)
     .skip(skip)
     .sort(sort);
 }
 
-async function getProductsWithCategory({ limit, skip, sort }) {
-  return ProductModel.find()
+export async function getProductsWithCategory(query?: IProductQueryWithSkip) {
+  if (!query) return ProductModel.find().populate('categories');
+
+  const { limit, skip, sort, priceFrom } = query;
+  return ProductModel.find({ price: { $gte: priceFrom } })
     .populate('categories')
     .limit(limit)
     .skip(skip)
     .limit(limit)
     .sort(sort);
+
 }
 
-async function getProductsByCategory({ limit, skip, sort, categoryId }) {
-  return ProductModel.find({ categoryId }).limit(limit).skip(skip).sort(sort);
+export async function getProductsByCategory(query: IProductQueryWithSkip) {
+  const { categoryId, limit, sort, skip } = query;
+  if (categoryId) return ProductModel.find({ categoryId }).limit(limit).skip(skip).sort(sort);
+
+  return [];
 }
 
-async function getProductsBySubCategory({ limit, skip, sort, subCategoryId }) {
-  return ProductModel.find({ subCategoriesId: { $in: subCategoryId } })
+export async function getProductsBySubCategory(query: IProductQueryWithSkip) {
+  const { subCategoryId, limit, sort, skip } = query;
+
+  if (subCategoryId) return ProductModel.find({ subCategoriesId: { $in: subCategoryId } })
     .limit(limit)
     .skip(skip)
     .sort(sort);
+
+  return [];
 }
 
-async function getProduct(filters) {
-  return ProductModel.findOne(filters);
+export async function getProduct(params: IProductParams) {
+  return ProductModel.findOne(params);
 }
 
-async function createProduct(product) {
-  return ProductModel.create(product);
+export async function createProduct(productData: IProduct) {
+  return ProductModel.create(productData);
 }
 
-async function updateProduct({ filters, product }) {
-  const { slug } = filters;
+export async function updateProduct(params: IProductParams, productData: IProduct) {
+  const { slug } = params;
   return ProductModel.findOneAndUpdate(
     { slug },
-    { $set: product },
+    { $set: productData },
     {
       new: true,
       runValidators: true,
@@ -47,19 +63,9 @@ async function updateProduct({ filters, product }) {
   );
 }
 
-async function deleteProduct(filters) {
-  const { slug } = filters;
+export async function deleteProduct(params: IProductParams) {
+  const { slug } = params;
 
   return ProductModel.findOneAndDelete({ slug });
 }
 
-module.exports = {
-  getProducts,
-  getProductsWithCategory,
-  getProduct,
-  getProductsByCategory,
-  getProductsBySubCategory,
-  createProduct,
-  updateProduct,
-  deleteProduct,
-};

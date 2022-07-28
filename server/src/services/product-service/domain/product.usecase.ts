@@ -1,55 +1,60 @@
-const slugify = require('slugify');
-const mongoose = require('mongoose');
+import slugify from 'slugify';
+import mongoose from 'mongoose';
 const ObjectId = mongoose.Types.ObjectId;
 
-const ProductRepo = require('../data-access/repositories/product.repository');
-const { prettierErrors } = require('#shares/utils/mongo/mongo.utils');
-const ApiError = require('#shares/utils/errors/api-error.utils');
-const DalError = require('#shares/utils/errors/dal-error.utils');
+import * as ProductRepo from '../data-access/repositories/product.repository';
 
-async function getAllProducts() {
+import { IProduct, IProductDocument, IProductParams, IProductQueryWithPage, IProductSort } from '../data-access/repositories/product.types';
+import { prettierErrors } from 'shares/utils/mongo';
+import ApiError from 'shares/utils/errors/api-error.utils';
+import DalError from 'shares/utils/errors/dal-error.utils';
+import { getSkipFromPageAndLimit } from 'shares/utils/logics/logics.utils';
+import { MongooseError } from 'shares/utils/mongo/mongo.types';
+
+/**
+ * Get all products
+ *
+ * @async
+ * @returns {Promise<IProductDocument[]>} Array of all products
+ */
+export async function getAllProducts(): Promise<IProductDocument[]> {
   return ProductRepo.getProducts();
 }
 
-async function getProductsByQuery({ query }) {
-  const DEFAULT_PAGE = 1;
-  const DEFAULT_LIMIT = 10;
-  const DEFAULT_SORT = { updatedAt: -1 };
-
+/**
+ * Get products by query
+ *
+ * @async
+ * @param {IProductQueryWithPage} query - Query out the products
+ * @returns {Promise<IProductDocument[] | null>} Array of products
+ */
+export async function getProductsByQuery(query: any): Promise<IProductDocument[] | null> {
   const {
-    page = DEFAULT_PAGE,
-    limit = DEFAULT_LIMIT,
+    page = 1,
+    limit = 10,
+    priceFrom = 0,
     descriptionTruncate,
     categoryId,
     subCategoryId,
-    priceFrom = 0,
   } = query;
-
+  const DEFAULT_SORT: IProductSort = { updatedAt: -1 };
   const sort = DEFAULT_SORT;
 
-  const skip = (page - 1) * limit;
+  const skip = getSkipFromPageAndLimit(page, limit);
+  const filters = { skip, limit, sort, priceFrom: +priceFrom };
+
 
   if (descriptionTruncate) {
-    const products = await ProductRepo.getProducts({ limit, skip, sort });
+    const products = await ProductRepo.getProducts(filters);
     products.forEach((product) => {
       product.description = product.description
-        .slice(0, +query.descriptionTruncate)
+        .slice(0, +descriptionTruncate)
         .concat('...');
     });
 
     return products;
   }
 
-  const filters = { skip, limit, sort, priceFrom: +priceFrom };
-  console.log(filters);
-
-  // if (query.category && query.subCategories) {
-  //   return ProductRepo.getProductsWithCategoryAndSubcategories({
-  //     limit,
-  //     skip,
-  //     sort,
-  //   });
-  // }
 
   if (categoryId) {
     return ProductRepo.getProductsByCategory({
@@ -68,28 +73,16 @@ async function getProductsByQuery({ query }) {
   return ProductRepo.getProducts(filters);
 }
 
-async function getProduct(data) {
-  const { params } = data;
-
-  const filters = {
-    slug: params.slug,
-  };
-
-  return ProductRepo.getProduct(filters);
-}
-
-async function getProductByIdOrSlug({ params }) {
-  const { param } = params;
-
-  const filters = {};
-
-  if (ObjectId.isValid(param)) {
-    filters._id = param;
-  } else {
-    filters.slug = param;
-  }
-
-  const product = await ProductRepo.getProduct(filters);
+/**
+ * Get product by params
+ *
+ * @async
+ * @param {IProductParams} params - Params like (_id|slug)
+ * @throws {[TODO:name]} - Throw error if not found
+ * @returns {Promise<IProductDocument | null>} Array of products
+ */
+export async function getProduct(params: IProductParams): Promise<IProductDocument | null> {
+  const product = await ProductRepo.getProduct(params);
   if (!product) {
     throw ApiError.notFound('Product did not exist');
   }
@@ -97,64 +90,71 @@ async function getProductByIdOrSlug({ params }) {
   return product;
 }
 
-async function createProduct(data) {
-  const { body } = data;
+/**
+ * Create a product 
+ *
+ * @async
+ * @param {IProduct} product - Product data to create
+ * @throws {[TODO:name]} - Throw error if fail to create
+ * @returns {Promise<IProductDocument | null>} - New product
+ */
+export async function createProduct(product: IProduct): Promise<IProductDocument | null> {
+  const { title, price, quantity, discount = 0, categoryId, subCategoriesId } = product;
 
-  const product = {
-    ...body,
-    slug: slugify(body.title),
-    price: +body.price,
-    quantity: +body.quantity,
-    discount: +body.discount,
-    categoryId: ObjectId(body.categoryId),
-    subCategoriesId: body.subCategoriesId.map((subCategoryId) => ({
-      _id: ObjectId(subCategoryId),
+  const productFormatedData: IProduct = {
+    ...product,
+    slug: slugify(title),
+    price: +price,
+    quantity: +quantity,
+    discount: +discount,
+    categoryId: new ObjectId(categoryId),
+    // Breaking change
+    subCategoriesId: subCategoriesId.map((subCategoryId) => ({
+      _id: new ObjectId(subCategoryId._id),
     })),
   };
 
   try {
-    return await ProductRepo.createProduct(product);
+    return await ProductRepo.createProduct(productFormatedData);
   } catch (errors) {
-    throw prettierErrors(errors);
+    throw prettierErrors(errors as MongooseError);
   }
 }
 
-async function updateProduct({ body, params }) {
-  const product = {
-    ...body,
-    slug: slugify(body.title),
-    price: +body.price,
-    quantity: +body.quantity,
-    discount: +body.discount,
-  };
+/**
+ * Update a product
+ *
+ * @async
+ * @param {IProductParams} params - Params like (_id|slug)
+ * @param {IProduct} product - Product data
+ * @throws {[TODO:name]} - Throw error if fail to update
+ * @returns {Promise<IProductDocument | null>} Updated product
+ */
+export async function updateProduct(params: IProductParams, product: IProduct): Promise<IProductDocument | null> {
+  const { title, price, quantity, discount = 0 } = product;
 
-  const filters = {
-    slug: params.slug,
+  const productFormatedData = {
+    ...product,
+    slug: slugify(title),
+    price: +price,
+    quantity: +quantity,
+    discount: +discount,
   };
 
   try {
-    return await ProductRepo.updateProduct({ filters, product });
+    return await ProductRepo.updateProduct(params, productFormatedData);
   } catch (errors) {
-    throw DalError.unprocessableEntity(errors);
+    throw DalError.unprocessableEntity(errors as MongooseError);
   }
 }
 
-async function deleteProduct(data) {
-  const { params } = data;
-
-  const filters = {
-    slug: params.slug,
-  };
-
-  return ProductRepo.deleteProduct(filters);
+/**
+ * Delete a product
+ *
+ * @async
+ * @param {IProductParams} params - Params like (_id|slug)
+ * @returns {Promise<IProductDocument | null>} Deleted product
+ */
+export async function deleteProduct(params: IProductParams): Promise<IProductDocument | null> {
+  return ProductRepo.deleteProduct(params);
 }
-
-module.exports = {
-  getAllProducts,
-  getProduct,
-  getProductByIdOrSlug,
-  getProductsByQuery,
-  createProduct,
-  updateProduct,
-  deleteProduct,
-};
