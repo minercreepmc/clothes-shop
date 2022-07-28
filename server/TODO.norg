@@ -1,0 +1,35 @@
+@document.meta
+title: TODO
+description: A TODO list describe what TO DO next in server code
+authors: shin
+categories: 
+created: 2022-07-27
+version: 0.0.11
+@end
+
+* TypeScript Migration
+** services 
+    - [x] category-service
+    - [x] sub-category-service
+    - [x] user-service
+    - [-] product-service
+    - [ ] image-service
+    - [ ] contact-service
+** shares
+    - [ ] middlewares
+*** utils
+     - [ ] cloudinary
+     - [-] errors
+     - [x] firebase
+     - [ ] logger
+     - [x] logics
+     - [ ] mongo
+     - [ ] nodemailer
+
+
+* Refactor 
+  - [ ] Use the true type of return formated Mongoose Error~
+  instead of 'any' {@ file.txt} 
+  - [ ] Type the request handler better [stackoverflow]{https://stackoverflow.com/questions/63579867/what-does-this-error-say-type-parsedqs-is-not-assignable-to-type-string}
+
+
