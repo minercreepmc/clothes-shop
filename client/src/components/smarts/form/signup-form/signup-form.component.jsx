@@ -40,6 +40,7 @@ const SignUpForm = () => {
 
   const handleGeneralChange = (e) => {
     const { value, name } = e.target;
+    console.log(user);
 
     setUser({ ...user, [name]: value });
   };
@@ -52,7 +53,7 @@ const SignUpForm = () => {
         label="Email"
         placeholder="Enter email"
         type="email"
-        name="email-signup"
+        name="email"
         id="email"
         value={email}
         onChange={() => { }}
